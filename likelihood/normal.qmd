@@ -1,0 +1,137 @@
+---
+title: "Normal → geometric Brownian motion"
+subtitle: "Two normal laws determine the familiar price process"
+css:
+  - lr-widgets.css
+  - continuous-models.css
+resources:
+  - continuous-models.js
+include-after-body:
+  - text: |
+      <script src="continuous-models.js"></script>
+---
+
+The [binomial model](binomial.qmd) turns two probabilities into two price multipliers. The normal model does the same with two densities. Start with two normal laws for one observation; their ratio produces geometric Brownian motion exactly.
+
+Throughout, $X(t)$ is measured in units of the reference asset $Y$. The pricing measure is $\mathbb P^Y$; the asset-induced measure is $\mathbb P^X$. An investor's belief $\mathbb P^M$ remains a separate choice.
+
+## One driver, two normal laws
+
+Let $R(t)$ have independent increments and a common variance rate $s^2>0$, but different mean rates:
+
+$$
+\begin{aligned}
+R(t)&\sim N(\mu_Yt,s^2t)
+&&\text{under }\mathbb P^Y,\\
+R(t)&\sim N(\mu_Xt,s^2t)
+&&\text{under }\mathbb P^X.
+\end{aligned}
+$$
+
+At each horizon $t>0$, write the two densities with the same formula, for $j\in\{X,Y\}$:
+
+$$
+f_j(z,t)=\frac{1}{\sqrt{2\pi s^2t}}
+\exp\!\left[-\frac{(z-\mu_jt)^2}{2s^2t}\right].
+$$
+
+The normalizing constants cancel in their ratio. Expanding the two squares leaves a straight line in $z$:
+
+$$
+\begin{aligned}
+\log\frac{f_X(z,t)}{f_Y(z,t)}
+&=-\frac{(z-\mu_Xt)^2}{2s^2t}\\
+&\quad+\frac{(z-\mu_Yt)^2}{2s^2t}\\
+&=az+bt,
+\end{aligned}
+$$
+
+$$
+a=\frac{\mu_X-\mu_Y}{s^2},
+\qquad
+b=-\frac{\mu_X^2-\mu_Y^2}{2s^2}.
+$$
+
+Consequently, the price is already determined:
+
+$$
+\frac{X(t)}{X(0)}=\exp\{aR(t)+bt\}.
+$$
+
+This is **linear information flow**: log price is affine in the observed statistic and time. Linear information flow does not mean that price or the driver follows a straight path.
+
+## Explore the model
+
+The figure fixes $s=1$ and $\mu_Y=0$. Choose the information rate $k$; the other mean follows as $\mu_X=\sqrt{2k}$. The densities, price response and paths all use the same parameters.
+
+::: {data-continuous-model="normal"}
+The interactive model requires JavaScript. With $k=0.05$, the driver mean rates are $0$ and $\sqrt{0.1}$, the price volatility is $\sqrt{0.1}$, and the expected log-price rates are $+0.05$ under $\mathbb P^X$ and $-0.05$ under $\mathbb P^Y$.
+:::
+
+## Recover the classical GBM solution
+
+Under the pricing measure, write $R(t)=\mu_Yt+sW^Y(t)$ and define the **signed price loading**
+
+$$
+\eta=\frac{\mu_X-\mu_Y}{s}.
+$$
+
+Substitution into the likelihood ratio gives
+
+$$
+\frac{X(t)}{X(0)}
+=\exp\!\left\{\eta W^Y(t)-\frac12\eta^2t\right\}.
+$$
+
+This is exactly the solution of the discounted geometric Brownian motion equation
+
+$$
+\frac{dX(t)}{X(t)}=\eta\,dW^Y(t).
+$$
+
+Under the asset measure, $R(t)=\mu_Xt+sW^X(t)$ instead, so
+
+$$
+\begin{aligned}
+\frac{X(t)}{X(0)}
+&=\exp\!\left\{\eta W^X(t)+\frac12\eta^2t\right\},\\
+\frac{dX(t)}{X(t)}
+&=\eta^2dt+\eta\,dW^X(t).
+\end{aligned}
+$$
+
+The price volatility is $|\eta|$, not generally the driver scale $s$. The information rate is $k=\eta^2/2$, with units of nats per time unit. Volatility and information rate therefore have different units. The book's convenient normalization $\mu_Y=0$, $\mu_X=s^2$ makes $a=1$ and $|\eta|=s$; that equality follows from the normalization.
+
+## The same model, read in the other direction
+
+| Dynamics first | Likelihood first |
+|---|---|
+| Specify the pricing-measure GBM equation. | Specify two normal laws with a common variance. |
+| Solve for the exponential price. | Divide the two densities. |
+| Recover the asset measure by the price tilt. | Read off the GBM equation if desired. |
+
+The two routes give the same process. A differential equation makes local evolution explicit. The likelihood formulation makes the pair of measures and the finite-horizon price formula explicit.
+
+## Information is the drift of log price
+
+The two divergences are equal in this same-variance normal family. In the formulas below, the measures describe observations through the chosen horizon $t$:
+
+$$
+\begin{aligned}
+D(\mathbb P^X\Vert\mathbb P^Y)&=kt,\\
+D(\mathbb P^Y\Vert\mathbb P^X)&=kt,\\
+k&=\frac{(\mu_X-\mu_Y)^2}{2s^2}.
+\end{aligned}
+$$
+
+Accordingly, expected log price is $+kt$ under $\mathbb P^X$ and $-kt$ under $\mathbb P^Y$. Meanwhile the expected **price** under $\mathbb P^Y$ remains $X(0)$. A mean-zero price return and a negative expected log return are compatible.
+
+The model is consistent at every time scale: increments over a period $\Delta t$ are normal with mean $\mu_j\Delta t$ and variance $s^2\Delta t$. Refining the observation grid changes the view of a path, not the model's horizon law.
+
+The same two normal laws also give [Black–Scholes prices and option densities](options.qmd). For a portfolio held between trading dates, [discrete hedging](hedging.qmd) compares its density with the target claim's density.
+
+**Continue:** replace continuous fluctuations with counted events in the [Poisson model](poisson.qmd), or return to the shared construction in [linear information flow](linear-information.qmd).
+
+::: {.callout-note collapse="true" title="Source and conventions"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 5, “Normal family (Brownian driver).” This page uses $s$ for driver scale and $\eta$ for price loading to keep their roles distinct. All prices are denominated in $Y$.
+:::

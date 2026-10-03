@@ -1,0 +1,136 @@
+---
+title: "Two ways to build a market"
+subtitle: "From price moves to probabilities—and back again"
+---
+
+The classical approach starts with asset prices and asks which probability measure makes their discounted evolution a martingale. The likelihood approach can start with the measures and obtain the price moves from their ratios. The mathematical connection is exact. What changes is the choice of inputs.
+
+All prices below are in units of a strictly positive reference asset $Y$. Thus $Y$ itself has constant value one.
+
+## Start with the dynamics
+
+Specify a finite set of possible states, a finite trading horizon, and the prices and payoffs of the traded assets. Assume frictionless trading, unrestricted borrowing and short selling, no intermediate dividends, and that every state is possible. An arbitrage is a self-financing strategy with zero initial cost, nonnegative terminal payoff in every state, and a positive payoff in at least one state.
+
+The **fundamental theorem of asset pricing**, in this finite, discrete setting, says:
+
+::: {.callout-note title="Existence: no arbitrage"}
+There is no arbitrage if and only if there exists a probability measure $\mathbb P^Y$, positive on every possible state, under which every traded price in units of $Y$ is a martingale.
+:::
+
+For a one-period asset with gross returns $R_i$ this gives two equations:
+
+$$
+\sum_i q_i=1,
+\qquad
+\sum_i q_i R_i=1,
+$$
+
+where $q_i=\mathbb P^Y(\omega_i)>0$. Over several periods the pricing equation becomes conditional:
+
+$$
+\mathbb E^Y[X(t+1)\mid\mathcal F_t]=X(t).
+$$
+
+These equations identify a pricing measure when their solution is unique. Otherwise, they identify a family of admissible measures. The investor's subjective probabilities $\mathbb P^M$ need not be the pricing probabilities.
+
+::: {.callout-note title="Uniqueness: completeness"}
+In the same finite, arbitrage-free setting, the market is complete if and only if its equivalent martingale measure is unique. Completeness means that trading the available assets can replicate every terminal payoff.
+:::
+
+No arbitrage ensures that a consistent pricing rule exists. Completeness is the additional property that makes every contingent payoff replicable and its price unique. Portfolio constraints can further restrict what an investor can implement.
+
+## Now read the same market through likelihoods
+
+Fix a pricing measure $\mathbb P^Y$ and a strictly positive traded asset $X$. At the terminal date define
+
+$$
+\mathbb P^X(\omega)
+=\frac{X(T,\omega)}{X(0)}\,\mathbb P^Y(\omega).
+$$
+
+The martingale pricing equation says exactly that these weights sum to one. Rearranging gives
+
+$$
+\frac{X(T,\omega)}{X(0)}
+=\frac{\mathbb P^X(\omega)}{\mathbb P^Y(\omega)}.
+$$
+
+Conversely, specify two positive probability distributions. Their ratio defines a unit-cost return whose expectation under $\mathbb P^Y$ is one. For a process, use their consistent restrictions to the information available at each date:
+
+$$
+\frac{X(t)}{X(0)}
+=\left.\frac{d\mathbb P^X}{d\mathbb P^Y}\right|_{\mathcal F_t}.
+$$
+
+The conditional likelihood ratio is a $\mathbb P^Y$-martingale. Positive prices also permit the reverse direction:
+
+$$
+\frac{X(0)}{X(t)}
+=\left.\frac{d\mathbb P^Y}{d\mathbb P^X}\right|_{\mathcal F_t},
+$$
+
+which is a martingale under $\mathbb P^X$. In financial terms, the price of $Y$ in units of $X$ is fair under the $X$-numeraire measure, just as the price of $X$ in units of $Y$ is fair under the $Y$-numeraire measure.
+
+## Two states identify the measure
+
+For the nondegenerate binomial model, assume $u>1>d>0$. The pricing equation is
+
+$$
+qu+(1-q)d=1.
+$$
+
+There is a unique solution:
+
+$$
+q=\frac{1-d}{u-d},
+\qquad p=uq.
+$$
+
+Starting from $p$ and $q$ instead recovers the same moves:
+
+$$
+u=\frac pq,
+\qquad d=\frac{1-p}{1-q}.
+$$
+
+With two states and two independent traded payoffs, the stock and the reference asset span every payoff. This is why the pricing measure is unique. If both returns equal one, that independence is lost; the market cannot distinguish the two states through these assets.
+
+[Explore both directions in the binomial model →](binomial.qmd)
+
+## Three states reveal what is missing
+
+Add a middle state while keeping only the stock and the reference asset. For the book's returns
+
+$$
+R=\left(\frac32,1,\frac12\right),
+$$
+
+all the following measures price the same stock:
+
+$$
+\mathbb P^Y=(t,1-2t,t),
+\qquad 0<t<\frac12.
+$$
+
+For each such choice, the associated asset measure is
+
+$$
+\mathbb P^X
+=\left(\frac{3t}{2},1-2t,\frac t2\right).
+$$
+
+The return vector alone does not select $t$. Another traded claim, a calibration target, or an explicit modeling criterion can supply additional information.
+
+**Choosing the measures directly makes the pricing identities automatic. It does not make the measures observable or make missing payoffs tradable.** A model still needs a way to select its inputs, and portfolio choice still takes place within the span of the available assets.
+
+[Explore the pricing family and the attainable portfolios →](trinomial.qmd)
+
+## Where this leads
+
+The binomial model can be built either from repeated up/down moves or from two binomial laws whose likelihood ratio produces those moves. Replacing the binomial count by a negative-binomial count gives a new price model through the same construction.
+
+[Continue to the negative binomial model →](negative-binomial.qmd)
+
+::: {.callout-tip title="Read alongside the book"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapters 1 and 3. Chapter 1 develops the binomial and trinomial inversion; Chapter 3 separates no arbitrage, incomplete markets, and portfolio implementation.
+:::

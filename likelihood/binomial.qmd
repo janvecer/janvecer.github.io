@@ -1,0 +1,202 @@
+---
+title: "The binomial model"
+subtitle: "The whole framework in two states"
+css: lr-widgets.css
+resources:
+  - lr-widgets.js
+include-after-body:
+  - text: |
+      <script src="lr-widgets.js"></script>
+---
+
+Each period has two scenarios, success and failure. The market prices success at $q=\mathbb P^Y(\text{success})$. A traded asset $X$ carries its own measure, with $p=\mathbb P^X(\text{success})$. The investor's model $\mathbb P^M$ is a third object: the asset $X$ is her log-optimal holding only when $\mathbb P^M=\mathbb P^X$. Every identity on the [framework page](index.qmd) has an explicit two-state form, and repeating the period turns them into a price process. All prices and returns below are in units of the reference asset $Y$.
+
+This is the first worked example of [likelihoods and price dynamics](dynamics.qmd): the two approaches describe the same market, but start with different primitives.
+
+## Two probabilities, two multipliers
+
+Take $p,q\in(0,1)$. Likelihood-ratio pricing, $X(1)/X(0)=\mathbb P^X/\mathbb P^Y$, gives the success and failure multipliers directly (up and down, respectively, when $p>q$):
+
+$$
+\begin{aligned}
+u&=\frac{p}{q},\\
+d&=\frac{1-p}{1-q}.
+\end{aligned}
+$$
+
+The corresponding asset return is
+
+$$
+\frac{X(1)}{X(0)}=
+\begin{cases} u & \text{success},\\ d & \text{failure}.\end{cases}
+$$
+
+There are **two martingale conditions**, one for each choice of numeraire. Under the reference-asset measure $\mathbb P^Y$, the normalized price of $X$ has expectation one:
+
+$$
+\begin{aligned}
+q\,u+(1-q)\,d
+&=p+(1-p)\\
+&=1.
+\end{aligned}
+$$
+
+Under the asset measure $\mathbb P^X$, the normalized price of $Y$ in units of $X$ is the reciprocal return. It also has expectation one:
+
+$$
+\begin{aligned}
+p\,\frac1u+(1-p)\,\frac1d
+&=q+(1-q)\\
+&=1.
+\end{aligned}
+$$
+
+The first condition identifies $q$ from nonconstant price multipliers; the second identifies $p$. Thus $p$ is the probability associated with the asset numeraire, not an independently supplied forecast of the success frequency. The investor's forecast is $p^M$.
+
+The classical one-period model runs the other way. It postulates $u$ and $d$ and derives the pricing probabilities from these martingale conditions. Solving them gives
+
+$$
+\begin{aligned}
+q&=\frac{1-d}{u-d},\\
+p&=\frac{u(1-d)}{u-d}=u\,q.
+\end{aligned}
+$$
+
+The map $(p,q)\mapsto(u,d)$ sends $\{0<q<p<1\}$ one-to-one onto $\{0<d<1<u\}$. Read backwards, the classical no-arbitrage condition $d<1<u$ corresponds to two interior probabilities ordered so that success is the up move. With $p<q$, success is the down move and $0<u<1<d$. When $p=q$, $u=d=1$: the asset has the reference asset's return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of $Y$, under the frictionless borrowing and short-selling assumptions.
+
+With two states, cash and a nonconstant asset span all payoffs, which is why these conditions identify the two measures uniquely. The [trinomial model](trinomial.qmd) shows what changes when there are three states and only two traded assets.
+
+:::: {#fig-binomial-step}
+::: {data-lrw="binomial-step"}
+Interactive figure. It needs JavaScript.
+:::
+
+One period of the asset $X$ in units of $Y$. Start from the probabilities or from the multipliers; the other pair follows in the nondegenerate no-arbitrage region. Both numeraire martingale conditions appear below the diagram. Multipliers on the same side of 1, or one equal to 1 and the other different, imply arbitrage when both scenarios are possible. The figure distinguishes these cases from the fair constant return $u=d=1$. Editing a probability in a later figure switches this figure to probability mode and explains the change.
+::::
+
+## Every position on one curve
+
+Write $d(a\Vert b)$ for the relative entropy between Bernoulli laws with probabilities $a$ and $b$:
+
+$$
+\begin{aligned}
+d(a\Vert b)
+&=a\log\frac ab\\
+&\quad +(1-a)\log\frac{1-a}{1-b}.
+\end{aligned}
+$$
+
+The usual conventions apply: a zero-probability term contributes zero, while positive probability divided by zero gives infinite divergence.
+
+Let the investor's model be $\mathbb P^M(\text{success})=p^M$. With two scenarios a nonnegative portfolio $V$ of positive price is determined, up to scale, by $v=\mathbb P^V(\text{success})$, the fraction of wealth spent on the success claim. Its expected log return under the investor's model is
+
+$$
+\begin{aligned}
+g(v)
+&=p^M\log\frac{v}{q}\\
+&\quad +(1-p^M)\log\frac{1-v}{1-q}.
+\end{aligned}
+$$
+
+The information decomposition becomes
+
+$$
+g(v)=d(p^M\Vert q)-d(p^M\Vert v).
+$$
+
+Three points on the curve have names. At $v=q$ the investor holds the reference asset and $g=0$. At $v=p$ she holds the asset $X$. At $v=p^M$ the curve peaks at $d(p^M\Vert q)$, and the shortfall of any other position is exactly $d(p^M\Vert v)$. Every portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.
+
+For $\gamma\ge1$, risk aversion moves the position from $p^M$ back toward $q$, in one of two ways. Fractional Kelly keeps a cash reserve:
+
+$$
+\begin{aligned}
+f&=1/\gamma,\\
+v_f&=(1-f)\,q+f\,p^M.
+\end{aligned}
+$$
+
+CRRA utility instead tempers the measure. Set $\alpha=1/\gamma$ and form the weights
+
+$$
+\begin{aligned}
+w_s&=(p^M)^\alpha q^{1-\alpha},\\
+w_f&=(1-p^M)^\alpha(1-q)^{1-\alpha}.
+\end{aligned}
+$$
+
+The optimal success weight is
+
+$$
+v_\gamma=\frac{w_s}{w_s+w_f}.
+$$
+
+For $0<p^M<1$ both families sweep the same segment between $q$ and $p^M$, including cash as a limit as $\gamma\to\infty$. They generally traverse it at different rates: the same numerical $\gamma$ can give different positions, while a change of $\gamma$ can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set $\mathbb P^M(\text{success})=0$ in the figure. For every finite $\gamma$, CRRA keeps that zero, while fractional Kelly with $\gamma>1$ assigns positive weight through its cash reserve. The [utility and risk-aversion page](utility.qmd) develops the general construction.
+
+:::: {#fig-binomial-growth}
+::: {data-lrw="binomial-growth"}
+Interactive figure. It needs JavaScript.
+:::
+
+Expected log return under $\mathbb P^M$ of every two-state position. The red segment is the mismatch divergence. The separate marker lanes below the curve keep all six positions identifiable even when they coincide; vertical leaders connect the lane markers to their positions on the curve. The ring and diamond denote fractional Kelly and CRRA at the chosen $\gamma$. The key reports each position and its growth numerically.
+::::
+
+## Many periods
+
+Repeat the period independently and let $S(n)$ count the successes after $n$ periods. Likelihood-ratio pricing at time $n$ gives
+
+$$
+\frac{X(n)}{X(0)}
+=\Big(\frac pq\Big)^{S(n)}
+\Big(\frac{1-p}{1-q}\Big)^{n-S(n)}.
+$$
+
+Equivalently,
+
+$$
+\frac{X(n)}{X(0)}=u^{S(n)}d^{\,n-S(n)}.
+$$
+
+The binomial coefficients in $\mathbb P^X$ and $\mathbb P^Y$ cancel. The price depends on the path only through the sufficient statistic $S(n)$, and its logarithm is affine in it:
+
+$$
+\log\frac{X(n)}{X(0)}=a\,S(n)+b\,n.
+$$
+
+Here the coefficients are
+
+$$
+\begin{aligned}
+a&=\log(u/d),\\
+b&=\log d.
+\end{aligned}
+$$
+
+Write $D^{X,Y}(n)$ for the divergence between the laws of $S(n)$ under the two measures. Independence gives
+
+$$
+D^{X,Y}(n)=n\,d(p\Vert q).
+$$
+
+This is [linear information flow](linear-information.qmd). The binomial tree is the first of the price models in Chapter 5, not a separate construction.
+
+Under $\mathbb P^Y$ the price $X(t)/X(0)$ is a nonnegative martingale with mean one. Ville's inequality then gives, for every horizon $n$,
+
+$$
+\mathbb P^Y\Big(\max_{t\le n}\frac{X(t)}{X(0)}\ge\frac1\alpha\Big)\le\alpha .
+$$
+
+For $0<\alpha<1$, the price path of $X$ is therefore an anytime-valid test of the market's model against the asset's: one may stop the moment $X$ has multiplied by $1/\alpha$, and the probability of ever crossing under $\mathbb P^Y$ is at most $\alpha$. If $p\ne q$, then under $\mathbb P^X$ the long-run log growth is the strictly positive one-period divergence, so the threshold is eventually crossed with probability one over an unbounded horizon. If $p=q$, wealth stays constant and no such rejection occurs.
+
+:::: {#fig-binomial-time}
+::: {data-lrw="binomial-time"}
+Interactive figure. It needs JavaScript.
+:::
+
+Top: the laws of $S(n)$ under the two measures, shown as filled green bars for $\mathbb P^X$ and blue outlines for $\mathbb P^Y$, followed by the log price as a function of $S(n)$. The outlines remain visible when the laws coincide. Bottom: eight simulated paths under each measure, with the expected log price as dashed lines and the rejection threshold $\log(1/\alpha)$. Changing $p$ or $q$ reuses the same random numbers, so the paths deform rather than redraw. Ville's bound concerns the true crossing probability; the reported Monte Carlo fraction is an estimate and can fluctuate above the bound.
+::::
+
+## References
+
+- Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapters 1–3 and 5. CRC Press.
+- J. Ville (1939). *Étude critique de la notion de collectif*. Gauthier-Villars.
+- A. Ramdas, P. Grünwald, V. Vovk and G. Shafer (2023). [Game-Theoretic Statistics and Safe Anytime-Valid Inference](https://doi.org/10.1214/23-STS894). *Statistical Science*.

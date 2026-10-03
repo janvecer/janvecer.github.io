@@ -1,0 +1,56 @@
+.cmodel {
+  --cm-x: var(--lrw-asset, #2b7a55);
+  --cm-y: var(--lrw-market, #3a64a0);
+  --cm-rule: var(--lrw-rule, #d9ddd9);
+  --cm-panel: var(--lrw-panel, #f5f7f5);
+  margin: 1.6rem 0 2rem;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+.cmodel *, .cmodel *::before, .cmodel *::after { box-sizing: border-box; }
+.cm-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.8rem; padding: 1.15rem; border: 1px solid var(--cm-rule); background: var(--cm-panel); border-radius: .55rem; }
+.cm-control { display: grid; grid-template-columns: 1fr auto; gap: .3rem .5rem; font-size: .92rem; min-width: 0; }
+.cm-control span { font-weight: 600; }
+.cm-control output { font-weight: 650; color: var(--cm-x); }
+.cm-control input { grid-column: 1 / -1; width: 100%; min-width: 0; accent-color: var(--cm-x); }
+.cm-control select { grid-column: 1 / -1; max-width: 100%; width: 100%; padding: .35rem .5rem; border: 1px solid var(--cm-rule); border-radius: .25rem; color: inherit; background: var(--bs-body-bg, white); font: inherit; }
+.cm-control input:focus-visible, .cm-control select:focus-visible, .cm-button:focus-visible { outline: 2px solid var(--cm-y); outline-offset: 4px; }
+.cm-hint { font-size: .87rem; line-height: 1.55; margin: .7rem 0; }
+.cm-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; margin: 1.15rem 0 .6rem; }
+.cm-metric { padding: .8rem .65rem; border-top: 2px solid var(--cm-rule); }
+.cm-metric strong { display: block; font-size: 1.3rem; line-height: 1.2; margin-bottom: .35rem; }
+.cm-metric span { display: block; font-size: .81rem; line-height: 1.4; }
+.cm-parameters { padding: .7rem .85rem; background: var(--cm-panel); font-size: .87rem; line-height: 1.7; overflow-wrap: anywhere; border-radius: .3rem; }
+.cm-legend { display: flex; flex-wrap: wrap; gap: .45rem 1.4rem; font-size: .88rem; margin: 1.1rem 0 .6rem; }
+.cm-key::before { content: ''; display: inline-block; width: 1.2rem; height: .2rem; vertical-align: .2rem; margin-right: .5rem; background: var(--cm-x); }
+.cm-key-y::before { background: var(--cm-y); }
+.cm-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.cm-chart { min-width: 0; margin: .6rem 0; }
+.cm-chart h4 { font-size: 1rem; font-weight: 650; margin: 0 0 .2rem; line-height: 1.45; }
+.cm-chart p { font-size: .82rem; line-height: 1.45; margin: .25rem 0 0; }
+.cm-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.cmodel svg text { font-family: inherit; font-size: 13px; fill: currentColor; }
+.cmodel svg .cm-axis-title { font-size: 13px; }
+.cmodel svg .cm-grid { stroke: var(--cm-rule); stroke-width: 1; }
+.cmodel svg .cm-axis { stroke: currentColor; stroke-opacity: .35; stroke-width: 1; }
+.cmodel svg .cm-curve { fill: none; stroke-width: 2.5; }
+.cmodel svg .cm-line-x { stroke: var(--cm-x); }
+.cmodel svg .cm-line-y { stroke: var(--cm-y); }
+.cmodel svg .cm-density-x { fill: var(--cm-x); fill-opacity: .10; }
+.cmodel svg .cm-density-y { fill: var(--cm-y); fill-opacity: .10; }
+.cmodel svg .cm-sample { fill: none; stroke-width: 1.5; stroke-opacity: .55; }
+.cmodel svg .cm-expected { fill: none; stroke-width: 2.8; stroke-dasharray: 7 5; }
+.cm-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .8rem; margin: 1rem 0 .4rem; }
+.cm-toolbar h4 { margin: 0; font-size: 1rem; }
+.cm-button { border: 1px solid var(--cm-rule); border-radius: .3rem; padding: .4rem .85rem; color: inherit; font: inherit; font-size: .9rem; background: var(--cm-panel); cursor: pointer; }
+.cm-button:hover { border-color: var(--cm-x); }
+.cm-seed { font-size: .8rem; }
+.cm-static { padding: 1rem; border: 1px solid var(--cm-rule); }
+@media (max-width: 760px) { .cm-charts { grid-template-columns: 1fr; } }
+@media (max-width: 460px) {
+  .cm-controls { grid-template-columns: 1fr; gap: .85rem; padding: .9rem; }
+  .cm-metrics { gap: .25rem; }
+  .cm-metric { padding: .65rem .3rem; }
+  .cm-metric strong { font-size: 1.1rem; }
+  .cm-metric span { font-size: .78rem; }
+}

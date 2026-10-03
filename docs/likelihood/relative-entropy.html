@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A beginner’s guide to likelihood ratios, Kullback–Leibler divergence, and expected log investment returns.">
+
+<title>Relative entropy – Jan Vecer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a435622ae35cc41ac2c5e25b0c4cfd6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+  <script defer="" src="../assets/vendor/mathjax/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../likelihood/lr-widgets.css">
+<link rel="stylesheet" href="entropy.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Jan Vecer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../likelihood/index.html" aria-current="page"> 
+<span class="menu-text">Likelihood Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../jan-vecer.html"> 
+<span class="menu-text">Jan Vecer</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/index.html">Start here</a></li><li class="breadcrumb-item"><a href="../likelihood/relative-entropy.html">Relative entropy</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Start here</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Likelihood Finance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/relative-entropy.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Relative entropy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The binomial model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The negative binomial model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normal → geometric Brownian motion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Poisson: events become price jumps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gamma: accumulated activity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inverse Gaussian: a random clock</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Markets and portfolios</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/trinomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The trinomial model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/utility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utility &amp; fractional Kelly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/mean-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mean–variance &amp; information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/portfolio-lab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio laboratory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Options as distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete hedging</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#first-compare-one-observation" id="toc-first-compare-one-observation" class="nav-link active" data-scroll-target="#first-compare-one-observation">First compare one observation</a></li>
+  <li><a href="#take-logarithms-so-evidence-adds" id="toc-take-logarithms-so-evidence-adds" class="nav-link" data-scroll-target="#take-logarithms-so-evidence-adds">Take logarithms so evidence adds</a></li>
+  <li><a href="#average-using-the-first-model" id="toc-average-using-the-first-model" class="nav-link" data-scroll-target="#average-using-the-first-model">Average using the first model</a></li>
+  <li><a href="#try-the-calculation-yourself" id="toc-try-the-calculation-yourself" class="nav-link" data-scroll-target="#try-the-calculation-yourself">Try the calculation yourself</a></li>
+  <li><a href="#why-the-average-is-nonnegative" id="toc-why-the-average-is-nonnegative" class="nav-link" data-scroll-target="#why-the-average-is-nonnegative">Why the average is nonnegative</a></li>
+  <li><a href="#the-financial-meaning-of-the-same-calculation" id="toc-the-financial-meaning-of-the-same-calculation" class="nav-link" data-scroll-target="#the-financial-meaning-of-the-same-calculation">The financial meaning of the same calculation</a></li>
+  <li><a href="#continuous-observations-use-densities" id="toc-continuous-observations-use-densities" class="nav-link" data-scroll-target="#continuous-observations-use-densities">Continuous observations use densities</a></li>
+  <li><a href="#long-run-growth" id="toc-long-run-growth" class="nav-link" data-scroll-target="#long-run-growth">From expected performance to long-run growth</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/index.html">Start here</a></li><li class="breadcrumb-item"><a href="../likelihood/relative-entropy.html">Relative entropy</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Relative entropy</h1>
+<p class="subtitle lead">From log evidence to expected performance</p>
+</div>
+
+<div>
+  <div class="description">
+    A beginner’s guide to likelihood ratios, Kullback–Leibler divergence, and expected log investment returns.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Relative entropy answers a specific question: <strong>how much log evidence does one probability model expect to accumulate against another?</strong> In likelihood finance, exactly the same quantity measures an asset’s expected log return under its own implied measure.</p>
+<p>The <a href="../likelihood/index.html">framework</a> constructs an investment from probabilities. Here we slow down at the information-theoretic step: ratios, logarithms, and the probabilities used to average them.</p>
+<section id="first-compare-one-observation" class="level2">
+<h2 class="anchored" data-anchor-id="first-compare-one-observation">First compare one observation</h2>
+<p>Consider two possible outcomes, A and B. The asset measure and the pricing measure assign these probabilities:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb P^X&amp;=(0.6,0.4),\\
+\mathbb P^Y&amp;=(0.5,0.5).
+\end{aligned}
+\]</span></p>
+<p>If A occurs, its likelihood ratio is <span class="math inline">\(0.6/0.5=1.2\)</span>. That observation is 20% more likely under the asset model than under the pricing model. It favors <span class="math inline">\(\mathbb P^X\)</span> over <span class="math inline">\(\mathbb P^Y\)</span>.</p>
+<p>If B occurs, the ratio is <span class="math inline">\(0.4/0.5=0.8\)</span>. That observation favors <span class="math inline">\(\mathbb P^Y\)</span>. A likelihood ratio is a comparison between two specified models; it is not, by itself, a probability that either model is true.</p>
+<div class="intro-example-table">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Outcome</th>
+<th style="text-align: right;">Asset</th>
+<th style="text-align: right;">Market</th>
+<th style="text-align: right;">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="take-logarithms-so-evidence-adds" class="level2">
+<h2 class="anchored" data-anchor-id="take-logarithms-so-evidence-adds">Take logarithms so evidence adds</h2>
+<p>Independent likelihood ratios multiply. Taking their logarithms turns that multiplication into addition, which makes accumulated evidence easier to track. For our two outcomes,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log(1.2)&amp;\approx+0.1823216,\\
+\log(0.8)&amp;\approx-0.2231436.
+\end{aligned}
+\]</span></p>
+<p>Positive log evidence favors the numerator model; negative log evidence favors the denominator. Notice that the positive and negative values are not equal in magnitude. Multiplying wealth by <span class="math inline">\(1.2\)</span> and then by <span class="math inline">\(0.8\)</span> leaves <span class="math inline">\(0.96\)</span> of the original wealth, so those two moves do not cancel.</p>
+<p>We use natural logarithms throughout. Their information unit is the <strong>nat</strong>. A different logarithm base would rescale every information value; it would not change which model an observation favors.</p>
+</section>
+<section id="average-using-the-first-model" class="level2">
+<h2 class="anchored" data-anchor-id="average-using-the-first-model">Average using the first model</h2>
+<p>Now ask what the asset model expects. Under <span class="math inline">\(\mathbb P^X\)</span>, A has weight <span class="math inline">\(0.6\)</span> and B has weight <span class="math inline">\(0.4\)</span>. Multiply each log ratio by that probability:</p>
+<p><span class="math display">\[
+\begin{aligned}
+0.6\log(1.2)&amp;\approx+0.109392934,\\
+0.4\log(0.8)&amp;\approx-0.089257421.
+\end{aligned}
+\]</span></p>
+<p>Adding the contributions gives</p>
+<p><span class="math display">\[
+\begin{gathered}
+D(\mathbb P^X\Vert\mathbb P^Y)\\
+=0.6\log(1.2)+0.4\log(0.8)\\
+\approx0.02013551\text{ nats}.
+\end{gathered}
+\]</span></p>
+<p>The negative contribution remains part of the calculation. Relative entropy is an average of signed log evidence, not an average of absolute differences.</p>
+<p>For any finite set of outcomes, write the two distributions as <span class="math inline">\(p=(p_i)\)</span> and <span class="math inline">\(q=(q_i)\)</span>. The definition is</p>
+<p><span class="math display">\[
+D(p\Vert q)=\sum_i p_i\log\frac{p_i}{q_i}.
+\]</span></p>
+<p>Read the order carefully: <strong>divide first by second; average with first</strong>. This is also called <em>Kullback–Leibler divergence</em>, or KL divergence. We use <span class="math inline">\(D\)</span> and <span class="math inline">\(D_{\mathrm{KL}}\)</span> for the same quantity.</p>
+</section>
+<section id="try-the-calculation-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-the-calculation-yourself">Try the calculation yourself</h2>
+<p>In the laboratory, A is called Success and B is called Failure. Move the asset probability first, then the market probability. Watch the individual log returns and their weighted contributions. Finally make the two probabilities equal: each ratio becomes one, every log ratio becomes zero, and relative entropy vanishes.</p>
+<div data-entropy-lab="">
+<p>The interactive laboratory requires JavaScript. Its default example uses asset probabilities <span class="math inline">\((0.6,0.4)\)</span> and market probabilities <span class="math inline">\((0.5,0.5)\)</span>. The corresponding returns are <span class="math inline">\((1.2,0.8)\)</span> and the relative entropy is approximately <span class="math inline">\(0.02013551\)</span> nats.</p>
+</div>
+</section>
+<section id="why-the-average-is-nonnegative" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-average-is-nonnegative">Why the average is nonnegative</h2>
+<p>The reason is the concavity of the logarithm: the log of an average is at least the average of the logs. This is <strong>Jensen’s inequality</strong>.</p>
+<p>For the finite-state case, average <span class="math inline">\(q_i/p_i\)</span> using the weights <span class="math inline">\(p_i\)</span>. Include only states with <span class="math inline">\(p_i&gt;0\)</span>, so no division by zero is needed:</p>
+<p><span class="math display">\[
+\sum_{i:p_i&gt;0}p_i\frac{q_i}{p_i}
+=\sum_{i:p_i&gt;0}q_i\le1.
+\]</span></p>
+<p>Applying Jensen gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+-D(p\Vert q)
+&amp;=\sum_{i:p_i&gt;0}p_i\log\frac{q_i}{p_i}\\
+&amp;\le\log\!\left(\sum_{i:p_i&gt;0}q_i\right)\\
+&amp;\le0.
+\end{aligned}
+\]</span></p>
+<p>Thus <span class="math inline">\(D(p\Vert q)\ge0\)</span>. Equality requires the ratio <span class="math inline">\(q_i/p_i\)</span> to be constant on the support of <span class="math inline">\(p\)</span> and all of <span class="math inline">\(q\)</span>’s mass to lie there. Since both distributions sum to one, this means <strong><span class="math inline">\(p=q\)</span></strong>. If some <span class="math inline">\(p_i&gt;0\)</span> but <span class="math inline">\(q_i=0\)</span>, the divergence is infinite, so the inequality still holds.</p>
+<p>Individual observations may support either model, but a model expects nonnegative log evidence in its own favor when the averaging uses its probabilities. This does not establish which model describes reality, nor guarantee positive evidence in a particular sample. Even in our example, a run of B outcomes can produce a large loss.</p>
+<p>The order generally matters. Reversing our two distributions gives</p>
+<p><span class="math display">\[
+D(\mathbb P^Y\Vert\mathbb P^X)
+\approx0.02041100\text{ nats}.
+\]</span></p>
+<p>The ratios are inverted <strong>and the averaging probabilities change</strong>. KL divergence is therefore asymmetric; it is not an ordinary geometric distance between two points.</p>
+</section>
+<section id="the-financial-meaning-of-the-same-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="the-financial-meaning-of-the-same-calculation">The financial meaning of the same calculation</h2>
+<p>Measure prices in units of a strictly positive traded reference investment, with distributions reinvested, so <span class="math inline">\(Y(T)=1\)</span> in its own units. A nonnegative asset <span class="math inline">\(X\)</span> with positive initial price and implied measure <span class="math inline">\(\mathbb P^X\)</span> has gross return</p>
+<p><span class="math display">\[
+\frac{X(T)}{X(0)}
+=\frac{\mathbb P^X(\omega)}{\mathbb P^Y(\omega)}.
+\]</span></p>
+<p>The likelihood ratios <span class="math inline">\(1.2\)</span> and <span class="math inline">\(0.8\)</span> are thus also the asset’s two wealth multipliers. Taking logarithms and averaging under <span class="math inline">\(\mathbb P^X\)</span> gives</p>
+<p><span class="math display">\[
+\begin{gathered}
+\mathbb E^X\!\left[\log\frac{X(T)}{X(0)}\right]\\
+=D(\mathbb P^X\Vert\mathbb P^Y).
+\end{gathered}
+\]</span></p>
+<p>The value <span class="math inline">\(0.02013551\)</span> is an expected <strong>log</strong> return. It is not the expected ordinary percentage return. In this example, the expected gross return under <span class="math inline">\(\mathbb P^X\)</span> is</p>
+<p><span class="math display">\[
+0.6(1.2)+0.4(0.8)=1.04,
+\]</span></p>
+<p>so the expected simple return is 4%. Averaging returns and averaging their logarithms answer different questions.</p>
+<p>The superscript on <span class="math inline">\(\mathbb E^X\)</span> matters just as much as the logarithm. An investor may hold beliefs <span class="math inline">\(\mathbb P^M\)</span> different from the asset’s implied measure. If that investor assigns probabilities <span class="math inline">\((0.4,0.6)\)</span> instead, the very same asset has expected log return approximately <span class="math inline">\(-0.06096\)</span> under her beliefs. The nonnegative divergence identity becomes her expected-performance statement only when <span class="math inline">\(\mathbb P^M=\mathbb P^X\)</span>.</p>
+</section>
+<section id="continuous-observations-use-densities" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-observations-use-densities">Continuous observations use densities</h2>
+<p>For a continuous observation, an exact point usually has probability zero under both models. Dividing those point probabilities would give no useful ratio. Instead compare <strong>densities</strong> with respect to the same underlying variable:</p>
+<p><span class="math display">\[
+\begin{gathered}
+D(f_X\Vert f_Y)\\
+=\int f_X(z)\log\frac{f_X(z)}{f_Y(z)}\,dz.
+\end{gathered}
+\]</span></p>
+<p>This is the same instruction as before: take a density ratio, take its logarithm, and average under the first density. The <a href="../likelihood/normal.html">normal model</a> illustrates it explicitly with two bell-shaped curves and their likelihood-ratio price.</p>
+</section>
+<section id="long-run-growth" class="level2">
+<h2 class="anchored" data-anchor-id="long-run-growth">From expected performance to long-run growth</h2>
+<p>Why use expected <strong>log</strong> performance as a growth criterion? Repeat the same investment independently. Let <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> be the per-trial asset and market distributions, and write the gross return in period <span class="math inline">\(k\)</span> as</p>
+<p><span class="math display">\[
+G(k)=\frac{p(\omega(k))}{q(\omega(k))}.
+\]</span></p>
+<p>Reinvesting the proceeds compounds these returns:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{X(n)}{X(0)}&amp;=\prod_{k=1}^{n}G(k),\\
+\log\frac{X(n)}{X(0)}&amp;=\sum_{k=1}^{n}\log G(k).
+\end{aligned}
+\]</span></p>
+<p>The expected log return after <span class="math inline">\(n\)</span> periods is <span class="math inline">\(nD(p\Vert q)\)</span> under the asset model. More is true: if the observations are independent and identically distributed and the one-period log return is integrable, the strong law of large numbers gives</p>
+<p><span class="math display">\[
+\frac1n\log\frac{X(n)}{X(0)}
+\longrightarrow D(p\Vert q)
+\]</span></p>
+<p>almost surely under <span class="math inline">\(\mathbb P^X\)</span>. This means convergence on a set of paths with probability one under the asset model. <strong>Relative entropy is the long-run log growth rate</strong> in this repeated experiment. The statement is conditional on the chosen model governing the observations; it does not establish that the model is correct.</p>
+<section id="the-fair-game-paradox" class="level3">
+<h3 class="anchored" data-anchor-id="the-fair-game-paradox">The fair-game paradox</h3>
+<p>Under the market model, each return has mean one. Nevertheless, Jensen’s inequality gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb E^Y[\log G(1)]
+&amp;\le\log\mathbb E^Y[G(1)]\\
+&amp;=0.
+\end{aligned}
+\]</span></p>
+<p>For distinct positive <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, the inequality is strict. Averaging the same log ratios under <span class="math inline">\(q\)</span> gives <span class="math inline">\(-D(q\Vert p)\)</span>. With the same independence and integrability assumptions, now under the market model,</p>
+<p><span class="math display">\[
+\frac1n\log\frac{X(n)}{X(0)}
+\longrightarrow -D(q\Vert p)
+\]</span></p>
+<p>almost surely under <span class="math inline">\(\mathbb P^Y\)</span>. So typical market-model paths decay toward zero even though</p>
+<p><span class="math display">\[
+\mathbb E^Y[X(n)]=X(0)
+\]</span></p>
+<p>at every finite date. Increasingly rare, very large outcomes sustain the arithmetic average. There is no contradiction: average wealth across many possible outcomes and long-run growth along a typical path are different quantities. If <span class="math inline">\(p=q\)</span>, every multiplier is one and there is no growth or decay.</p>
+<p>In our example the two long-run log rates are about <span class="math inline">\(+0.02014\)</span> under the asset model and <span class="math inline">\(-0.02041\)</span> under the market model. <a href="../likelihood/binomial.html#many-periods">Generate paths in the binomial model</a> to see the distinction. The <a href="../likelihood/linear-information.html">linear information flow page</a> develops the common additive structure across model families.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Market averaging, zeros, and support">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Market averaging, zeros, and support
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When both distributions are positive, averaging the same log return under the market measure reverses the divergence:</p>
+<p><span class="math display">\[
+\begin{gathered}
+\mathbb E^Y\!\left[\log\frac{X(T)}{X(0)}\right]\\
+=-D(\mathbb P^Y\Vert\mathbb P^X).
+\end{gathered}
+\]</span></p>
+<p>In the example this is approximately <span class="math inline">\(-0.02041100\)</span>, even though the market’s expected gross return is one.</p>
+<p>Throughout the finite-state construction, market state prices satisfy <span class="math inline">\(q_i&gt;0\)</span>. Asset probabilities may be zero: the convention <span class="math inline">\(0\log(0/q_i)=0\)</span> reflects the limiting value of that expression. If <span class="math inline">\(p_i=0\)</span> while <span class="math inline">\(q_i&gt;0\)</span>, the asset pays zero in that state. Its expected log return under a model assigning positive probability to that state is <span class="math inline">\(-\infty\)</span>; the corresponding reverse divergence is <span class="math inline">\(+\infty\)</span>. In independent repetitions under the market model, such a state is eventually encountered with probability one, and reinvested wealth then stays at zero. The finite-log-mean assumption for the displayed market strong law does not apply in this case.</p>
+<p>For general density models, positive mass under the numerator outside the denominator’s support gives infinite divergence. Finite subtraction identities require suitable support and integrability assumptions; one must not subtract two infinities.</p>
+</div>
+</div>
+</div>
+<p><strong>Source:</strong> Jan Vecer, <em>Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective</em>, Chapters 1–3. Continue to <a href="../likelihood/utility.html">utility and risk aversion</a> to see how an investor’s chosen payoff can differ from the belief-matching investment.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/janvecer\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Jan Vecer · Likelihood Finance</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../likelihood/index.html">
+<p>Explore the framework</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../jan-vecer.html">
+<p>About &amp; contact</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="entropy.js" defer=""></script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,188 @@
+---
+title: "Options as distributions"
+subtitle: "See the payoff, its density, and the Black–Scholes formula together"
+description: "Explore continuous call, put, digital and straddle densities, and derive Black–Scholes prices from two normal probability laws."
+css: normal-options.css
+resources:
+  - normal-options.js
+include-after-body:
+  - text: |
+      <script src="normal-options.js"></script>
+---
+
+A call pays in high-price states. A put pays in low-price states. Their **densities show which observations the contracts emphasize**, including how much weight each observation receives. Here we draw those densities continuously, using the normal model.
+
+Throughout, prices are in units of the reference asset $Y$, so $Y(t)=1$. The underlying is $X(t)$, and a strike $K$ is fixed in those units. We return to currency prices below.
+
+## Three densities on one axis
+
+Let $z$ be the standardized normal observation at maturity $T$, and set $a=\sigma\sqrt T$. The market and asset assign it different normal laws:
+
+$$
+\begin{aligned}
+f^Y(z)&=\varphi(z),\\
+f^X(z)&=\varphi(z-a),
+\end{aligned}
+$$
+
+where $\varphi$ is the standard normal density. Thus $z$ has mean zero under $\mathbb P^Y$ and mean $a$ under $\mathbb P^X$, with variance one under both.
+
+Dividing the densities determines the terminal price:
+
+$$
+\frac{X(T)}{X(0)}
+=\frac{f^X(z)}{f^Y(z)}
+=\exp\!\left(az-\frac{a^2}{2}\right).
+$$
+
+The **observation is normal; the price is lognormal**. This is the geometric Brownian motion model from the [normal-model page](normal.qmd), not a model in which the price itself is normally distributed.
+
+Now choose an option payoff $h(X(T))$. Its price and density are
+
+$$
+C(0)=\mathbb E^Y[h(X(T))],
+$$
+
+$$
+f^C(z)=\frac{h(X(T))}{C(0)}\,f^Y(z).
+$$
+
+Multiply the market density by the payoff, then divide by its price. For a positive finite price, the result has area one. A call has no density below the exercise threshold; above it, larger payoffs receive more weight.
+
+## Draw the option's view
+
+Start with a call at strike 100. The blue and green curves are the two normal densities; the purple curve is the option's induced density. Switch to a digital: its flat payoff above the strike conditions the market density on that region, without the call's extra weighting toward larger gains.
+
+::: {data-normal-options=""}
+The interactive density explorer requires JavaScript. With $X(0)=K=100$, $\sigma=0.25$ and $T=1$, the call price is approximately $9.948$. Its density is proportional to $\bigl(100\varphi(z-0.25)-100\varphi(z)\bigr)^+$.
+:::
+
+The density plot uses the normal observation $z$ throughout. The separate payoff plot uses the terminal price $X(T)$. Changing coordinates would change density heights; keeping a common observation axis makes the likelihood ratios directly visible.
+
+::: {.callout-note title="What this density means"}
+$\mathbb P^C$ describes the exposure built into **one contract**. It is not automatically the investor's subjective forecast $\mathbb P^M$. It also differs from recovering the underlying's market distribution from a whole surface of option prices.
+:::
+
+## A call price is a difference of two probabilities
+
+Let $A=\{X(T)>K\}$. The call pays the underlying on $A$, less the strike payment on the same event. Since $X(T)f^Y=X(0)f^X$,
+
+$$
+\begin{aligned}
+C(0)
+&=X(0)\mathbb P^X(A)\\
+&\quad-K\mathbb P^Y(A).
+\end{aligned}
+$$
+
+The underlying payment is valued using the asset measure; the strike payment is valued using the reference measure. This identity holds before choosing any particular distribution.
+
+Its density has an equally direct expression:
+
+$$
+f^C(z)
+=\frac{\bigl(X(0)f^X(z)-Kf^Y(z)\bigr)^+}{C(0)}.
+$$
+
+The numerator is the positive part of the difference between two scaled densities. Its integral is the call price.
+
+## Black–Scholes from the normal tails
+
+In the normal model, exercise means
+
+$$
+z>\frac{\log(K/X(0))}{a}+\frac a2.
+$$
+
+Write $\Phi$ for the standard normal cumulative distribution function, and define
+
+$$
+\begin{aligned}
+d(2)&=\frac{\log(X(0)/K)}{a}-\frac a2,\\
+d(1)&=d(2)+a.
+\end{aligned}
+$$
+
+Under $\mathbb P^Y$, the observation has mean zero; under $\mathbb P^X$, its mean is shifted by $a$. The exercise probabilities are therefore
+
+$$
+\begin{aligned}
+\mathbb P^Y(A)&=\Phi(d(2)),\\
+\mathbb P^X(A)&=\Phi(d(1)).
+\end{aligned}
+$$
+
+Substitute them into the two-measure price identity:
+
+$$
+\boxed{
+\begin{aligned}
+C(0)&=X(0)\Phi(d(1))\\
+&\quad-K\Phi(d(2)).
+\end{aligned}}
+$$
+
+This is the **Black–Scholes call formula in reference-asset units**. The two normal probabilities have financial roles: one values delivery of the underlying, the other values payment of the strike. Neither probability is an investor's personal forecast unless that investor chooses the corresponding measure.
+
+For a put, use the complementary exercise region:
+
+$$
+\begin{aligned}
+P(0)&=K\Phi(-d(2))\\
+&\quad-X(0)\Phi(-d(1)).
+\end{aligned}
+$$
+
+Subtracting yields put–call parity,
+
+$$
+C(0)-P(0)=X(0)-K.
+$$
+
+::: {.callout-note collapse="true" title="The familiar currency formula, with interest"}
+Let the reference asset be a bank account $B(t)=e^{rt}$ with constant rate $r$ and $B(0)=1$. For a non-dividend-paying stock with currency price $S(t)$, we have $X(t)=S(t)/B(t)$. A currency strike $K^{\mathrm{cash}}$ at maturity becomes $K=K^{\mathrm{cash}}e^{-rT}$ in reference units.
+
+Consequently,
+
+$$
+\begin{aligned}
+C^{\mathrm{cash}}(0)
+&=S(0)\Phi(d(1))\\
+&\quad-K^{\mathrm{cash}}e^{-rT}\Phi(d(2)),
+\end{aligned}
+$$
+
+where
+
+$$
+\begin{aligned}
+d(1)&=\frac{\log(S(0)/K^{\mathrm{cash}})+rT}{\sigma\sqrt T}\\
+&\quad+\frac{\sigma\sqrt T}{2},\\
+d(2)&=d(1)-\sigma\sqrt T.
+\end{aligned}
+$$
+
+The discount factor appears when converting the currency strike into reference units. It was already accounted for by the choice of units above.
+:::
+
+## Other payoffs, and a reference-asset reserve
+
+A digital call pays one unit on $A$. Its price is $\mathbb P^Y(A)=\Phi(d(2))$, and its induced distribution is $\mathbb P^Y$ conditioned on $A$.
+
+A straddle combines a call and a put. Its density is the mixture of their densities with weights $C(0)/(C(0)+P(0))$ and $P(0)/(C(0)+P(0))$. The weights are fractions of the initial cost, even though the position holds one unit of each contract.
+
+Calls, puts and digitals pay zero on entire regions. If an investor assigns positive probability to a zero-payoff region, committing all wealth to that option gives expected log performance $-\infty$. The option density is still perfectly valid.
+
+To retain a positive payoff floor, keep a fraction $b$ of the budget in $Y$ and allocate $1-b$ to the option. The portfolio density is
+
+$$
+f^V(z)=b\,f^Y(z)+(1-b)f^C(z),
+$$
+
+and its gross payoff is at least $b$. The explorer's reserve control draws this mixture in gold. It is the same cost-weighted construction used in [portfolio mixtures](portfolio-lab.qmd).
+
+How could trading the underlying reproduce one of these payoffs? The [discrete-hedging page](hedging.qmd) compares a target density with the density implemented by rebalancing at finitely many dates.
+
+::: {.callout-note collapse="true" title="Book connection"}
+Based on Chapter 4 of Jan Vecer's *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*: “Option Payoffs,” the call and put induced distributions, the two-measure price identity, and “Black–Scholes Formula from State Prices.” The normal driver is the standardized cumulative return used there. Chapter 5 develops the same likelihood ratio as an additive normal model.
+:::

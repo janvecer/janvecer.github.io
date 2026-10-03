@@ -1,0 +1,227 @@
+{
+  "created": "2026-10-03T15:07:23.780Z",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390,
+    1024,
+    1440
+  ],
+  "pages": 5,
+  "results": [
+    {
+      "page": "index.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 390,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [
+        "Document has horizontal overflow"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.caption-top table",
+        "THEAD.",
+        "TR.header",
+        "TH.",
+        "TBODY.",
+        "TR.odd",
+        "TD.",
+        "TR.even"
+      ]
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [
+        "Entropy p=0,q=0.01: document overflow",
+        "Entropy p=0,q=0.99: document overflow",
+        "Entropy p=1,q=0.01: document overflow",
+        "Entropy p=1,q=0.99: document overflow",
+        "Entropy same: document overflow",
+        "Entropy strong: document overflow",
+        "Entropy swap: document overflow",
+        "Entropy small: document overflow",
+        "Document has horizontal overflow"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.caption-top table",
+        "THEAD.",
+        "TR.header",
+        "TH.",
+        "TBODY.",
+        "TR.odd",
+        "TD.",
+        "TR.even"
+      ]
+    },
+    {
+      "page": "index.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1024,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1024,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1440,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1440,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    }
+  ],
+  "failures": [
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [
+        "Document has horizontal overflow"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.caption-top table",
+        "THEAD.",
+        "TR.header",
+        "TH.",
+        "TBODY.",
+        "TR.odd",
+        "TD.",
+        "TR.even"
+      ]
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [
+        "Entropy p=0,q=0.01: document overflow",
+        "Entropy p=0,q=0.99: document overflow",
+        "Entropy p=1,q=0.01: document overflow",
+        "Entropy p=1,q=0.99: document overflow",
+        "Entropy same: document overflow",
+        "Entropy strong: document overflow",
+        "Entropy swap: document overflow",
+        "Entropy small: document overflow",
+        "Document has horizontal overflow"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.caption-top table",
+        "THEAD.",
+        "TR.header",
+        "TH.",
+        "TBODY.",
+        "TR.odd",
+        "TD.",
+        "TR.even"
+      ]
+    }
+  ]
+}

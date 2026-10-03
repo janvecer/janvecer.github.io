@@ -1,16 +1,1351 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "jan-website",
+    "objectID": "likelihood/hedging.html",
+    "href": "likelihood/hedging.html",
+    "title": "Discrete hedging",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "An option carries a probability density. A portfolio of stock and cash carries another. Hedging asks how closely the second can reproduce the first. Exact agreement means replication; a remaining difference records the exposures the available portfolio cannot match.\nThe options page plots distributions over observations at expiry. Here the question is local: what can a portfolio reproduce between now and the next trading date? All prices are in units of \\(Y\\), so the reference asset has value one.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/hedging.html#one-trading-interval",
+    "href": "likelihood/hedging.html#one-trading-interval",
+    "title": "Discrete hedging",
+    "section": "One trading interval",
+    "text": "One trading interval\nSuppose the stock is worth \\(x=X(t)\\) today, the call expires in \\(\\tau=T-t\\) years, and the next rebalance is in \\(h\\) years, with \\(0&lt;h\\leq\\tau\\). In the normal model, a standard normal shock \\(z\\) produces the stock multiplier\n\\[\nR(h,z)=\\exp\\!\\left\\{\\sigma\\sqrt h\\,z-\\tfrac12\\sigma^2h\\right\\}.\n\\]\nUnder the pricing measure, the shock has density \\(q(z)=\\varphi(z)\\). The stock’s conditional density is therefore\n\\[\np(z)=R(h,z)\\varphi(z).\n\\]\nBoth integrate to one: \\(\\mathbb E^Y[R(h,Z)]=1\\). The plotted horizontal axis is the same standardized shock for every density. These are distributions over the next interval’s information, not histograms of hedging errors.\nWrite \\(C(x,\\tau)\\) for the Black–Scholes call value at current stock price \\(x\\) and remaining maturity \\(\\tau\\). At the next trading date, its value is \\(C(xR(h,z),\\tau-h)\\). Consequently the call’s conditional density is\n\\[\nc(z)=\n\\frac{C(xR(h,z),\\tau-h)}{C(x,\\tau)}\n\\varphi(z).\n\\]\nBefore expiry, the numerator is the remaining option value, rather than its terminal payoff. At \\(h=\\tau\\), it becomes \\((xR(h,z)-K)^+\\). Conditional pricing ensures that this density also integrates to one.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/hedging.html#a-target-that-includes-a-reserve",
+    "href": "likelihood/hedging.html#a-target-that-includes-a-reserve",
+    "title": "Discrete hedging",
+    "section": "A target that includes a reserve",
+    "text": "A target that includes a reserve\nThe explorer can hedge a call together with a fixed reserve \\(B\\geq0\\) in \\(Y\\). Its current value is\n\\[\nH=C(x,\\tau)+B.\n\\]\nIts density over the next interval becomes\n\\[\nc_B(z)=\n\\frac{C(xR(h,z),\\tau-h)+B}{H}\n\\varphi(z).\n\\]\nThe default uses \\(B=K\\): the terminal target is \\((X(T)-K)^++K=\\max(X(T),K)\\), a stock position with a protected floor. This is also a put plus the stock by put–call parity.\nAdding the reserve changes the target payoff as well as its price. It makes the target less concentrated in upside states; it does not supply a cost-free improvement to the original call hedge.\nSpend a fraction \\(w\\) of the same budget \\(H\\) on stock and keep the rest in \\(Y\\). Hold that position until the next trading date. Its value and density are\n\\[\nV(t+h,z)=H\\{1-w+wR(h,z)\\},\n\\]\n\\[\nv(w,z)=\\{1-w+wR(h,z)\\}\\varphi(z).\n\\]\nThis is a cost-weighted mixture of the stock and reference densities. The share holding is \\(\\Delta(t)=Hw/x\\); the cost fraction \\(w\\) and the number of shares \\(\\Delta(t)\\) are different quantities.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/hedging.html#move-the-hedge-toward-the-target",
+    "href": "likelihood/hedging.html#move-the-hedge-toward-the-target",
+    "title": "Discrete hedging",
+    "section": "Move the hedge toward the target",
+    "text": "Move the hedge toward the target\nStart with the call plus a reserve equal to the strike, then press Fit the density. Change the time to the next rebalance and compare the two curves. Finally select Call only to see why the positivity constraint matters.\n\nThe interactive density comparison requires JavaScript. For a stock price of 100, strike of 110, annual volatility 30%, and one year remaining, the call costs about 8.14 and its Black–Scholes delta is about 0.433 shares. With a 110-unit reserve the target costs 118.14; the corresponding delta cost fraction is about 0.367.\n\nThe fitted position minimizes the forward relative entropy\n\\[\nw^\\star=\\underset{0\\leq w\\leq1}{\\arg\\min}\\;\nD_{\\mathrm{KL}}(c_B\\Vert v(w)),\n\\]\n\\[\n\\begin{aligned}\n&D_{\\mathrm{KL}}(c_B\\Vert v(w))\\\\\n&\\quad=\\int c_B(z)\\log\\frac{c_B(z)}{v(w,z)}\\,dz.\n\\end{aligned}\n\\]\nZero divergence means identical densities, hence identical next-date values for the same initial cost. Positive divergence measures the remaining mismatch in nats. It is also the loss of expected log performance, evaluated under the target measure, relative to holding the target itself.\nThe optimization is convex in \\(w\\). The figure compares its best value with the chosen position over several interval lengths. Shorter intervals change the local problem: they do not simply add more points to the same terminal distribution.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/hedging.html#why-the-call-only-fit-reaches-a-boundary",
+    "href": "likelihood/hedging.html#why-the-call-only-fit-reaches-a-boundary",
+    "title": "Discrete hedging",
+    "section": "Why the call-only fit reaches a boundary",
+    "text": "Why the call-only fit reaches a boundary\nIn the normal model, the next stock multiplier can be arbitrarily close to zero or arbitrarily large. A position held unchanged over a finite interval must satisfy\n\\[\n1-w+wR\\geq0\n\\qquad\\text{for every }R&gt;0.\n\\]\nWith only stock and cash, that condition is exactly \\(0\\leq w\\leq1\\). Borrowing cash would give \\(w&gt;1\\), and sufficiently large downward moves would then make the portfolio negative. Shorting the stock would fail in the other tail. A negative function cannot be used as a probability density.\nFor the default call without a reserve, Black–Scholes delta requires about 0.433 shares, costing about 43.34, while the call itself costs only 8.14. Its stock cost fraction is about 5.32: the rest is financed by borrowing. The finite-step positive-density fit cannot take that position. The Call only preset makes the restriction visible by putting the best admissible fit at the all-stock boundary.\nThis does not contradict continuous-time replication. A continuously rebalanced strategy changes its position as the stock moves. It is a different admissibility problem from a leveraged position left unchanged across a finite interval.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/hedging.html#where-blackscholes-delta-reappears",
+    "href": "likelihood/hedging.html#where-blackscholes-delta-reappears",
+    "title": "Discrete hedging",
+    "section": "Where Black–Scholes delta reappears",
+    "text": "Where Black–Scholes delta reappears\nFor the call plus a fixed reserve, the derivative with respect to stock price is still the call delta:\n\\[\n\\Delta^{\\mathrm{BS}}(t)=\\Phi(d(1)).\n\\]\n\\[\nw^{\\mathrm{BS}}=\\frac{x\\Phi(d(1))}{H}.\n\\]\nThe options page defines \\(d(1)\\) and derives the Black–Scholes formula from two normal tail probabilities. When this cost fraction is strictly inside the admissible interval, the short-interval KL fit approaches the same delta. The default reserve is large enough for this condition to hold. Press Fit the density, then reduce \\(h\\) to see the fitted share holding approach the delta benchmark.\nThe book also develops two quadratic hedges: a target-relative weighted error criterion, and the classical minimum-variance criterion. Their finite-step positions need not agree. In the normal model, both approach delta as the interval shrinks. The direct KL fit shown here retains the full logarithmic objective and its positivity restriction.\n\n\n\n\n\n\nNoteWhat is being calculated\n\n\n\n\n\nThe lab solves one conditional trading interval at the current stock price. A strategy on a trading grid repeats that calculation after each observed move, using the new stock price and remaining maturity. The graphs do not claim to show a complete multistep replication or a realized hedge profit.\nThe integrals use deterministic numerical quadrature over standard normal shocks, with a separate breakpoint at the strike when the interval reaches expiry. The plotted range contains nearly all the probability mass for these controls; numerical integration uses a wider range. Zero target density contributes zero to forward KL. The normal family and volatility range keep the integration well behaved.\n\n\n\n\n\n\n\n\n\nNoteBook connection\n\n\n\n\n\nBased on Chapter 6 of Jan Vecer’s Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective: local Kullback–Leibler projection, cost weights versus hedge shares, the normal model’s discrete call hedges, and the full-support positivity restriction. The reserve is an explicit target modification that makes an interior stock-and-cash comparison possible.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Discrete hedging"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html",
+    "href": "likelihood/portfolio-lab.html",
+    "title": "Portfolio laboratory",
+    "section": "",
+    "text": "A desired probability distribution need not be attainable with the assets a market offers. The trinomial model makes that restriction visible. This laboratory turns it into a portfolio problem: enter the distributions carried by the available assets, then find their best mixture for your belief.\nThis is a finite-state, one-period model. Every number describes the same scenario and horizon, and all prices and payoffs use the same reference asset \\(Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html#a-portfolio-is-a-mixture-of-measures",
+    "href": "likelihood/portfolio-lab.html#a-portfolio-is-a-mixture-of-measures",
+    "title": "Portfolio laboratory",
+    "section": "A portfolio is a mixture of measures",
+    "text": "A portfolio is a mixture of measures\nWrite \\(q_i=\\mathbb P^Y(i)&gt;0\\) for market pricing probabilities, \\(p_i=\\mathbb P^M(i)\\) for beliefs, and \\(a_{ji}=\\mathbb P^{A_j}(i)\\) for the distribution carried by asset \\(j\\). A unit of initial wealth invested in that asset pays\n\\[\nG^j(i)=\\frac{a_{ji}}{q_i}.\n\\]\nAllocate cost weights \\(w_j\\geq0\\) with \\(\\sum_jw_j=1\\). The portfolio’s distribution is\n\\[\nv_i=\\sum_jw_ja_{ji},\n\\]\nand its gross payoff is\n\\[\nG(i)=\\frac{v_i}{q_i}.\n\\]\nThe weights are fractions of the initial budget, not numbers of shares. If the initial asset price is \\(A_j(0)\\) and total wealth is \\(W\\), the holding is \\(w_jW/A_j(0)\\) units. A reference-asset holding has density \\(a_{0i}=q_i\\) and gross payoff one.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html#enter-a-market-and-a-belief",
+    "href": "likelihood/portfolio-lab.html#enter-a-market-and-a-belief",
+    "title": "Portfolio laboratory",
+    "section": "Enter a market and a belief",
+    "text": "Enter a market and a belief\nEach row is a distribution across the same states. For example, “state 1” must mean the same outcome in the market row, belief row and every asset row. The table accepts 2–12 states and up to eight risky asset distributions; the reference asset is always available. Apply the inputs to normalize proportional weights explicitly. The market row must remain strictly positive; beliefs and asset rows may contain zeros.\nStart with the book’s incomplete three-state example, solve for log growth, and inspect the residual mismatch. Then try the four-state menu or the fully spanned state-claim preset. You can also change an asset density or add another asset. A larger menu can improve the best attainable growth, but it need not change the optimum if the added asset provides no useful new exposure.\n\n\n\n\nInteractive portfolio laboratory. It needs JavaScript.\n\n\n\nFigure 1: Editable pricing, belief and asset distributions. The solver chooses long-only cost weights. The displayed density and payoff describe the same portfolio; its expected log growth is always evaluated under the belief row, whichever optimization criterion is selected.\n\n\n\n\n\n\n\n\n\nTipA useful three-step experiment\n\n\n\n\nSolve with the default asset menu. Inspect where the implemented distribution misses the belief.\nAdd an asset whose distribution equals your belief. Under exact log optimization, the mismatch can now reach zero.\nChange that asset so it no longer matches. Compare the exact log and quadratic solutions, then inspect their statewise payoffs.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html#what-the-exact-solver-minimizes",
+    "href": "likelihood/portfolio-lab.html#what-the-exact-solver-minimizes",
+    "title": "Portfolio laboratory",
+    "section": "What the exact solver minimizes",
+    "text": "What the exact solver minimizes\nUse \\(D(P\\Vert Q)\\) for KL divergence. Expected log growth satisfies\n\\[\n\\begin{aligned}\n\\mathbb E^M[\\log G]&=D(p\\Vert q)\\\\\n&\\quad-D(p\\Vert v).\n\\end{aligned}\n\\]\nFor fixed prices and beliefs, the first term is constant. The exact problem is therefore\n\\[\n\\min_{w\\in\\Delta}\\;D\\bigl(p\\Vert v(w)\\bigr),\n\\]\nwhere \\(\\Delta\\) is the simplex of nonnegative weights summing to one.\nThe feasible distributions form the convex hull of the asset rows. The optimizer finds the closest point in that set in the stated direction of KL divergence. Reversing the arguments would solve a different problem.\nIf \\(p\\) lies in the hull, the full likelihood-ratio payoff is attainable. If it lies outside, the minimum divergence is the exact amount of expected log growth lost because of the restricted menu. The portfolio measure may be unique even when several weight vectors implement it.\n\n\n\n\n\n\nNoteWhy this optimization is convex\n\n\n\n\n\nIgnoring a constant independent of \\(w\\), the objective is\n\\[\n-\\sum_{i:p_i&gt;0}p_i\\log v_i.\n\\]\nEach \\(v_i\\) is linear in \\(w\\), and \\(-\\log\\) is convex. The simplex of nonnegative weights summing to one is a convex feasible set. A valid first-order optimum is therefore globally optimal within this menu and these constraints.\nFor finite growth, every state with \\(p_i&gt;0\\) needs \\(v_i&gt;0\\). If all available assets assign zero mass to such a state, every allocation has expected log growth \\(-\\infty\\). Including the reference asset guarantees a feasible portfolio with finite growth.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html#read-the-numerical-result",
+    "href": "likelihood/portfolio-lab.html#read-the-numerical-result",
+    "title": "Portfolio laboratory",
+    "section": "Read the numerical result",
+    "text": "Read the numerical result\nThe reported expected growth uses natural logarithms, so it is measured in nats over the chosen horizon. It is model-implied expected log return, not a promised return and not automatically an annual rate. The payoff table provides the statewise outcomes that produce it.\nA numerical optimum is assessed by its first-order gap. For exact log growth, define the marginal improvement of asset \\(j\\) by\n\\[\nb_j=\\sum_{i:p_i&gt;0}\\frac{p_ia_{ji}}{v_i}.\n\\]\nAt a finite feasible portfolio, \\(\\sum_jw_jb_j=1\\). The gap\n\\[\n\\delta=\\max_jb_j-1\n\\]\nbounds the remaining possible improvement in expected log growth. A small gap certifies that the current allocation is close to the global optimum in objective value. It does not guarantee that every individual weight is close to a unique target; redundant assets can give many equivalent portfolios.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/portfolio-lab.html#why-the-quadratic-solution-can-differ",
+    "href": "likelihood/portfolio-lab.html#why-the-quadratic-solution-can-differ",
+    "title": "Portfolio laboratory",
+    "section": "Why the quadratic solution can differ",
+    "text": "Why the quadratic solution can differ\nThe laboratory offers exact log growth, the book’s mixed quadratic and classical mean–variance. The mean–variance page also explains their relation to the ordinary Taylor approximation. Exact log growth minimizes \\(D(p\\Vert v)\\). The mixed quadratic minimizes\n\\[\n\\frac12\\sum_i\\frac{(v_i-p_i)^2}{q_i}.\n\\]\nClassical mean–variance instead uses the portfolio mean and covariance under the subjective measure. It has a separate risk-penalty parameter. These are different objectives on the same feasible set; comparing their exact log growth afterward makes the consequences visible.\nLong-only mixtures guarantee a nonnegative payoff and make the feasible set easy to interpret. Short selling would enlarge the set to affine combinations, with an additional statewise constraint to keep the payoff nonnegative. That extension changes the feasible geometry and is outside this laboratory.\nContinue: options provide concrete asset-density shapes that can serve as portfolio ingredients. Utility and fractional Kelly explain how a preference or reserve rule changes the target portfolio.\n\n\n\n\n\n\nNoteBook connection\n\n\n\n\n\nBased on Chapter 1 of Jan Vecer’s Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, especially the theorem “State price density of a general static portfolio,” together with the constrained portfolio problems and information projections in Chapter 3. The finite-state laboratory illustrates these constructions without introducing a dynamic trading rule.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Portfolio laboratory"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html",
+    "href": "likelihood/utility.html",
+    "title": "Utility & fractional Kelly",
+    "section": "",
+    "text": "The framework gives a direct payoff for a belief: invest in the likelihood ratio \\(R=\\mathbb P^M/\\mathbb P^Y\\). That position maximizes expected log growth under the stated belief. It does not answer how much wealth an investor wants to expose to that belief, or which other preferences she might have.\nTwo familiar responses fit into the same language. Expected utility chooses a transformed payoff. Fractional Kelly allocates part of the budget to the original likelihood-ratio payoff and keeps the rest in the reference asset.\nAll wealth on this page is measured in units of the reference asset \\(Y\\). The formulas first describe a complete, finite-state market with positive pricing probabilities. Restricted asset menus require a further optimization over attainable portfolios.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html#what-utility-maximization-does",
+    "href": "likelihood/utility.html#what-utility-maximization-does",
+    "title": "Utility & fractional Kelly",
+    "section": "What utility maximization does",
+    "text": "What utility maximization does\nLet \\(W\\) be initial wealth and \\(V(T)\\) the terminal payoff. An investor with increasing, strictly concave utility \\(U\\) solves\n\\[\n\\max_{V(T)\\geq0}\\;\\mathbb E^M[U(V(T))]\n\\]\nsubject to the pricing constraint\n\\[\n\\mathbb E^Y[V(T)]=W.\n\\]\nWrite \\(p_i=\\mathbb P^M(i)\\) and \\(q_i=\\mathbb P^Y(i)\\). An extra unit paid in state \\(i\\) contributes \\(p_iU'(V(T,i))\\) to expected utility and costs \\(q_i\\). At an interior optimum, the marginal utility per unit of cost is the same in every state with \\(p_i&gt;0\\):\n\\[\nU'(V^*(T,i))=\\lambda\\frac{q_i}{p_i}.\n\\]\nIf \\(I=(U')^{-1}\\) is inverse marginal utility, then\n\\[\nV^*(T,i)=I\\!\\left(\\lambda\\frac{q_i}{p_i}\\right).\n\\]\nThe budget fixes \\(\\lambda\\). The resulting portfolio still induces a probability distribution,\n\\[\nv_i^*=q_i\\frac{V^*(T,i)}{W}.\n\\]\nUtility therefore supplies a rule for turning the investor’s belief \\(p\\) and the market’s prices \\(q\\) into the implemented measure \\(v^*\\).\n\n\n\n\n\n\nNoteConditions behind the formula\n\n\n\n\n\nThe inverse-marginal-utility formula applies when \\(U\\) is continuously differentiable and strictly concave, with \\(U'(0+)=\\infty\\) and \\(U'(\\infty)=0\\). In the finite-state setting, a positive budget determines the multiplier uniquely. A state with \\(p_i=0\\) contributes nothing to the objective; paying it a positive amount would consume budget, so the optimizer assigns it zero. Utility at zero is interpreted through the boundary limit, and states of zero subjective probability do not enter the expectation.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html#crra-a-power-of-the-likelihood-ratio",
+    "href": "likelihood/utility.html#crra-a-power-of-the-likelihood-ratio",
+    "title": "Utility & fractional Kelly",
+    "section": "CRRA: a power of the likelihood ratio",
+    "text": "CRRA: a power of the likelihood ratio\nConstant relative risk aversion uses\n\\[\nU_\\gamma(x)=\\frac{x^{1-\\gamma}-1}{1-\\gamma},\n\\]\nwith \\(U_1(x)=\\log x\\). Set \\(\\alpha=1/\\gamma\\) and \\(R(i)=p_i/q_i\\). The optimal gross payoff is\n\\[\nG^U(i)=\\frac{R(i)^\\alpha}{\\sum_jq_jR(j)^\\alpha}.\n\\]\nIts implied probabilities are\n\\[\nv^U(i)=q_iG^U(i).\n\\]\nAt \\(\\gamma=1\\), \\(G^U=R\\) and \\(v^U=p\\): utility reproduces the full Kelly position. For \\(\\gamma&gt;1\\), the power moderates the likelihood ratios. The denominator is essential: it makes the payoff cost exactly one unit of initial wealth.\nFor positive \\(p_i\\) in every state, increasing \\(\\gamma\\) eventually brings the implemented measure back to \\(q\\). This is normalized geometric interpolation between the two distributions.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html#fractional-kelly-keep-a-reserve",
+    "href": "likelihood/utility.html#fractional-kelly-keep-a-reserve",
+    "title": "Utility & fractional Kelly",
+    "section": "Fractional Kelly: keep a reserve",
+    "text": "Fractional Kelly: keep a reserve\nInvest a fraction \\(f\\in[0,1]\\) of wealth in the full Kelly payoff and leave \\(1-f\\) in \\(Y\\). The gross terminal payoff is\n\\[\nG^F(i)=(1-f)+fR(i).\n\\]\nMultiplication by \\(q_i\\) gives\n\\[\nv^F(i)=(1-f)q_i+fp_i.\n\\]\nThe original belief still determines the active position. The total portfolio’s measure is an arithmetic mixture because part of the budget stays in reserve. In particular,\n\\[\nG^F(i)\\geq1-f.\n\\]\nThis is a terminal wealth floor in units of \\(Y\\). With \\(f=0.25\\), at least three quarters of initial wealth remains even if the active position pays zero. It is not a claim about purchasing power in another unit, or about every strategy called “fractional Kelly.” Here the definition is a static holding of the reference asset and the full Kelly claim, without repeated rebalancing to a fixed risky weight.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html#compare-the-two-portfolios",
+    "href": "likelihood/utility.html#compare-the-two-portfolios",
+    "title": "Utility & fractional Kelly",
+    "section": "Compare the two portfolios",
+    "text": "Compare the two portfolios\nStart with \\(\\gamma=2\\) and \\(f=1/2\\). Compare the state probabilities and the payoff floor. Keep the fraction linked to \\(1/\\gamma\\) for a matched-parameter comparison, or unlink it to choose the reserve independently. Then increase risk aversion and try a belief that assigns zero probability to one state. The three-state view makes the difference between arithmetic and geometric interpolation visible.\n\n\n\n\nInteractive comparison. It needs JavaScript.\n\n\n\nFigure 1: The same market prices and subjective belief generate two moderated portfolios. Their expected log growth is evaluated under the original belief \\(\\mathbb P^M\\); it is not the CRRA objective. The simplex shows the three probabilities as a single point.\n\n\n\nThe choice \\(f=1/\\gamma\\) is a useful comparison, not a general equivalence. For beliefs close to prices, both gross payoffs have the same first-order expansion:\n\\[\nG\\approx1+\\frac{R-1}{\\gamma}.\n\\]\nFurther from the market distribution, their shapes and downside protection can differ substantially.\n\n\n\n\n\n\nNoteWhy two states can conceal the difference\n\n\n\nWith two states and strictly positive beliefs, both families cover the segment from \\(q\\) to \\(p\\) for \\(\\gamma\\geq1\\), including cash as a limit. One allocation can be matched by a different parameter in the other family. They generally disagree at the same numerical \\(\\gamma\\). With three or more states, they generally follow different curves, so changing one scalar parameter need not match the portfolios.\n\n\n\n\n\n\n\n\nNoteWhat happens when a belief is zero?\n\n\n\n\n\nFor every finite \\(\\gamma\\), CRRA retains the zero wherever \\(p_i=0\\). Fractional Kelly with \\(f&lt;1\\) assigns that state positive mass through the reserve.\nLet \\(B=\\{i:p_i&gt;0\\}\\). As \\(\\gamma\\to\\infty\\), the CRRA probabilities converge to\n\\[\nv^U(i)\\longrightarrow\n\\frac{q_i\\mathbf1_B(i)}{\\sum_{j\\in B}q_j}.\n\\]\nThus the cash limit requires full subjective support. Otherwise the limit is the pricing distribution conditioned on the states the investor considers possible.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/utility.html#the-information-cost-of-moderation",
+    "href": "likelihood/utility.html#the-information-cost-of-moderation",
+    "title": "Utility & fractional Kelly",
+    "section": "The information cost of moderation",
+    "text": "The information cost of moderation\nWrite \\(D(P\\Vert Q)\\) for relative entropy and let \\(v\\) be either implemented distribution. The growth decomposition gives\n\\[\n\\begin{aligned}\n\\mathbb E^M[\\log G]&=D(p\\Vert q)\\\\\n&\\quad-D(p\\Vert v).\n\\end{aligned}\n\\]\nThe difference from full Kelly is exactly the mismatch \\(D(p\\Vert v)\\). That loss of expected log growth can be an intentional choice made for another objective or a wealth floor. It is measured under the stated belief; changing the belief can change the ranking.\nContinue: explore mean–variance approximations, or choose among available assets in the portfolio laboratory.\n\n\n\n\n\n\nNoteBook connection\n\n\n\n\n\nBased on Chapter 3 of Jan Vecer’s Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective: “Utility Maximization” and “Risk aversion: utility-based density tempering versus fractional Kelly sizing.” The normal model shows how these constructions behave for Gaussian likelihoods.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Utility & fractional Kelly"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html",
+    "href": "likelihood/gamma.html",
+    "title": "Gamma: accumulated activity",
+    "section": "",
+    "text": "The Poisson model counts isolated events. A gamma driver records a nonnegative amount of accumulated activity. It could represent an abstract operational clock or accumulated volume; the financial interpretation requires a model linking that quantity to the application.\nThe driver increases by jumps. Although its value at any fixed positive time has a continuous density, its paths are not continuous: a gamma process has infinitely many small jumps on every positive time interval.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html#common-shape-different-rates",
+    "href": "likelihood/gamma.html#common-shape-different-rates",
+    "title": "Gamma: accumulated activity",
+    "section": "Common shape, different rates",
+    "text": "Common shape, different rates\nSpecify one additive driver \\(G(t)\\) under two measures:\n\\[\n\\begin{aligned}\nG(t)&\\sim\\Gamma(\\alpha t,\\beta_X)\n&&\\text{under }\\mathbb P^X,\\\\\nG(t)&\\sim\\Gamma(\\alpha t,\\beta_Y)\n&&\\text{under }\\mathbb P^Y.\n\\end{aligned}\n\\]\nHere \\(\\alpha&gt;0\\) is the common shape rate. The parameters \\(\\beta_X,\\beta_Y&gt;0\\) are rates, so the means and variances are\n\\[\nE^j[G(t)]=\\frac{\\alpha t}{\\beta_j},\n\\qquad\n\\operatorname{Var}^j[G(t)]=\\frac{\\alpha t}{\\beta_j^2}.\n\\]\nFor \\(z&gt;0\\) and \\(j\\in\\{X,Y\\}\\), the density is\n\\[\nf_j(z,t)=\\frac{\\beta_j^{\\alpha t}}{\\Gamma(\\alpha t)}\nz^{\\alpha t-1}e^{-\\beta_jz}.\n\\]\nThe common power of \\(z\\) and the gamma-function factor cancel. The resulting price is\n\\[\n\\begin{aligned}\n\\frac{X(t)}{X(0)}\n&=\\left(\\frac{\\beta_X}{\\beta_Y}\\right)^{\\alpha t}\ne^{(\\beta_Y-\\beta_X)G(t)},\\\\\n\\log\\frac{X(t)}{X(0)}&=aG(t)+bt,\n\\end{aligned}\n\\]\n\\[\na=\\beta_Y-\\beta_X,\n\\qquad b=\\alpha\\log\\frac{\\beta_X}{\\beta_Y}.\n\\]\nThe common shape is essential for this affine expression. Different shape rates would leave an additional \\(\\log G(t)\\) term.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html#explore-the-model",
+    "href": "likelihood/gamma.html#explore-the-model",
+    "title": "Gamma: accumulated activity",
+    "section": "Explore the model",
+    "text": "Explore the model\nThe figure fixes \\(\\beta_Y=2\\). Choose the common shape rate, forward information rate and jump direction; the corresponding \\(\\beta_X\\) is then determined. The displayed horizon is at least \\(0.5\\) and \\(\\alpha\\ge2\\), keeping the horizon density finite at zero. This is an exploration range, not a restriction on the mathematical gamma family.\n\nThe interactive model requires JavaScript. The default common shape rate is \\(\\alpha=3\\), the pricing rate is \\(\\beta_Y=2\\) and the forward information rate is \\(k=0.05\\) nats per time unit.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html#driver-jumps-become-price-jumps",
+    "href": "likelihood/gamma.html#driver-jumps-become-price-jumps",
+    "title": "Gamma: accumulated activity",
+    "section": "Driver jumps become price jumps",
+    "text": "Driver jumps become price jumps\nFor a driver jump of size \\(\\Delta G(t)&gt;0\\),\n\\[\n\\frac{X(t)}{X(t-)}=e^{a\\Delta G(t)}.\n\\]\nIf \\(\\beta_X&gt;\\beta_Y\\), the asset measure favors smaller amounts of activity. An upward jump in observed activity then produces a downward price jump, while \\(b&gt;0\\) supplies the compensating deterministic component. If \\(\\beta_X&lt;\\beta_Y\\), the price jumps upward and \\(b&lt;0\\).\nThere is no positive interval free of all gamma jumps. The decomposition \\(aG(t)+bt\\) still separates the jump contribution from the deterministic contribution, but it should not be described as a succession of isolated jumps with empty waiting periods.\nThe jump intensity density under measure \\(\\mathbb P^j\\) is\n\\[\n\\nu_j(dz)=\\alpha z^{-1}e^{-\\beta_jz}\\,dz,\n\\qquad z&gt;0.\n\\]\nIts integral diverges near zero, giving infinite activity. The integral of jump size against this density is finite, so total accumulated jump size is finite over bounded intervals.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html#information-accumulated-per-unit-time",
+    "href": "likelihood/gamma.html#information-accumulated-per-unit-time",
+    "title": "Gamma: accumulated activity",
+    "section": "Information accumulated per unit time",
+    "text": "Information accumulated per unit time\nTaking the mean of the affine log likelihood gives the divergence between the two observation laws at horizon \\(t\\):\n\\[\n\\begin{aligned}\nD(\\mathbb P^X\\Vert\\mathbb P^Y)&=k_Xt,\\\\\nk_X&=\\alpha\\left[\n\\log\\frac{\\beta_X}{\\beta_Y}\n-1+\\frac{\\beta_Y}{\\beta_X}\\right].\n\\end{aligned}\n\\]\nReversing the two measures gives\n\\[\nk_Y=\\alpha\\left[\n\\log\\frac{\\beta_Y}{\\beta_X}\n-1+\\frac{\\beta_X}{\\beta_Y}\\right].\n\\]\nThe expected log-price slopes are \\(+k_X\\) under \\(\\mathbb P^X\\) and \\(-k_Y\\) under \\(\\mathbb P^Y\\). The price ratio itself remains a mean-one martingale under \\(\\mathbb P^Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/gamma.html#from-discrete-blocks-to-an-additive-clock",
+    "href": "likelihood/gamma.html#from-discrete-blocks-to-an-additive-clock",
+    "title": "Gamma: accumulated activity",
+    "section": "From discrete blocks to an additive clock",
+    "text": "From discrete blocks to an additive clock\nThe negative-binomial model sums independent geometric blocks. Gamma laws supply a continuous-valued analogue: independent gamma variables with the same rate add their shape parameters,\n\\[\n\\begin{gathered}\n\\Gamma(\\alpha s,\\beta)+\\Gamma(\\alpha t,\\beta)\\\\\n\\overset{d}{=}\\ \\Gamma(\\alpha(s+t),\\beta).\n\\end{gathered}\n\\]\nFor integer shape, a gamma variable is a sum of exponential waiting times. Positive noninteger shapes extend that family consistently to every time increment. The simulation uses these exact increment distributions; the connecting segments do not reproduce the infinitely many individual jumps.\nContinue: the inverse Gaussian model gives another additive positive clock, with a different density and a stronger small-jump singularity.\n\n\n\n\n\n\nNoteSource and conventions\n\n\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 5, “Gamma family.” Shape–rate convention: \\(\\Gamma(s,\\beta)\\) has mean \\(s/\\beta\\). All prices are in units of \\(Y\\); \\(\\mathbb P^X\\) and an investor’s \\(\\mathbb P^M\\) are distinct unless explicitly identified.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Gamma: accumulated activity"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html",
+    "href": "likelihood/normal.html",
+    "title": "Normal → geometric Brownian motion",
+    "section": "",
+    "text": "The binomial model turns two probabilities into two price multipliers. The normal model does the same with two densities. Start with two normal laws for one observation; their ratio produces geometric Brownian motion exactly.\nThroughout, \\(X(t)\\) is measured in units of the reference asset \\(Y\\). The pricing measure is \\(\\mathbb P^Y\\); the asset-induced measure is \\(\\mathbb P^X\\). An investor’s belief \\(\\mathbb P^M\\) remains a separate choice.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html#one-driver-two-normal-laws",
+    "href": "likelihood/normal.html#one-driver-two-normal-laws",
+    "title": "Normal → geometric Brownian motion",
+    "section": "One driver, two normal laws",
+    "text": "One driver, two normal laws\nLet \\(R(t)\\) have independent increments and a common variance rate \\(s^2&gt;0\\), but different mean rates:\n\\[\n\\begin{aligned}\nR(t)&\\sim N(\\mu_Yt,s^2t)\n&&\\text{under }\\mathbb P^Y,\\\\\nR(t)&\\sim N(\\mu_Xt,s^2t)\n&&\\text{under }\\mathbb P^X.\n\\end{aligned}\n\\]\nAt each horizon \\(t&gt;0\\), write the two densities with the same formula, for \\(j\\in\\{X,Y\\}\\):\n\\[\nf_j(z,t)=\\frac{1}{\\sqrt{2\\pi s^2t}}\n\\exp\\!\\left[-\\frac{(z-\\mu_jt)^2}{2s^2t}\\right].\n\\]\nThe normalizing constants cancel in their ratio. Expanding the two squares leaves a straight line in \\(z\\):\n\\[\n\\begin{aligned}\n\\log\\frac{f_X(z,t)}{f_Y(z,t)}\n&=-\\frac{(z-\\mu_Xt)^2}{2s^2t}\\\\\n&\\quad+\\frac{(z-\\mu_Yt)^2}{2s^2t}\\\\\n&=az+bt,\n\\end{aligned}\n\\]\n\\[\na=\\frac{\\mu_X-\\mu_Y}{s^2},\n\\qquad\nb=-\\frac{\\mu_X^2-\\mu_Y^2}{2s^2}.\n\\]\nConsequently, the price is already determined:\n\\[\n\\frac{X(t)}{X(0)}=\\exp\\{aR(t)+bt\\}.\n\\]\nThis is linear information flow: log price is affine in the observed statistic and time. Linear information flow does not mean that price or the driver follows a straight path.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html#explore-the-model",
+    "href": "likelihood/normal.html#explore-the-model",
+    "title": "Normal → geometric Brownian motion",
+    "section": "Explore the model",
+    "text": "Explore the model\nThe figure fixes \\(s=1\\) and \\(\\mu_Y=0\\). Choose the information rate \\(k\\); the other mean follows as \\(\\mu_X=\\sqrt{2k}\\). The densities, price response and paths all use the same parameters.\n\nThe interactive model requires JavaScript. With \\(k=0.05\\), the driver mean rates are \\(0\\) and \\(\\sqrt{0.1}\\), the price volatility is \\(\\sqrt{0.1}\\), and the expected log-price rates are \\(+0.05\\) under \\(\\mathbb P^X\\) and \\(-0.05\\) under \\(\\mathbb P^Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html#recover-the-classical-gbm-solution",
+    "href": "likelihood/normal.html#recover-the-classical-gbm-solution",
+    "title": "Normal → geometric Brownian motion",
+    "section": "Recover the classical GBM solution",
+    "text": "Recover the classical GBM solution\nUnder the pricing measure, write \\(R(t)=\\mu_Yt+sW^Y(t)\\) and define the signed price loading\n\\[\n\\eta=\\frac{\\mu_X-\\mu_Y}{s}.\n\\]\nSubstitution into the likelihood ratio gives\n\\[\n\\frac{X(t)}{X(0)}\n=\\exp\\!\\left\\{\\eta W^Y(t)-\\frac12\\eta^2t\\right\\}.\n\\]\nThis is exactly the solution of the discounted geometric Brownian motion equation\n\\[\n\\frac{dX(t)}{X(t)}=\\eta\\,dW^Y(t).\n\\]\nUnder the asset measure, \\(R(t)=\\mu_Xt+sW^X(t)\\) instead, so\n\\[\n\\begin{aligned}\n\\frac{X(t)}{X(0)}\n&=\\exp\\!\\left\\{\\eta W^X(t)+\\frac12\\eta^2t\\right\\},\\\\\n\\frac{dX(t)}{X(t)}\n&=\\eta^2dt+\\eta\\,dW^X(t).\n\\end{aligned}\n\\]\nThe price volatility is \\(|\\eta|\\), not generally the driver scale \\(s\\). The information rate is \\(k=\\eta^2/2\\), with units of nats per time unit. Volatility and information rate therefore have different units. The book’s convenient normalization \\(\\mu_Y=0\\), \\(\\mu_X=s^2\\) makes \\(a=1\\) and \\(|\\eta|=s\\); that equality follows from the normalization.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html#the-same-model-read-in-the-other-direction",
+    "href": "likelihood/normal.html#the-same-model-read-in-the-other-direction",
+    "title": "Normal → geometric Brownian motion",
+    "section": "The same model, read in the other direction",
+    "text": "The same model, read in the other direction\n\n\n\n\n\n\n\nDynamics first\nLikelihood first\n\n\n\n\nSpecify the pricing-measure GBM equation.\nSpecify two normal laws with a common variance.\n\n\nSolve for the exponential price.\nDivide the two densities.\n\n\nRecover the asset measure by the price tilt.\nRead off the GBM equation if desired.\n\n\n\nThe two routes give the same process. A differential equation makes local evolution explicit. The likelihood formulation makes the pair of measures and the finite-horizon price formula explicit.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/normal.html#information-is-the-drift-of-log-price",
+    "href": "likelihood/normal.html#information-is-the-drift-of-log-price",
+    "title": "Normal → geometric Brownian motion",
+    "section": "Information is the drift of log price",
+    "text": "Information is the drift of log price\nThe two divergences are equal in this same-variance normal family. In the formulas below, the measures describe observations through the chosen horizon \\(t\\):\n\\[\n\\begin{aligned}\nD(\\mathbb P^X\\Vert\\mathbb P^Y)&=kt,\\\\\nD(\\mathbb P^Y\\Vert\\mathbb P^X)&=kt,\\\\\nk&=\\frac{(\\mu_X-\\mu_Y)^2}{2s^2}.\n\\end{aligned}\n\\]\nAccordingly, expected log price is \\(+kt\\) under \\(\\mathbb P^X\\) and \\(-kt\\) under \\(\\mathbb P^Y\\). Meanwhile the expected price under \\(\\mathbb P^Y\\) remains \\(X(0)\\). A mean-zero price return and a negative expected log return are compatible.\nThe model is consistent at every time scale: increments over a period \\(\\Delta t\\) are normal with mean \\(\\mu_j\\Delta t\\) and variance \\(s^2\\Delta t\\). Refining the observation grid changes the view of a path, not the model’s horizon law.\nThe same two normal laws also give Black–Scholes prices and option densities. For a portfolio held between trading dates, discrete hedging compares its density with the target claim’s density.\nContinue: replace continuous fluctuations with counted events in the Poisson model, or return to the shared construction in linear information flow.\n\n\n\n\n\n\nNoteSource and conventions\n\n\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 5, “Normal family (Brownian driver).” This page uses \\(s\\) for driver scale and \\(\\eta\\) for price loading to keep their roles distinct. All prices are denominated in \\(Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Normal → geometric Brownian motion"
+    ]
+  },
+  {
+    "objectID": "likelihood/trinomial.html",
+    "href": "likelihood/trinomial.html",
+    "title": "The trinomial model",
+    "section": "",
+    "text": "The binomial model has just enough traded payoffs to distinguish its two states. A third state exposes two separate issues: which pricing measure fits the traded returns, and which investor beliefs can be implemented by trading?\nWork in units of \\(Y\\) and take the book’s three-state stock return:\n\\[\nR^X=\\left(\\frac32,1,\\frac12\\right).\n\\]\nOnly \\(X\\) and \\(Y\\) are traded. Every state is possible; borrowing and short selling are available unless a portfolio constraint is explicitly imposed.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "The trinomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/trinomial.html#first-find-all-consistent-pricing-measures",
+    "href": "likelihood/trinomial.html#first-find-all-consistent-pricing-measures",
+    "title": "The trinomial model",
+    "section": "First, find all consistent pricing measures",
+    "text": "First, find all consistent pricing measures\nThe pricing weights must satisfy\n\\[\nq_1+q_2+q_3=1,\n\\]\n\\[\n\\frac32q_1+q_2+\\frac12q_3=1.\n\\]\nSubtracting these equations gives \\(q_1=q_3\\). Thus the positive pricing measures form a line:\n\\[\n\\mathbb P^Y(t)=(t,1-2t,t),\n\\qquad 0&lt;t&lt;\\frac12.\n\\]\nEach choice gives an asset measure by multiplying the pricing weights by the stock return:\n\\[\n\\mathbb P^X(t)\n=\\left(\\frac{3t}{2},1-2t,\\frac t2\\right).\n\\]\nBoth martingale checks now hold:\n\\[\n\\mathbb E^Y[R^X]=1,\n\\qquad\n\\mathbb E^X[1/R^X]=1.\n\\]\nThe first prices \\(X\\) in units of \\(Y\\). The second prices \\(Y\\) in units of \\(X\\). Choosing another \\(t\\) changes both measures while preserving the same stock returns.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "The trinomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/trinomial.html#then-choose-an-attainable-portfolio",
+    "href": "likelihood/trinomial.html#then-choose-an-attainable-portfolio",
+    "title": "The trinomial model",
+    "section": "Then choose an attainable portfolio",
+    "text": "Then choose an attainable portfolio\nPut a fraction \\(w\\) of initial wealth in \\(X\\), and \\(1-w\\) in \\(Y\\). Its return is\n\\[\nR^{V,w}\n=\\left(1+\\frac w2,1,1-\\frac w2\\right).\n\\]\nFor a fixed pricing measure, its implied density is\n\\[\n\\mathbb P^{V,w}\n=(1-w)\\mathbb P^Y+w\\mathbb P^X.\n\\]\nWith no short sales, \\(0\\le w\\le1\\): the investor can move along a line segment in the probability triangle. Allowing borrowing and short selling extends the line; nonnegative terminal wealth imposes \\(-2\\le w\\le2\\). Neither case fills the triangle.\n\nThe interactive figure requires JavaScript. At the book’s default \\(t=1/3\\), the pricing measure is \\((1/3,1/3,1/3)\\) and the stock measure is \\((1/2,1/3,1/6)\\). Every stock-and-cash portfolio retains middle-state probability \\(1/3\\).\n\nThe left triangle varies the pricing rule, holding the stock’s returns fixed. The right triangle varies the portfolio, holding the selected pricing rule fixed. Each corner represents all probability concentrated on one state; interior points assign weight to all three.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "The trinomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/trinomial.html#why-a-belief-can-be-unattainable",
+    "href": "likelihood/trinomial.html#why-a-belief-can-be-unattainable",
+    "title": "The trinomial model",
+    "section": "Why a belief can be unattainable",
+    "text": "Why a belief can be unattainable\nAt the book’s choice \\(t=1/3\\),\n\\[\n\\mathbb P^{V,w}\n=\\left(\\frac{2+w}{6},\\frac13,\\frac{2-w}{6}\\right).\n\\]\nNow consider the investor’s beliefs\n\\[\n\\mathbb P^M=\\left(\\frac12,\\frac16,\\frac13\\right).\n\\]\nEvery attainable portfolio has middle-state weight \\(1/3\\), while the investor assigns \\(1/6\\). No choice of \\(w\\) can make the two distributions equal. The unrestricted likelihood payoff \\(\\mathbb P^M/\\mathbb P^Y\\) exists as a mathematical claim, but it cannot be replicated using only this stock and cash.\nThe best attainable portfolio instead minimizes\n\\[\nD_{\\mathrm{KL}}(\\mathbb P^M\\Vert\\mathbb P^{V,w}).\n\\]\nEquivalently, it maximizes\n\\[\n\\begin{aligned}\ng(w)&=\\frac12\\log\\left(1+\\frac w2\\right)\\\\\n&\\quad+\\frac13\\log\\left(1-\\frac w2\\right).\n\\end{aligned}\n\\]\nHere the maximizing weight is \\(w=2/5\\), under either of the displayed constraints. The figure shows its remaining information mismatch. This weight depends on the beliefs and the traded returns, so it stays the same as \\(t\\) changes. The two divergences in the growth decomposition change together.\n\n\n\n\n\n\nNoteA useful special case\n\n\n\nAt \\(t=5/12\\), this particular belief lies on the attainable line and the mismatch vanishes at \\(w=2/5\\). The market remains incomplete: implementing one selected belief does not mean that every payoff is spanned.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "The trinomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/trinomial.html#incompleteness-also-leaves-a-price-range",
+    "href": "likelihood/trinomial.html#incompleteness-also-leaves-a-price-range",
+    "title": "The trinomial model",
+    "section": "Incompleteness also leaves a price range",
+    "text": "Incompleteness also leaves a price range\nA claim paying one in the middle state and zero otherwise would have price\n\\[\nC(0)=\\mathbb P^Y(\\omega_2)=1-2t.\n\\]\nThe original stock and cash prices permit every value in \\((0,1)\\). This is an open no-arbitrage interval; its endpoints are limiting bounds, not admissible prices when all three states remain possible. Trading that additional claim at a price inside the interval would identify \\(t\\) and complete this one-period market.\nThis is the distinction behind the fundamental theorem of asset pricing: no arbitrage gives existence of a pricing measure; completeness gives uniqueness. A likelihood description respects the same distinction.\n\n\n\n\n\n\nTipRead alongside the book\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 1, “Trinomial model” and “Numerical trinomial mixture: rigid asset densities”; Chapter 3, incomplete markets and relative-entropy projection.\n\n\nBack to the framework · Next: negative binomial",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "The trinomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html",
+    "href": "likelihood/linear-information.html",
+    "title": "Linear information flow",
+    "section": "",
+    "text": "The binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian models share a structure. An observable driver \\(Z(t)\\) accumulates information. Two measures give different probabilities to its increments. Price is the likelihood ratio of those two models.\nThe driver is additive; the price is multiplicative. “Linear information flow” refers to the affine log likelihood and its expected accumulation, not to a price moving along a straight line.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#add-increments-multiply-likelihoods",
+    "href": "likelihood/linear-information.html#add-increments-multiply-likelihoods",
+    "title": "Linear information flow",
+    "section": "Add increments, multiply likelihoods",
+    "text": "Add increments, multiply likelihoods\nSuppose nonoverlapping increments are independent under each of two consistent process laws. Their densities or mass functions belong to the same time-scaled exponential family:\n\\[\nf(z,t;\\theta)=h(z,t)\\exp\\{\\theta z-t\\kappa(\\theta)\\}.\n\\]\nKeep the common base \\(h(z,t)\\) and any shared shape or variance parameters fixed. Change the natural parameter from \\(\\theta_Y\\) to \\(\\theta_X\\). The base cancels:\n\\[\n\\log\\frac{X(t)}{X(0)}=aZ(t)+bt,\n\\]\nwhere the two constants are\n\\[\na=\\theta_X-\\theta_Y,\n\\]\n\\[\nb=-\\{\\kappa(\\theta_X)-\\kappa(\\theta_Y)\\}.\n\\]\nThe likelihood ratio of a full sequence of increments has exactly the same form, because their sums are \\(Z(t)\\) and \\(t\\). Thus the terminal statistic retains the information needed to compare this particular pair of process models. Independently chosen densities at unrelated horizons would not guarantee such a consistent process.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#why-the-expected-information-is-linear",
+    "href": "likelihood/linear-information.html#why-the-expected-information-is-linear",
+    "title": "Linear information flow",
+    "section": "Why the expected information is linear",
+    "text": "Why the expected information is linear\nIf \\(\\mathbb E^X[Z(t)]=m_Xt\\), then the two laws of observations through time \\(t\\) satisfy\n\\[\n\\begin{aligned}\nD(\\mathbb P^X\\Vert\\mathbb P^Y)\n&=\\mathbb E^X\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]\\\\\n&=k_Xt,\n\\end{aligned}\n\\]\nwith \\(k_X=am_X+b\\geq0\\). Under the market measure the expected log price goes the other way:\n\\[\n\\mathbb E^Y\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]\n=-k_Yt,\n\\]\nwhere \\(k_Y\\) is the reverse divergence over one unit of time. The two information rates need not be equal. Their signs describe the same position evaluated by two different models.\nPrices still satisfy \\(\\mathbb E^Y[X(t)]=X(0)\\). There is no contradiction: the logarithm is concave, so mean wealth and mean log wealth are different quantities.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#the-six-clocks",
+    "href": "likelihood/linear-information.html#the-six-clocks",
+    "title": "Linear information flow",
+    "section": "The six clocks",
+    "text": "The six clocks\n\n\n\nFamily\nWhat accumulates?\nWhat stays common?\n\n\n\n\nBinomial\nSuccesses in a fixed number of trials\nTrial count\n\n\nNegative binomial\nSuccesses before a fixed number of failures\nFailure-count clock\n\n\nNormal\nContinuous Gaussian increments\nVariance rate\n\n\nPoisson\nEvent arrivals\nTime and event sizes\n\n\nGamma\nPositive gamma increments\nShape rate\n\n\nInverse Gaussian\nPositive inverse Gaussian increments\nActivity parameter\n\n\n\nBinomial time is an integer trial count. Negative-binomial time is an integer failure count; each step contains a random number of trials. Normal, Poisson, gamma, and inverse Gaussian processes can be observed on any positive time grid. Their increment distributions remain in the same family with the appropriate time scaling.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#a-common-scale-for-comparison",
+    "href": "likelihood/linear-information.html#a-common-scale-for-comparison",
+    "title": "Linear information flow",
+    "section": "A common scale for comparison",
+    "text": "A common scale for comparison\nA raw parameter change has different meanings across families. Moving a Poisson intensity by one is not comparable to moving a normal mean by one. The forward KL rate \\(k_X\\) gives a common information scale: nats per unit of the stated clock.\nThe continuous-model laboratories therefore start from a chosen \\(k_X\\), then infer the compatible second parameter. Additional controls change the event rate or shape of the information stream. Two models can have the same information rate and still produce very different paths, downside behavior, and higher moments.\nThese bounded controls are teaching choices. They are not fitted market parameters or limits imposed by the theory. In particular, fixing forward KL does not fix reverse KL or every tail risk.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#what-a-simulated-path-shows",
+    "href": "likelihood/linear-information.html#what-a-simulated-path-shows",
+    "title": "Linear information flow",
+    "section": "What a simulated path shows",
+    "text": "What a simulated path shows\n\nNormal: exact Gaussian increments on the chosen grid; joining them visually does not resolve the Brownian motion between grid points.\nPoisson: finite event activity; arrivals produce visible price jumps, with deterministic movement between them.\nGamma and inverse Gaussian: infinitely many small jumps in every positive interval. Exact increment sampling gives exact distributions at the grid times; the display does not locate all intervening jumps.\n\nThe asset price may have upward or downward jumps depending on the sign of \\(a\\), even when the information driver only increases. For all families, the likelihood ratio is evaluated without discretizing an SDE. Exact finite-increment simulation is also available in classical models when their transition law is known—the normal/GBM example is a direct instance of that agreement.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/linear-information.html#where-to-go-next",
+    "href": "likelihood/linear-information.html#where-to-go-next",
+    "title": "Linear information flow",
+    "section": "Where to go next",
+    "text": "Where to go next\nUse normal and GBM for the connection with stochastic calculus, Poisson for a visible jump clock, then gamma and inverse Gaussian for infinite activity. The negative-binomial model provides the cleanest comparison of different sampling clocks carrying the same likelihood evidence.\nSource: Jan Vecer, Principles of Portfolio Choice, Chapter 5, “Dynamic Price Models with Linear Information Flow.”",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Linear information flow"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html",
+    "href": "likelihood/relative-entropy.html",
+    "title": "Relative entropy",
+    "section": "",
+    "text": "Relative entropy answers a specific question: how much log evidence does one probability model expect to accumulate against another? In likelihood finance, exactly the same quantity measures an asset’s expected log return under its own implied measure.\nThe framework constructs an investment from probabilities. Here we slow down at the information-theoretic step: ratios, logarithms, and the probabilities used to average them.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#first-compare-one-observation",
+    "href": "likelihood/relative-entropy.html#first-compare-one-observation",
+    "title": "Relative entropy",
+    "section": "First compare one observation",
+    "text": "First compare one observation\nConsider two possible outcomes, A and B. The asset measure and the pricing measure assign these probabilities:\n\\[\n\\begin{aligned}\n\\mathbb P^X&=(0.6,0.4),\\\\\n\\mathbb P^Y&=(0.5,0.5).\n\\end{aligned}\n\\]\nIf A occurs, its likelihood ratio is \\(0.6/0.5=1.2\\). That observation is 20% more likely under the asset model than under the pricing model. It favors \\(\\mathbb P^X\\) over \\(\\mathbb P^Y\\).\nIf B occurs, the ratio is \\(0.4/0.5=0.8\\). That observation favors \\(\\mathbb P^Y\\). A likelihood ratio is a comparison between two specified models; it is not, by itself, a probability that either model is true.\n\n\n\n\nOutcome\nAsset\nMarket\nRatio\n\n\n\n\nA\n0.6\n0.5\n1.2\n\n\nB\n0.4\n0.5\n0.8",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#take-logarithms-so-evidence-adds",
+    "href": "likelihood/relative-entropy.html#take-logarithms-so-evidence-adds",
+    "title": "Relative entropy",
+    "section": "Take logarithms so evidence adds",
+    "text": "Take logarithms so evidence adds\nIndependent likelihood ratios multiply. Taking their logarithms turns that multiplication into addition, which makes accumulated evidence easier to track. For our two outcomes,\n\\[\n\\begin{aligned}\n\\log(1.2)&\\approx+0.1823216,\\\\\n\\log(0.8)&\\approx-0.2231436.\n\\end{aligned}\n\\]\nPositive log evidence favors the numerator model; negative log evidence favors the denominator. Notice that the positive and negative values are not equal in magnitude. Multiplying wealth by \\(1.2\\) and then by \\(0.8\\) leaves \\(0.96\\) of the original wealth, so those two moves do not cancel.\nWe use natural logarithms throughout. Their information unit is the nat. A different logarithm base would rescale every information value; it would not change which model an observation favors.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#average-using-the-first-model",
+    "href": "likelihood/relative-entropy.html#average-using-the-first-model",
+    "title": "Relative entropy",
+    "section": "Average using the first model",
+    "text": "Average using the first model\nNow ask what the asset model expects. Under \\(\\mathbb P^X\\), A has weight \\(0.6\\) and B has weight \\(0.4\\). Multiply each log ratio by that probability:\n\\[\n\\begin{aligned}\n0.6\\log(1.2)&\\approx+0.109392934,\\\\\n0.4\\log(0.8)&\\approx-0.089257421.\n\\end{aligned}\n\\]\nAdding the contributions gives\n\\[\n\\begin{gathered}\nD(\\mathbb P^X\\Vert\\mathbb P^Y)\\\\\n=0.6\\log(1.2)+0.4\\log(0.8)\\\\\n\\approx0.02013551\\text{ nats}.\n\\end{gathered}\n\\]\nThe negative contribution remains part of the calculation. Relative entropy is an average of signed log evidence, not an average of absolute differences.\nFor any finite set of outcomes, write the two distributions as \\(p=(p_i)\\) and \\(q=(q_i)\\). The definition is\n\\[\nD(p\\Vert q)=\\sum_i p_i\\log\\frac{p_i}{q_i}.\n\\]\nRead the order carefully: divide first by second; average with first. This is also called Kullback–Leibler divergence, or KL divergence. We use \\(D\\) and \\(D_{\\mathrm{KL}}\\) for the same quantity.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#try-the-calculation-yourself",
+    "href": "likelihood/relative-entropy.html#try-the-calculation-yourself",
+    "title": "Relative entropy",
+    "section": "Try the calculation yourself",
+    "text": "Try the calculation yourself\nIn the laboratory, A is called Success and B is called Failure. Move the asset probability first, then the market probability. Watch the individual log returns and their weighted contributions. Finally make the two probabilities equal: each ratio becomes one, every log ratio becomes zero, and relative entropy vanishes.\n\nThe interactive laboratory requires JavaScript. Its default example uses asset probabilities \\((0.6,0.4)\\) and market probabilities \\((0.5,0.5)\\). The corresponding returns are \\((1.2,0.8)\\) and the relative entropy is approximately \\(0.02013551\\) nats.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#why-the-average-is-nonnegative",
+    "href": "likelihood/relative-entropy.html#why-the-average-is-nonnegative",
+    "title": "Relative entropy",
+    "section": "Why the average is nonnegative",
+    "text": "Why the average is nonnegative\nThe reason is the concavity of the logarithm: the log of an average is at least the average of the logs. This is Jensen’s inequality.\nFor the finite-state case, average \\(q_i/p_i\\) using the weights \\(p_i\\). Include only states with \\(p_i&gt;0\\), so no division by zero is needed:\n\\[\n\\sum_{i:p_i&gt;0}p_i\\frac{q_i}{p_i}\n=\\sum_{i:p_i&gt;0}q_i\\le1.\n\\]\nApplying Jensen gives\n\\[\n\\begin{aligned}\n-D(p\\Vert q)\n&=\\sum_{i:p_i&gt;0}p_i\\log\\frac{q_i}{p_i}\\\\\n&\\le\\log\\!\\left(\\sum_{i:p_i&gt;0}q_i\\right)\\\\\n&\\le0.\n\\end{aligned}\n\\]\nThus \\(D(p\\Vert q)\\ge0\\). Equality requires the ratio \\(q_i/p_i\\) to be constant on the support of \\(p\\) and all of \\(q\\)’s mass to lie there. Since both distributions sum to one, this means \\(p=q\\). If some \\(p_i&gt;0\\) but \\(q_i=0\\), the divergence is infinite, so the inequality still holds.\nIndividual observations may support either model, but a model expects nonnegative log evidence in its own favor when the averaging uses its probabilities. This does not establish which model describes reality, nor guarantee positive evidence in a particular sample. Even in our example, a run of B outcomes can produce a large loss.\nThe order generally matters. Reversing our two distributions gives\n\\[\nD(\\mathbb P^Y\\Vert\\mathbb P^X)\n\\approx0.02041100\\text{ nats}.\n\\]\nThe ratios are inverted and the averaging probabilities change. KL divergence is therefore asymmetric; it is not an ordinary geometric distance between two points.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#the-financial-meaning-of-the-same-calculation",
+    "href": "likelihood/relative-entropy.html#the-financial-meaning-of-the-same-calculation",
+    "title": "Relative entropy",
+    "section": "The financial meaning of the same calculation",
+    "text": "The financial meaning of the same calculation\nMeasure prices in units of a strictly positive traded reference investment, with distributions reinvested, so \\(Y(T)=1\\) in its own units. A nonnegative asset \\(X\\) with positive initial price and implied measure \\(\\mathbb P^X\\) has gross return\n\\[\n\\frac{X(T)}{X(0)}\n=\\frac{\\mathbb P^X(\\omega)}{\\mathbb P^Y(\\omega)}.\n\\]\nThe likelihood ratios \\(1.2\\) and \\(0.8\\) are thus also the asset’s two wealth multipliers. Taking logarithms and averaging under \\(\\mathbb P^X\\) gives\n\\[\n\\begin{gathered}\n\\mathbb E^X\\!\\left[\\log\\frac{X(T)}{X(0)}\\right]\\\\\n=D(\\mathbb P^X\\Vert\\mathbb P^Y).\n\\end{gathered}\n\\]\nThe value \\(0.02013551\\) is an expected log return. It is not the expected ordinary percentage return. In this example, the expected gross return under \\(\\mathbb P^X\\) is\n\\[\n0.6(1.2)+0.4(0.8)=1.04,\n\\]\nso the expected simple return is 4%. Averaging returns and averaging their logarithms answer different questions.\nThe superscript on \\(\\mathbb E^X\\) matters just as much as the logarithm. An investor may hold beliefs \\(\\mathbb P^M\\) different from the asset’s implied measure. If that investor assigns probabilities \\((0.4,0.6)\\) instead, the very same asset has expected log return approximately \\(-0.06096\\) under her beliefs. The nonnegative divergence identity becomes her expected-performance statement only when \\(\\mathbb P^M=\\mathbb P^X\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#continuous-observations-use-densities",
+    "href": "likelihood/relative-entropy.html#continuous-observations-use-densities",
+    "title": "Relative entropy",
+    "section": "Continuous observations use densities",
+    "text": "Continuous observations use densities\nFor a continuous observation, an exact point usually has probability zero under both models. Dividing those point probabilities would give no useful ratio. Instead compare densities with respect to the same underlying variable:\n\\[\n\\begin{gathered}\nD(f_X\\Vert f_Y)\\\\\n=\\int f_X(z)\\log\\frac{f_X(z)}{f_Y(z)}\\,dz.\n\\end{gathered}\n\\]\nThis is the same instruction as before: take a density ratio, take its logarithm, and average under the first density. The normal model illustrates it explicitly with two bell-shaped curves and their likelihood-ratio price.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
+  },
+  {
+    "objectID": "likelihood/relative-entropy.html#long-run-growth",
+    "href": "likelihood/relative-entropy.html#long-run-growth",
+    "title": "Relative entropy",
+    "section": "From expected performance to long-run growth",
+    "text": "From expected performance to long-run growth\nWhy use expected log performance as a growth criterion? Repeat the same investment independently. Let \\(p\\) and \\(q\\) be the per-trial asset and market distributions, and write the gross return in period \\(k\\) as\n\\[\nG(k)=\\frac{p(\\omega(k))}{q(\\omega(k))}.\n\\]\nReinvesting the proceeds compounds these returns:\n\\[\n\\begin{aligned}\n\\frac{X(n)}{X(0)}&=\\prod_{k=1}^{n}G(k),\\\\\n\\log\\frac{X(n)}{X(0)}&=\\sum_{k=1}^{n}\\log G(k).\n\\end{aligned}\n\\]\nThe expected log return after \\(n\\) periods is \\(nD(p\\Vert q)\\) under the asset model. More is true: if the observations are independent and identically distributed and the one-period log return is integrable, the strong law of large numbers gives\n\\[\n\\frac1n\\log\\frac{X(n)}{X(0)}\n\\longrightarrow D(p\\Vert q)\n\\]\nalmost surely under \\(\\mathbb P^X\\). This means convergence on a set of paths with probability one under the asset model. Relative entropy is the long-run log growth rate in this repeated experiment. The statement is conditional on the chosen model governing the observations; it does not establish that the model is correct.\n\nThe fair-game paradox\nUnder the market model, each return has mean one. Nevertheless, Jensen’s inequality gives\n\\[\n\\begin{aligned}\n\\mathbb E^Y[\\log G(1)]\n&\\le\\log\\mathbb E^Y[G(1)]\\\\\n&=0.\n\\end{aligned}\n\\]\nFor distinct positive \\(p\\) and \\(q\\), the inequality is strict. Averaging the same log ratios under \\(q\\) gives \\(-D(q\\Vert p)\\). With the same independence and integrability assumptions, now under the market model,\n\\[\n\\frac1n\\log\\frac{X(n)}{X(0)}\n\\longrightarrow -D(q\\Vert p)\n\\]\nalmost surely under \\(\\mathbb P^Y\\). So typical market-model paths decay toward zero even though\n\\[\n\\mathbb E^Y[X(n)]=X(0)\n\\]\nat every finite date. Increasingly rare, very large outcomes sustain the arithmetic average. There is no contradiction: average wealth across many possible outcomes and long-run growth along a typical path are different quantities. If \\(p=q\\), every multiplier is one and there is no growth or decay.\nIn our example the two long-run log rates are about \\(+0.02014\\) under the asset model and \\(-0.02041\\) under the market model. Generate paths in the binomial model to see the distinction. The linear information flow page develops the common additive structure across model families.\n\n\n\n\n\n\nNoteMarket averaging, zeros, and support\n\n\n\n\n\nWhen both distributions are positive, averaging the same log return under the market measure reverses the divergence:\n\\[\n\\begin{gathered}\n\\mathbb E^Y\\!\\left[\\log\\frac{X(T)}{X(0)}\\right]\\\\\n=-D(\\mathbb P^Y\\Vert\\mathbb P^X).\n\\end{gathered}\n\\]\nIn the example this is approximately \\(-0.02041100\\), even though the market’s expected gross return is one.\nThroughout the finite-state construction, market state prices satisfy \\(q_i&gt;0\\). Asset probabilities may be zero: the convention \\(0\\log(0/q_i)=0\\) reflects the limiting value of that expression. If \\(p_i=0\\) while \\(q_i&gt;0\\), the asset pays zero in that state. Its expected log return under a model assigning positive probability to that state is \\(-\\infty\\); the corresponding reverse divergence is \\(+\\infty\\). In independent repetitions under the market model, such a state is eventually encountered with probability one, and reinvested wealth then stays at zero. The finite-log-mean assumption for the displayed market strong law does not apply in this case.\nFor general density models, positive mass under the numerator outside the denominator’s support gives infinite divergence. Finite subtraction identities require suitable support and integrability assumptions; one must not subtract two infinities.\n\n\n\nSource: Jan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapters 1–3. Continue to utility and risk aversion to see how an investor’s chosen payoff can differ from the belief-matching investment.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Relative entropy"
+    ]
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "About Jan Vecer",
     "section": "",
-    "text": "About this site"
+    "text": "The profile page has moved to Jan Vecer. For the research project, visit Likelihood Finance."
+  },
+  {
+    "objectID": "index.html#what-does-a-likelihood-ratio-tell-us",
+    "href": "index.html#what-does-a-likelihood-ratio-tell-us",
+    "title": "Jan Vecer · Likelihood Finance",
+    "section": "What does a likelihood ratio tell us?",
+    "text": "What does a likelihood ratio tell us?\nA ratio above one favors one probability model over another. Its logarithm measures the strength of that evidence. Average this log ratio under the first model, and you have relative entropy.\nBecause a normalized price is a likelihood ratio, the same number measures expected log performance. Here the expectation is under the asset measure \\(\\mathbb P^X\\).\nUnderstand relative entropy, one example at a time →"
+  },
+  {
+    "objectID": "index.html#one-framework.-different-points-of-entry.",
+    "href": "index.html#one-framework.-different-points-of-entry.",
+    "title": "Jan Vecer · Likelihood Finance",
+    "section": "One framework. Different points of entry.",
+    "text": "One framework. Different points of entry.\nRead the essentials, move the probabilities, or follow a model from its distribution to its price process."
+  },
+  {
+    "objectID": "index.html#two-perspectives-on-the-same-market.",
+    "href": "index.html#two-perspectives-on-the-same-market.",
+    "title": "Jan Vecer · Likelihood Finance",
+    "section": "Two perspectives on the same market.",
+    "text": "Two perspectives on the same market."
+  },
+  {
+    "objectID": "index.html#from-the-framework-to-the-literature.",
+    "href": "index.html#from-the-framework-to-the-literature.",
+    "title": "Jan Vecer · Likelihood Finance",
+    "section": "From the framework to the literature.",
+    "text": "From the framework to the literature.\nPublished articles connected to the ideas on this site.\nMore research & contact →"
+  },
+  {
+    "objectID": "index.html#one-bet-is-enough-to-begin.",
+    "href": "index.html#one-bet-is-enough-to-begin.",
+    "title": "Jan Vecer · Likelihood Finance",
+    "section": "One bet is enough to begin.",
+    "text": "One bet is enough to begin."
+  },
+  {
+    "objectID": "jan-vecer.html",
+    "href": "jan-vecer.html",
+    "title": "Jan Vecer",
+    "section": "",
+    "text": "I teach and conduct research in quantitative finance and statistics at Charles University in Prague. I am also a Visiting Professor at the Frankfurt School of Finance & Management.\nMy work connects financial prices, probability models, and portfolio choice. The Likelihood Finance project develops this connection through concise explanations, interactive models, and links to the research behind them."
+  },
+  {
+    "objectID": "jan-vecer.html#research",
+    "href": "jan-vecer.html#research",
+    "title": "Jan Vecer",
+    "section": "Research",
+    "text": "Research\nMy research interests include portfolio theory, derivative pricing and hedging, stochastic processes, and prediction markets. A recurring question is what becomes simpler when a price is read as a likelihood ratio and an investment position as a probability distribution over future outcomes.\nThe interactive guide begins with the binomial model. It then follows the same structure through richer distributions, utility and risk aversion, mean–variance approximation, and option-implied measures.\nSelected articles on this site provide entry points into the published work. Further research and professional profiles:\n\nGoogle Scholar ORCID Web of Science / Publons Scopus LinkedIn"
+  },
+  {
+    "objectID": "jan-vecer.html#books",
+    "href": "jan-vecer.html#books",
+    "title": "Jan Vecer",
+    "section": "Books",
+    "text": "Books\nPrinciples of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, forthcoming from Chapman & Hall/CRC, develops portfolio selection through the correspondence between normalized payoffs and probability measures.\nStochastic Finance: A Numeraire Approach, CRC Press, 2011, presents derivative valuation and hedging through relative prices and changes of numeraire."
+  },
+  {
+    "objectID": "jan-vecer.html#academic-background",
+    "href": "jan-vecer.html#academic-background",
+    "title": "Jan Vecer",
+    "section": "Academic background",
+    "text": "Academic background\nI received my PhD in Mathematical Finance from Carnegie Mellon University in 2000. I was a faculty member in the Department of Statistics at Columbia University from 2001 to 2010, and Professor of Finance at the Frankfurt School of Finance & Management from 2010 to 2015, continuing there as a visiting professor since 2015.\nMy teaching has also included courses at the University of Michigan and Kyoto University. The publisher’s biography gives further background on my academic and applied work."
+  },
+  {
+    "objectID": "jan-vecer.html#contact",
+    "href": "jan-vecer.html#contact",
+    "title": "Jan Vecer",
+    "section": "Contact",
+    "text": "Contact\nJan Vecer\nDepartment of Probability and Mathematical Statistics\nFaculty of Mathematics and Physics, Charles University\nSokolovská 83, 186 75 Prague 8, Czech Republic\nJan.Vecer@mff.cuni.cz\nUniversity profile"
+  },
+  {
+    "objectID": "likelihood/index.html",
+    "href": "likelihood/index.html",
+    "title": "Likelihood Finance",
+    "section": "",
+    "text": "Start with a simple question: if you and the market disagree about the chances of an outcome, what investment expresses your view? We will answer it with one bet, work through a football example, and then introduce the mathematics that connects portfolios with information.\nThis is a web companion to Jan Vecer’s Principles of Portfolio Choice. No knowledge of information theory is needed to begin.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#choose-the-unit-in-which-we-measure-wealth",
+    "href": "likelihood/index.html#choose-the-unit-in-which-we-measure-wealth",
+    "title": "Likelihood Finance",
+    "section": "1. Choose the unit in which we measure wealth",
+    "text": "1. Choose the unit in which we measure wealth\nFix a strictly positive traded reference asset \\(Y\\), held as a self-financing, total-return investment: any distributions are reinvested, rather than paid out separately. An interest-bearing account is one example. Express every price and payoff in units of \\(Y\\): how many units of the reference asset could you exchange it for? In these units, the reference asset itself always has value\n\\[\nY(t)=1.\n\\]\nIf \\(Y\\) is a cash account, this means measuring performance relative to that account. We write \\(X(0)\\) for another asset’s price now and \\(X(T)\\) for its value at the final date. The ratio \\(X(T)/X(0)\\) is its gross return in these reference units.\nBegin with finitely many possible outcomes and a market that lets us buy a separate claim on each one. Each quoted state price is strictly positive; trading is frictionless and arbitrage-free. Later we will ask what changes when only a few bundled assets are available.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#one-claim",
+    "href": "likelihood/index.html#one-claim",
+    "title": "Likelihood Finance",
+    "section": "2. Understand one claim before building a portfolio",
+    "text": "2. Understand one claim before building a portfolio\nSuppose a football team can win, draw, or lose. A win claim pays one unit of \\(Y\\) if the team wins, and zero otherwise. Suppose it costs \\(0.50\\) units of \\(Y\\).\nSpending one unit buys two such claims. If the team wins, they pay two units. Thus the claim’s price is \\(q=0.5\\), while its payout per unit staked—the decimal odds—is\n\\[\n\\frac{1}{q}=2.\n\\]\nThese are two descriptions of the same contract: price per claim and payout per unit spent.\nBuying one claim on every outcome guarantees exactly one unit of \\(Y\\) at the final date. Holding one unit of the reference investment delivers the same thing. By the law of one price, the claims together cost one unit of \\(Y\\) now, so their prices sum to one.1 We denote this distribution of market state prices by \\(\\mathbb P^Y\\). It is a pricing distribution; it need not agree with an investor’s assessment of the chances.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#turn-your-probabilities-into-stakes",
+    "href": "likelihood/index.html#turn-your-probabilities-into-stakes",
+    "title": "Likelihood Finance",
+    "section": "3. Turn your probabilities into stakes",
+    "text": "3. Turn your probabilities into stakes\nSuppose you have \\(1{,}000\\) units to invest. You assign probabilities \\(0.6\\), \\(0.3\\), and \\(0.1\\) to Win, Draw, and Loss. Call your belief distribution \\(\\mathbb P^M\\).\nAllocate your budget in those proportions: \\(600\\) to Win, \\(300\\) to Draw, and \\(100\\) to Loss. To find the number of claims bought, divide each stake by the corresponding claim price.\n\n\n\n\nOutcome\nBelief\nPrice\nStake\nPayoff\n\n\n\n\nWin\n0.6\n0.5\n600\n1,200\n\n\nDraw\n0.3\n0.3\n300\n1,000\n\n\nLoss\n0.1\n0.2\n100\n500\n\n\n\n\nIf Win occurs, only the win claims pay, so your final wealth is \\(1{,}200\\). If Draw occurs, it is \\(1{,}000\\); if Loss occurs, it is \\(500\\). The three final wealth values are alternatives, not amounts to add together.\nWrite \\(M\\) for this investment. In outcome \\(\\omega\\), its stake is \\(M(0)\\mathbb P^M(\\omega)\\). Dividing by the price per claim gives\n\\[\nM(T,\\omega)\n=\\frac{M(0)\\mathbb P^M(\\omega)}{\\mathbb P^Y(\\omega)}.\n\\]\nConsequently,\n\\[\n\\frac{M(T,\\omega)}{M(0)}\n=\\frac{\\mathbb P^M(\\omega)}{\\mathbb P^Y(\\omega)}.\n\\]\nThis ratio of probabilities is a likelihood ratio. The win return is \\(0.6/0.5=1.2\\): your model puts more weight on Win than the market does, and your position pays more if Win occurs. Nothing has yet been optimized; we have simply translated probabilities into an investment.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#run-the-construction-backwards",
+    "href": "likelihood/index.html#run-the-construction-backwards",
+    "title": "Likelihood Finance",
+    "section": "4. Run the construction backwards",
+    "text": "4. Run the construction backwards\nA payoff can also be translated into a probability distribution. Suppose a different investment \\(V\\) costs \\(1{,}000\\) and pays \\((800,1200,1200)\\) in the same three outcomes. Its price is consistent with the market weights because\n\\[\n\\begin{aligned}\n&0.5(800)+0.3(1200)\\\\\n&\\quad+0.2(1200)=1000.\n\\end{aligned}\n\\]\nDivide its payoffs by its cost to obtain the returns \\((0.8,1.2,1.2)\\). Multiply those returns by the market probabilities:\n\\[\n\\mathbb P^V=(0.4,0.36,0.24).\n\\]\nThe entries sum to one. This is the distribution implied by the payoff, whether or not its owner consciously selected those probabilities. In general,\n\\[\n\\mathbb P^V(\\omega)\n=\\frac{V(T,\\omega)}{V(0)}\\mathbb P^Y(\\omega).\n\\]\nThe budget fixes the size of the investment; this distribution describes how its payoff is spread across outcomes. We can move in either direction: probabilities determine a payoff, and a fairly priced nonnegative payoff determines probabilities.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#measure-the-football-investments-performance",
+    "href": "likelihood/index.html#measure-the-football-investments-performance",
+    "title": "Likelihood Finance",
+    "section": "5. Measure the football investment’s performance",
+    "text": "5. Measure the football investment’s performance\nThe football investment \\(M\\) has wealth multipliers \\(1.2\\), \\(1\\), and \\(0.5\\). A multiplier of \\(1.2\\) means a 20% gain; \\(0.5\\) means a 50% loss. Their log returns are\n\\[\n\\begin{aligned}\n\\log(1.2)&\\approx0.1823,\\\\\n\\log(1)&=0,\\\\\n\\log(0.5)&\\approx-0.6931.\n\\end{aligned}\n\\]\nWhy logarithms? Successive wealth multipliers multiply, while their logarithms add. In repeated independent investments, average log performance approaches expected log performance, provided the log return is integrable. This makes it a measure of long-run compounded growth. We derive that connection on the relative-entropy page.\nAn expectation must specify which probabilities do the averaging. Start with your beliefs, \\((0.6,0.3,0.1)\\):\n\\[\n\\begin{aligned}\n&\\mathbb E^M\\!\\left[\\log\\frac{M(T)}{M(0)}\\right]\\\\\n&=0.6\\log(1.2)+0.3\\log(1)\\\\\n&\\quad+0.1\\log(0.5)\\\\\n&\\approx0.0401.\n\\end{aligned}\n\\]\nNow use the market weights, \\((0.5,0.3,0.2)\\), to average the same three log returns:\n\\[\n\\begin{aligned}\n&\\mathbb E^Y\\!\\left[\\log\\frac{M(T)}{M(0)}\\right]\\\\\n&=0.5\\log(1.2)+0.3\\log(1)\\\\\n&\\quad+0.2\\log(0.5)\\\\\n&\\approx-0.0475.\n\\end{aligned}\n\\]\nThe market assigns twice as much weight to the loss. The investment therefore has positive expected log performance under your beliefs and negative expected log performance under the market weights. Neither average guarantees a particular outcome.\n\nThose averages have an information interpretation\nRecall that each wealth multiplier is a ratio of probabilities. For two distributions \\(p\\) and \\(q\\) on the same outcomes, define\n\\[\nD(p\\Vert q)\n=\\sum_i p_i\\log\\frac{p_i}{q_i}.\n\\]\nFor each outcome, divide its two probabilities, take the logarithm, and then average using the first distribution, \\(p\\). This is relative entropy, also called Kullback–Leibler divergence. Natural logarithms give units called nats.\nOur first calculation is exactly this definition:\n\\[\nD(\\mathbb P^M\\Vert\\mathbb P^Y)\\approx0.0401.\n\\]\nFor the market average, reverse the order of the distributions and change the sign:\n\\[\n-D(\\mathbb P^Y\\Vert\\mathbb P^M)\\approx-0.0475.\n\\]\nHere “information” means average log evidence distinguishing two models. A likelihood ratio above one favors the numerator model; a ratio below one favors the denominator. Relative entropy averages that log evidence under the numerator model. It is nonnegative and vanishes only when the distributions agree. The relative-entropy page explains why and lets you examine each contribution.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#explore-the-example-then-generalize",
+    "href": "likelihood/index.html#explore-the-example-then-generalize",
+    "title": "Likelihood Finance",
+    "section": "6. Explore the example, then generalize",
+    "text": "6. Explore the example, then generalize\nTry changing the beliefs first, then the prices. Watch how stake ÷ price = final wealth in that outcome changes, along with the two expected log returns.\n\n\n\n\nInteractive figure. It needs JavaScript.\n\n\n\nFigure 1: The defaults reproduce Chapter 1: beliefs \\((0.6,0.3,0.1)\\), market prices \\((0.5,0.3,0.2)\\), and initial wealth \\(1{,}000\\).\n\n\n\n\nEvery asset has the same information identity\nAny fairly priced nonnegative asset \\(X\\) of positive cost has its own implied measure \\(\\mathbb P^X\\), just as \\(V\\) does in Section 4. The same identity holds with \\(X\\) in place of \\(M\\):\n\\[\n\\begin{gathered}\n\\mathbb E^X\\!\\left[\\log\\frac{X(T)}{X(0)}\\right]\\\\\n=\\mathbb E^X\\!\\left[\\log\\frac{d\\mathbb P^X}{d\\mathbb P^Y}\\right]\\\\\n=D(\\mathbb P^X\\Vert\\mathbb P^Y).\n\\end{gathered}\n\\]\nIn our finite example, \\(d\\mathbb P^X/d\\mathbb P^Y\\) is simply the state-by-state probability ratio. The expectation is under \\(\\mathbb P^X\\), the same measure as the numerator. This measure describes the asset’s payoff; it need not equal your personal belief \\(\\mathbb P^M\\). The football investment matched those beliefs because we deliberately constructed it that way.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#what-if-your-payoff-expresses-a-different-model",
+    "href": "likelihood/index.html#what-if-your-payoff-expresses-a-different-model",
+    "title": "Likelihood Finance",
+    "section": "7. What if your payoff expresses a different model?",
+    "text": "7. What if your payoff expresses a different model?\nYour beliefs can stay at \\(\\mathbb P^M\\) while you choose a payoff with implied distribution \\(\\mathbb P^V\\). Let \\(G(T)=V(T)/V(0)\\) be its gross return. The expected log return now decomposes as\n\\[\n\\begin{aligned}\n\\mathbb E^M[\\log G(T)]\n&=D(\\mathbb P^M\\Vert\\mathbb P^Y)\\\\\n&\\quad-D(\\mathbb P^M\\Vert\\mathbb P^V).\n\\end{aligned}\n\\]\nRead it in two steps. The first term is the information in your beliefs relative to market prices. The second is the mismatch between your beliefs and the distribution your payoff implements. Subtracting it gives your expected log performance.\nBecause relative entropy is nonnegative, that mismatch cannot improve expected log growth under your beliefs. Choosing \\(\\mathbb P^V=\\mathbb P^M\\) removes it. This is why the original investment \\(M\\) is log-optimal when all state claims are available: the optimality follows from the construction.\nNow choose a payoff below. The figure calculates its implied probabilities and shows the two terms. The likelihood-ratio button returns to the payoff that expresses your beliefs exactly.\n\n\n\n\nInteractive figure. It needs JavaScript.\n\n\n\nFigure 2: Both figures share the same beliefs and prices. The information bar separates the available information from the mismatch of the chosen payoff.\n\n\n\n\nThe colors now have four distinct roles: market \\(\\mathbb P^Y\\), belief \\(\\mathbb P^M\\), asset \\(\\mathbb P^X\\), chosen payoff \\(\\mathbb P^V\\). Lost growth marks the mismatch penalty.\n\n\n\n\n\n\n\nNoteSupport, zero payoffs, and attainability\n\n\n\n\n\nBeliefs and payoffs may contain zeros. If the investor assigns positive probability to a zero-payoff state, expected log growth is \\(-\\infty\\), and the mismatch is \\(+\\infty\\). The finite-market identity remains valid in this extended sense.\nFor general scenario spaces, use densities and require \\(\\mathbb P^M\\ll\\mathbb P^Y\\) and \\(D(\\mathbb P^M\\Vert\\mathbb P^Y)&lt;\\infty\\) for the displayed subtraction. This avoids an undefined difference of infinities.\nThe payoff-to-measure map requires only fair pricing and a nonnegative payoff of positive finite cost. Implementing every desired measure additionally requires a rich enough asset menu. The trinomial page shows what happens when that menu is incomplete; the portfolio laboratory finds the closest attainable distribution.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#from-distributions-to-price-processes",
+    "href": "likelihood/index.html#from-distributions-to-price-processes",
+    "title": "Likelihood Finance",
+    "section": "From distributions to price processes",
+    "text": "From distributions to price processes\nA traded asset has a measure \\(\\mathbb P^X\\), which need not equal any investor’s beliefs. Its relative price is the likelihood ratio \\(\\mathbb P^X/\\mathbb P^Y\\) on the information observed so far. Classical martingale pricing and this construction are compatible; they start from different primitives.\nThe likelihood and dynamics page states the fundamental theorem of asset pricing and compares the two directions. The linear information flow page gives the common structure behind all six families.\n\n\nBinomial\nTwo outcomes per trial. Recover both measures from the two martingale conditions.\n\n\nNegative binomial\nThe same trials, counted until a fixed number of failures. A new clock, the same likelihood evidence.\n\n\nNormal\nContinuous information. Derive geometric Brownian motion directly from two normal densities.\n\n\nPoisson\nInformation arrives as countable events. Compare event rates and generate jump paths.\n\n\nGamma\nPositive increments of many sizes. Keep the shape clock fixed and compare rates.\n\n\nInverse Gaussian\nA first-passage interpretation and an alternative pattern of positive jump activity.\n\n\nEach family has explicit prices and linear expected information accumulation. The continuous-model laboratories let you choose a bounded KL rate and an event or shape parameter, then generate paths under both measures. The displayed ranges keep the examples readable; they are illustrative calibrations.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#choose-a-portfolio",
+    "href": "likelihood/index.html#choose-a-portfolio",
+    "title": "Likelihood Finance",
+    "section": "Choose a portfolio",
+    "text": "Choose a portfolio\n\nTrinomial and incomplete markets: see which pricing measures fit the same dynamics, and which beliefs a limited asset menu can express.\nUtility and fractional Kelly: compare normalized geometric tempering with a cash reserve, using three states to see the difference.\nMean–variance approximation: connect quadratic optimization to likelihood ratios and distinguish the ordinary Taylor and Pearson objectives.\nPortfolio laboratory: enter asset distributions, mix them, and solve exact KL or quadratic portfolio problems.\nOptions as densities: convert calls, puts, digitals, and straddles into their implied scenario weights.\nDiscrete hedging: rebalance a normal-model option hedge and compare the resulting payoffs and densities.\n\n\n\n\n\n\n\nNoteA further connection: statistical testing\n\n\n\n\n\nThe market measure \\(\\mathbb P^Y\\) can serve as a null model, and an asset or portfolio measure as an alternative. A fairly priced, normalized, nonnegative payoff is an e-value: its expectation under the null is one. Consistent likelihood ratios through time form a nonnegative martingale. Ville’s inequality then controls the chance, under the null, of ever crossing a chosen evidence threshold. Explore it in the binomial model.\n\n\n\nKelly (1956) connected information rate and capital growth; Cover and Thomas give the finite horse-race identity. Geman, El Karoui, and Rochet developed the change-of-numeraire relation between traded assets and probability measures. This site uses these connections as a common language for pricing and portfolio choice.\nThe book continues with hedging as density approximation in Chapter 6, introduced here through discrete hedging, and learning and Bayesian portfolios in Chapter 7. The learning chapter connects mixture portfolios with Bayesian updating: the changing wealth shares are posterior model weights. That part of the web companion will follow later.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#reading",
+    "href": "likelihood/index.html#reading",
+    "title": "Likelihood Finance",
+    "section": "Reading",
+    "text": "Reading\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapters 1–7. CRC Press. Book details.\nJ. L. Kelly, Jr. (1956). A new interpretation of information rate. Bell System Technical Journal 35(4), 917–926.\nT. M. Cover and J. A. Thomas (2006). Elements of Information Theory, 2nd ed., Chapter 6. Wiley.\nH. Geman, N. El Karoui, and J.-C. Rochet (1995). Changes of numeraire, changes of probability measure and pricing of options. Journal of Applied Probability 32(2), 443–458.\nA. Ramdas, P. Grünwald, V. Vovk and G. Shafer (2023). Game-Theoretic Statistics and Safe Anytime-Valid Inference. Statistical Science.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/index.html#footnotes",
+    "href": "likelihood/index.html#footnotes",
+    "title": "Likelihood Finance",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe payoff unit matters. Ordinary state claims paying one unit of currency at \\(T\\) have spot-currency prices that sum to the price of a zero-coupon bond maturing at \\(T\\). Our claims instead pay one unit of the reference investment. Interest and reinvestment are already included in that investment; setting its value to one in its own units does not assume zero interest rates.↩︎",
+    "crumbs": [
+      "Likelihood Finance",
+      "Start here",
+      "Likelihood Finance"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html",
+    "href": "likelihood/dynamics.html",
+    "title": "Two ways to build a market",
+    "section": "",
+    "text": "The classical approach starts with asset prices and asks which probability measure makes their discounted evolution a martingale. The likelihood approach can start with the measures and obtain the price moves from their ratios. The mathematical connection is exact. What changes is the choice of inputs.\nAll prices below are in units of a strictly positive reference asset \\(Y\\). Thus \\(Y\\) itself has constant value one.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html#start-with-the-dynamics",
+    "href": "likelihood/dynamics.html#start-with-the-dynamics",
+    "title": "Two ways to build a market",
+    "section": "Start with the dynamics",
+    "text": "Start with the dynamics\nSpecify a finite set of possible states, a finite trading horizon, and the prices and payoffs of the traded assets. Assume frictionless trading, unrestricted borrowing and short selling, no intermediate dividends, and that every state is possible. An arbitrage is a self-financing strategy with zero initial cost, nonnegative terminal payoff in every state, and a positive payoff in at least one state.\nThe fundamental theorem of asset pricing, in this finite, discrete setting, says:\n\n\n\n\n\n\nNoteExistence: no arbitrage\n\n\n\nThere is no arbitrage if and only if there exists a probability measure \\(\\mathbb P^Y\\), positive on every possible state, under which every traded price in units of \\(Y\\) is a martingale.\n\n\nFor a one-period asset with gross returns \\(R_i\\) this gives two equations:\n\\[\n\\sum_i q_i=1,\n\\qquad\n\\sum_i q_i R_i=1,\n\\]\nwhere \\(q_i=\\mathbb P^Y(\\omega_i)&gt;0\\). Over several periods the pricing equation becomes conditional:\n\\[\n\\mathbb E^Y[X(t+1)\\mid\\mathcal F_t]=X(t).\n\\]\nThese equations identify a pricing measure when their solution is unique. Otherwise, they identify a family of admissible measures. The investor’s subjective probabilities \\(\\mathbb P^M\\) need not be the pricing probabilities.\n\n\n\n\n\n\nNoteUniqueness: completeness\n\n\n\nIn the same finite, arbitrage-free setting, the market is complete if and only if its equivalent martingale measure is unique. Completeness means that trading the available assets can replicate every terminal payoff.\n\n\nNo arbitrage ensures that a consistent pricing rule exists. Completeness is the additional property that makes every contingent payoff replicable and its price unique. Portfolio constraints can further restrict what an investor can implement.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html#now-read-the-same-market-through-likelihoods",
+    "href": "likelihood/dynamics.html#now-read-the-same-market-through-likelihoods",
+    "title": "Two ways to build a market",
+    "section": "Now read the same market through likelihoods",
+    "text": "Now read the same market through likelihoods\nFix a pricing measure \\(\\mathbb P^Y\\) and a strictly positive traded asset \\(X\\). At the terminal date define\n\\[\n\\mathbb P^X(\\omega)\n=\\frac{X(T,\\omega)}{X(0)}\\,\\mathbb P^Y(\\omega).\n\\]\nThe martingale pricing equation says exactly that these weights sum to one. Rearranging gives\n\\[\n\\frac{X(T,\\omega)}{X(0)}\n=\\frac{\\mathbb P^X(\\omega)}{\\mathbb P^Y(\\omega)}.\n\\]\nConversely, specify two positive probability distributions. Their ratio defines a unit-cost return whose expectation under \\(\\mathbb P^Y\\) is one. For a process, use their consistent restrictions to the information available at each date:\n\\[\n\\frac{X(t)}{X(0)}\n=\\left.\\frac{d\\mathbb P^X}{d\\mathbb P^Y}\\right|_{\\mathcal F_t}.\n\\]\nThe conditional likelihood ratio is a \\(\\mathbb P^Y\\)-martingale. Positive prices also permit the reverse direction:\n\\[\n\\frac{X(0)}{X(t)}\n=\\left.\\frac{d\\mathbb P^Y}{d\\mathbb P^X}\\right|_{\\mathcal F_t},\n\\]\nwhich is a martingale under \\(\\mathbb P^X\\). In financial terms, the price of \\(Y\\) in units of \\(X\\) is fair under the \\(X\\)-numeraire measure, just as the price of \\(X\\) in units of \\(Y\\) is fair under the \\(Y\\)-numeraire measure.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html#two-states-identify-the-measure",
+    "href": "likelihood/dynamics.html#two-states-identify-the-measure",
+    "title": "Two ways to build a market",
+    "section": "Two states identify the measure",
+    "text": "Two states identify the measure\nFor the nondegenerate binomial model, assume \\(u&gt;1&gt;d&gt;0\\). The pricing equation is\n\\[\nqu+(1-q)d=1.\n\\]\nThere is a unique solution:\n\\[\nq=\\frac{1-d}{u-d},\n\\qquad p=uq.\n\\]\nStarting from \\(p\\) and \\(q\\) instead recovers the same moves:\n\\[\nu=\\frac pq,\n\\qquad d=\\frac{1-p}{1-q}.\n\\]\nWith two states and two independent traded payoffs, the stock and the reference asset span every payoff. This is why the pricing measure is unique. If both returns equal one, that independence is lost; the market cannot distinguish the two states through these assets.\nExplore both directions in the binomial model →",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html#three-states-reveal-what-is-missing",
+    "href": "likelihood/dynamics.html#three-states-reveal-what-is-missing",
+    "title": "Two ways to build a market",
+    "section": "Three states reveal what is missing",
+    "text": "Three states reveal what is missing\nAdd a middle state while keeping only the stock and the reference asset. For the book’s returns\n\\[\nR=\\left(\\frac32,1,\\frac12\\right),\n\\]\nall the following measures price the same stock:\n\\[\n\\mathbb P^Y=(t,1-2t,t),\n\\qquad 0&lt;t&lt;\\frac12.\n\\]\nFor each such choice, the associated asset measure is\n\\[\n\\mathbb P^X\n=\\left(\\frac{3t}{2},1-2t,\\frac t2\\right).\n\\]\nThe return vector alone does not select \\(t\\). Another traded claim, a calibration target, or an explicit modeling criterion can supply additional information.\nChoosing the measures directly makes the pricing identities automatic. It does not make the measures observable or make missing payoffs tradable. A model still needs a way to select its inputs, and portfolio choice still takes place within the span of the available assets.\nExplore the pricing family and the attainable portfolios →",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/dynamics.html#where-this-leads",
+    "href": "likelihood/dynamics.html#where-this-leads",
+    "title": "Two ways to build a market",
+    "section": "Where this leads",
+    "text": "Where this leads\nThe binomial model can be built either from repeated up/down moves or from two binomial laws whose likelihood ratio produces those moves. Replacing the binomial count by a negative-binomial count gives a new price model through the same construction.\nContinue to the negative binomial model →\n\n\n\n\n\n\nTipRead alongside the book\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapters 1 and 3. Chapter 1 develops the binomial and trinomial inversion; Chapter 3 separates no arbitrage, incomplete markets, and portfolio implementation.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Two ways to build a market"
+    ]
+  },
+  {
+    "objectID": "likelihood/binomial.html",
+    "href": "likelihood/binomial.html",
+    "title": "The binomial model",
+    "section": "",
+    "text": "Each period has two scenarios, success and failure. The market prices success at \\(q=\\mathbb P^Y(\\text{success})\\). A traded asset \\(X\\) carries its own measure, with \\(p=\\mathbb P^X(\\text{success})\\). The investor’s model \\(\\mathbb P^M\\) is a third object: the asset \\(X\\) is her log-optimal holding only when \\(\\mathbb P^M=\\mathbb P^X\\). Every identity on the framework page has an explicit two-state form, and repeating the period turns them into a price process. All prices and returns below are in units of the reference asset \\(Y\\).\nThis is the first worked example of likelihoods and price dynamics: the two approaches describe the same market, but start with different primitives.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/binomial.html#two-probabilities-two-multipliers",
+    "href": "likelihood/binomial.html#two-probabilities-two-multipliers",
+    "title": "The binomial model",
+    "section": "Two probabilities, two multipliers",
+    "text": "Two probabilities, two multipliers\nTake \\(p,q\\in(0,1)\\). Likelihood-ratio pricing, \\(X(1)/X(0)=\\mathbb P^X/\\mathbb P^Y\\), gives the success and failure multipliers directly (up and down, respectively, when \\(p&gt;q\\)):\n\\[\n\\begin{aligned}\nu&=\\frac{p}{q},\\\\\nd&=\\frac{1-p}{1-q}.\n\\end{aligned}\n\\]\nThe corresponding asset return is\n\\[\n\\frac{X(1)}{X(0)}=\n\\begin{cases} u & \\text{success},\\\\ d & \\text{failure}.\\end{cases}\n\\]\nThere are two martingale conditions, one for each choice of numeraire. Under the reference-asset measure \\(\\mathbb P^Y\\), the normalized price of \\(X\\) has expectation one:\n\\[\n\\begin{aligned}\nq\\,u+(1-q)\\,d\n&=p+(1-p)\\\\\n&=1.\n\\end{aligned}\n\\]\nUnder the asset measure \\(\\mathbb P^X\\), the normalized price of \\(Y\\) in units of \\(X\\) is the reciprocal return. It also has expectation one:\n\\[\n\\begin{aligned}\np\\,\\frac1u+(1-p)\\,\\frac1d\n&=q+(1-q)\\\\\n&=1.\n\\end{aligned}\n\\]\nThe first condition identifies \\(q\\) from nonconstant price multipliers; the second identifies \\(p\\). Thus \\(p\\) is the probability associated with the asset numeraire, not an independently supplied forecast of the success frequency. The investor’s forecast is \\(p^M\\).\nThe classical one-period model runs the other way. It postulates \\(u\\) and \\(d\\) and derives the pricing probabilities from these martingale conditions. Solving them gives\n\\[\n\\begin{aligned}\nq&=\\frac{1-d}{u-d},\\\\\np&=\\frac{u(1-d)}{u-d}=u\\,q.\n\\end{aligned}\n\\]\nThe map \\((p,q)\\mapsto(u,d)\\) sends \\(\\{0&lt;q&lt;p&lt;1\\}\\) one-to-one onto \\(\\{0&lt;d&lt;1&lt;u\\}\\). Read backwards, the classical no-arbitrage condition \\(d&lt;1&lt;u\\) corresponds to two interior probabilities ordered so that success is the up move. With \\(p&lt;q\\), success is the down move and \\(0&lt;u&lt;1&lt;d\\). When \\(p=q\\), \\(u=d=1\\): the asset has the reference asset’s return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of \\(Y\\), under the frictionless borrowing and short-selling assumptions.\nWith two states, cash and a nonconstant asset span all payoffs, which is why these conditions identify the two measures uniquely. The trinomial model shows what changes when there are three states and only two traded assets.\n\n\n\n\nInteractive figure. It needs JavaScript.\n\n\n\nFigure 1: One period of the asset \\(X\\) in units of \\(Y\\). Start from the probabilities or from the multipliers; the other pair follows in the nondegenerate no-arbitrage region. Both numeraire martingale conditions appear below the diagram. Multipliers on the same side of 1, or one equal to 1 and the other different, imply arbitrage when both scenarios are possible. The figure distinguishes these cases from the fair constant return \\(u=d=1\\). Editing a probability in a later figure switches this figure to probability mode and explains the change.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/binomial.html#every-position-on-one-curve",
+    "href": "likelihood/binomial.html#every-position-on-one-curve",
+    "title": "The binomial model",
+    "section": "Every position on one curve",
+    "text": "Every position on one curve\nWrite \\(d(a\\Vert b)\\) for the relative entropy between Bernoulli laws with probabilities \\(a\\) and \\(b\\):\n\\[\n\\begin{aligned}\nd(a\\Vert b)\n&=a\\log\\frac ab\\\\\n&\\quad +(1-a)\\log\\frac{1-a}{1-b}.\n\\end{aligned}\n\\]\nThe usual conventions apply: a zero-probability term contributes zero, while positive probability divided by zero gives infinite divergence.\nLet the investor’s model be \\(\\mathbb P^M(\\text{success})=p^M\\). With two scenarios a nonnegative portfolio \\(V\\) of positive price is determined, up to scale, by \\(v=\\mathbb P^V(\\text{success})\\), the fraction of wealth spent on the success claim. Its expected log return under the investor’s model is\n\\[\n\\begin{aligned}\ng(v)\n&=p^M\\log\\frac{v}{q}\\\\\n&\\quad +(1-p^M)\\log\\frac{1-v}{1-q}.\n\\end{aligned}\n\\]\nThe information decomposition becomes\n\\[\ng(v)=d(p^M\\Vert q)-d(p^M\\Vert v).\n\\]\nThree points on the curve have names. At \\(v=q\\) the investor holds the reference asset and \\(g=0\\). At \\(v=p\\) she holds the asset \\(X\\). At \\(v=p^M\\) the curve peaks at \\(d(p^M\\Vert q)\\), and the shortfall of any other position is exactly \\(d(p^M\\Vert v)\\). Every portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.\nFor \\(\\gamma\\ge1\\), risk aversion moves the position from \\(p^M\\) back toward \\(q\\), in one of two ways. Fractional Kelly keeps a cash reserve:\n\\[\n\\begin{aligned}\nf&=1/\\gamma,\\\\\nv_f&=(1-f)\\,q+f\\,p^M.\n\\end{aligned}\n\\]\nCRRA utility instead tempers the measure. Set \\(\\alpha=1/\\gamma\\) and form the weights\n\\[\n\\begin{aligned}\nw_s&=(p^M)^\\alpha q^{1-\\alpha},\\\\\nw_f&=(1-p^M)^\\alpha(1-q)^{1-\\alpha}.\n\\end{aligned}\n\\]\nThe optimal success weight is\n\\[\nv_\\gamma=\\frac{w_s}{w_s+w_f}.\n\\]\nFor \\(0&lt;p^M&lt;1\\) both families sweep the same segment between \\(q\\) and \\(p^M\\), including cash as a limit as \\(\\gamma\\to\\infty\\). They generally traverse it at different rates: the same numerical \\(\\gamma\\) can give different positions, while a change of \\(\\gamma\\) can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set \\(\\mathbb P^M(\\text{success})=0\\) in the figure. For every finite \\(\\gamma\\), CRRA keeps that zero, while fractional Kelly with \\(\\gamma&gt;1\\) assigns positive weight through its cash reserve. The utility and risk-aversion page develops the general construction.\n\n\n\n\nInteractive figure. It needs JavaScript.\n\n\n\nFigure 2: Expected log return under \\(\\mathbb P^M\\) of every two-state position. The red segment is the mismatch divergence. The separate marker lanes below the curve keep all six positions identifiable even when they coincide; vertical leaders connect the lane markers to their positions on the curve. The ring and diamond denote fractional Kelly and CRRA at the chosen \\(\\gamma\\). The key reports each position and its growth numerically.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/binomial.html#many-periods",
+    "href": "likelihood/binomial.html#many-periods",
+    "title": "The binomial model",
+    "section": "Many periods",
+    "text": "Many periods\nRepeat the period independently and let \\(S(n)\\) count the successes after \\(n\\) periods. Likelihood-ratio pricing at time \\(n\\) gives\n\\[\n\\frac{X(n)}{X(0)}\n=\\Big(\\frac pq\\Big)^{S(n)}\n\\Big(\\frac{1-p}{1-q}\\Big)^{n-S(n)}.\n\\]\nEquivalently,\n\\[\n\\frac{X(n)}{X(0)}=u^{S(n)}d^{\\,n-S(n)}.\n\\]\nThe binomial coefficients in \\(\\mathbb P^X\\) and \\(\\mathbb P^Y\\) cancel. The price depends on the path only through the sufficient statistic \\(S(n)\\), and its logarithm is affine in it:\n\\[\n\\log\\frac{X(n)}{X(0)}=a\\,S(n)+b\\,n.\n\\]\nHere the coefficients are\n\\[\n\\begin{aligned}\na&=\\log(u/d),\\\\\nb&=\\log d.\n\\end{aligned}\n\\]\nWrite \\(D^{X,Y}(n)\\) for the divergence between the laws of \\(S(n)\\) under the two measures. Independence gives\n\\[\nD^{X,Y}(n)=n\\,d(p\\Vert q).\n\\]\nThis is linear information flow. The binomial tree is the first of the price models in Chapter 5, not a separate construction.\nUnder \\(\\mathbb P^Y\\) the price \\(X(t)/X(0)\\) is a nonnegative martingale with mean one. Ville’s inequality then gives, for every horizon \\(n\\),\n\\[\n\\mathbb P^Y\\Big(\\max_{t\\le n}\\frac{X(t)}{X(0)}\\ge\\frac1\\alpha\\Big)\\le\\alpha .\n\\]\nFor \\(0&lt;\\alpha&lt;1\\), the price path of \\(X\\) is therefore an anytime-valid test of the market’s model against the asset’s: one may stop the moment \\(X\\) has multiplied by \\(1/\\alpha\\), and the probability of ever crossing under \\(\\mathbb P^Y\\) is at most \\(\\alpha\\). If \\(p\\ne q\\), then under \\(\\mathbb P^X\\) the long-run log growth is the strictly positive one-period divergence, so the threshold is eventually crossed with probability one over an unbounded horizon. If \\(p=q\\), wealth stays constant and no such rejection occurs.\n\n\n\n\nInteractive figure. It needs JavaScript.\n\n\n\nFigure 3: Top: the laws of \\(S(n)\\) under the two measures, shown as filled green bars for \\(\\mathbb P^X\\) and blue outlines for \\(\\mathbb P^Y\\), followed by the log price as a function of \\(S(n)\\). The outlines remain visible when the laws coincide. Bottom: eight simulated paths under each measure, with the expected log price as dashed lines and the rejection threshold \\(\\log(1/\\alpha)\\). Changing \\(p\\) or \\(q\\) reuses the same random numbers, so the paths deform rather than redraw. Ville’s bound concerns the true crossing probability; the reported Monte Carlo fraction is an estimate and can fluctuate above the bound.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/binomial.html#references",
+    "href": "likelihood/binomial.html#references",
+    "title": "The binomial model",
+    "section": "References",
+    "text": "References\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapters 1–3 and 5. CRC Press.\nJ. Ville (1939). Étude critique de la notion de collectif. Gauthier-Villars.\nA. Ramdas, P. Grünwald, V. Vovk and G. Shafer (2023). Game-Theoretic Statistics and Safe Anytime-Valid Inference. Statistical Science.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html",
+    "href": "likelihood/negative-binomial.html",
+    "title": "The negative binomial model",
+    "section": "",
+    "text": "In the binomial model, time counts trials. Here it counts completed failure blocks: observe successive Bernoulli trials and stop a block at its first failure. Count the successes in each block, then add them.\nThe information driver changes, while the rule stays the same: two probability laws determine a price through their likelihood ratio.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html#a-different-count",
+    "href": "likelihood/negative-binomial.html#a-different-count",
+    "title": "The negative binomial model",
+    "section": "A different count",
+    "text": "A different count\nLet \\(G(j)\\) be the number of successes before the failure ending block \\(j\\). The blocks are independent. Under \\(\\mathbb P^X\\), each trial succeeds with probability \\(p\\in(0,1)\\); under \\(\\mathbb P^Y\\), it succeeds with probability \\(q\\in(0,1)\\).\nAfter \\(n\\) completed blocks,\n\\[\nZ(n)=G(1)+\\cdots+G(n).\n\\]\nThis counts successes before the \\(n\\)-th failure. The book uses the convention\n\\[\n\\begin{aligned}\n&\\mathbb P^X(Z(n)=k)\\\\\n&\\quad=\\binom{n+k-1}{k}(1-p)^n p^k,\n\\end{aligned}\n\\]\nfor \\(k=0,1,\\ldots\\), and the same formula with \\(q\\) under \\(\\mathbb P^Y\\). We write these laws as \\(\\mathrm{NB}(n,p)\\) and \\(\\mathrm{NB}(n,q)\\). Unlike the binomial count, \\(Z(n)\\) has no upper bound.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html#the-likelihood-ratio-is-the-price",
+    "href": "likelihood/negative-binomial.html#the-likelihood-ratio-is-the-price",
+    "title": "The negative binomial model",
+    "section": "The likelihood ratio is the price",
+    "text": "The likelihood ratio is the price\nThe combinatorial factor cancels between the two laws. Therefore\n\\[\n\\frac{X(n)}{X(0)}\n=\\left(\\frac pq\\right)^{Z(n)}\n\\left(\\frac{1-p}{1-q}\\right)^n.\n\\]\nThe logarithm is affine in the accumulated count and the number of completed blocks:\n\\[\n\\log\\frac{X(n)}{X(0)}=aZ(n)+bn,\n\\]\n\\[\na=\\log\\frac pq,\n\\qquad b=\\log\\frac{1-p}{1-q}.\n\\]\nOne block can contain any nonnegative number of successes. Its price multiplier is \\((p/q)^{G(j)}(1-p)/(1-q)\\), whose expectation under \\(\\mathbb P^Y\\) is one. Products over independent blocks therefore form a positive \\(\\mathbb P^Y\\)-martingale; their reciprocals form a \\(\\mathbb P^X\\)-martingale.\n\nThe interactive figure requires JavaScript. For \\(p=0.60\\), \\(q=0.40\\), the information per completed failure block is approximately \\(0.20273\\) nats, so after ten blocks the expected log return under \\(\\mathbb P^X\\) is approximately \\(2.02733\\).\n\nThe distributions are shown on the same success-count axis. Their probabilities are not renormalized when the chart truncates the infinite tail. The simulation displays the price itself, starting from \\(X(0)=1\\), and the logarithms of exactly the same six paths under each measure. Paths are sampled at completed blocks; the individual trials inside a block are not shown. The count-to-price figure can also switch to log price.\nThe horizontal dashed line in the price figure is \\(\\mathbb E^Y[X(n)/X(0)]=1\\). In the log figure the dashed lines show expected log prices. Exponentiating an expected log price does not give an expected price: rare large outcomes can keep the mean price at one even while most simulated market-measure paths decline. Extremely large prices are explicitly marked as off scale; the log figure retains their full range.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html#information-grows-linearly-in-block-time",
+    "href": "likelihood/negative-binomial.html#information-grows-linearly-in-block-time",
+    "title": "The negative binomial model",
+    "section": "Information grows linearly in block time",
+    "text": "Information grows linearly in block time\nLet \\(D(n;p\\Vert q)\\) denote the divergence from \\(\\mathrm{NB}(n,p)\\) to \\(\\mathrm{NB}(n,q)\\). Since \\(\\mathbb E^X[Z(n)]=np/(1-p)\\), expected log growth is\n\\[\n\\mathbb E^X\\left[\\log\\frac{X(n)}{X(0)}\\right]\n=D(n;p\\Vert q).\n\\]\nDefine information per failure block by\n\\[\nI(p,q)=\\frac{p}{1-p}\\log\\frac pq\n+\\log\\frac{1-p}{1-q}.\n\\]\nThen the entire horizon contributes exactly \\(nI(p,q)\\). This is linear information flow in the book’s clock. It is also the additivity of relative entropy across the independent geometric blocks; their sum \\(Z(n)\\) retains the likelihood ratio.\nUnder the pricing measure the direction reverses:\n\\[\n\\mathbb E^Y\\left[\\log\\frac{X(n)}{X(0)}\\right]\n=-nI(q,p).\n\\]\nWhen \\(p=q\\), both information rates are zero and the asset has the reference asset’s constant return.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html#the-binomial-connection-same-observations-same-likelihood",
+    "href": "likelihood/negative-binomial.html#the-binomial-connection-same-observations-same-likelihood",
+    "title": "The negative binomial model",
+    "section": "The binomial connection: same observations, same likelihood",
+    "text": "The binomial connection: same observations, same likelihood\nSuppose the realized data contain \\(k\\) successes and \\(n\\) failures. They could have come from an experiment with a fixed total of \\(k+n\\) trials, or from an experiment stopped at the \\(n\\)-th failure. For an unknown success probability \\(\\rho\\), both likelihoods are proportional to\n\\[\nL(\\rho)\\propto\\rho^k(1-\\rho)^n.\n\\]\nTheir proportionality factor depends on the sampling design and the observed counts, but not on \\(\\rho\\). Thus comparing \\(p\\) with \\(q\\) gives the same likelihood ratio in either experiment. This illustrates the likelihood principle: proportional likelihood functions carry the same likelihood-based evidence about the parameter.\nThe sampling distributions differ, so procedures that depend on unobserved outcomes, including conventional fixed-design p-values, can differ. The principle concerns the evidential content of the observed likelihood; it does not say that the two experiments have identical sampling properties.\nIn financial terms, evaluate the binomial wealth process at the trial when the \\(n\\)-th failure occurs. Its wealth agrees with the negative-binomial formula above. Here the negative-binomial index \\(n\\) counts failures, not total trials.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/negative-binomial.html#walds-identity-explains-the-change-of-clock",
+    "href": "likelihood/negative-binomial.html#walds-identity-explains-the-change-of-clock",
+    "title": "The negative binomial model",
+    "section": "Wald’s identity explains the change of clock",
+    "text": "Wald’s identity explains the change of clock\nLet \\(\\tau(n)=Z(n)+n\\) be the total number of trials needed for \\(n\\) failures. Under \\(\\mathbb P^X\\),\n\\[\n\\mathbb E^X[\\tau(n)]=\\frac{n}{1-p}.\n\\]\nThe same entropy can be written as\n\\[\nD_{\\mathrm{KL}}(\\mathrm{NB}(n,p)\\Vert\\mathrm{NB}(n,q))\n\\]\n\\[\n=\\frac{n}{1-p}\\,\nD_{\\mathrm{KL}}(\\mathrm{Bern}(p)\\Vert\\mathrm{Bern}(q)).\n\\]\nFor these bounded one-trial log-likelihood increments and the integrable stopping time \\(\\tau(n)\\), Wald’s identity says: expected accumulated information equals information per trial times the expected number of trials. There is no extra information created by the new clock.\n\n\n\n\n\n\nTipRead alongside the book\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 5, “Negative binomial family.” The likelihood-principle connection is discussed by D. V. Lindley and L. D. Phillips (1976), “Inference for a Bernoulli Process (A Bayesian View),” The American Statistician 30(3), 112–119. For the stopped-sum identity, see A. Wald (1947), Sequential Analysis.\n\n\nBack to the binomial model · Back to the framework",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "The negative binomial model"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html",
+    "href": "likelihood/poisson.html",
+    "title": "Poisson: events become price jumps",
+    "section": "",
+    "text": "In the normal model, the observation is a continuous return driver. Here it is an event count. The pricing measure and the asset measure attach different probabilities to the same sequence of arrivals; their likelihood ratio determines how the price responds to each arrival.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html#two-arrival-rates",
+    "href": "likelihood/poisson.html#two-arrival-rates",
+    "title": "Poisson: events become price jumps",
+    "section": "Two arrival rates",
+    "text": "Two arrival rates\nLet \\(N(t)\\) count events. Under measure \\(\\mathbb P^j\\), for \\(j\\in\\{X,Y\\}\\), use a Poisson process with intensity \\(\\lambda_j&gt;0\\):\n\\[\nN(t)\\sim\\operatorname{Poisson}(\\lambda_jt).\n\\]\nThe mass assigned to \\(n\\) events is\n\\[\nf_j(n,t)=e^{-\\lambda_jt}\\frac{(\\lambda_jt)^n}{n!}.\n\\]\nThe factorial and the common power of \\(t\\) cancel when the two masses are divided:\n\\[\n\\begin{aligned}\n\\frac{X(t)}{X(0)}\n&=\\left(\\frac{\\lambda_X}{\\lambda_Y}\\right)^{N(t)}\ne^{(\\lambda_Y-\\lambda_X)t},\\\\\n\\log\\frac{X(t)}{X(0)}&=aN(t)+bt,\n\\end{aligned}\n\\]\n\\[\na=\\log\\frac{\\lambda_X}{\\lambda_Y},\n\\qquad b=\\lambda_Y-\\lambda_X.\n\\]\nThis is again linear information flow. The count is sufficient for the likelihood ratio: with constant intensities, the precise arrival times carry no further likelihood information once the horizon and total count are known.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html#explore-arrival-frequency-and-price-response",
+    "href": "likelihood/poisson.html#explore-arrival-frequency-and-price-response",
+    "title": "Poisson: events become price jumps",
+    "section": "Explore arrival frequency and price response",
+    "text": "Explore arrival frequency and price response\nChoose a pricing intensity, an information rate and a jump direction. The figure solves for \\(\\lambda_X\\) from those choices. The intensity ratio, and hence the size of a price jump, is derived rather than chosen independently.\n\nThe interactive model requires JavaScript. Its default pricing intensity is \\(\\lambda_Y=3\\) and the information rate is \\(k=0.05\\) nats per time unit; the asset intensity is chosen on the downward-jump branch.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html#read-the-path-from-the-two-rates",
+    "href": "likelihood/poisson.html#read-the-path-from-the-two-rates",
+    "title": "Poisson: events become price jumps",
+    "section": "Read the path from the two rates",
+    "text": "Read the path from the two rates\nAt an arrival, \\(N\\) increases by one and the price is multiplied by\n\\[\n\\frac{X(t)}{X(t-)}=\\frac{\\lambda_X}{\\lambda_Y}.\n\\]\nBetween arrivals, log price changes at the deterministic rate \\(b=\\lambda_Y-\\lambda_X\\).\n\n\n\nRate comparison\nAt an event\nBetween events\n\n\n\n\n\\(\\lambda_X&gt;\\lambda_Y\\)\nPrice jumps up.\nPrice drifts down.\n\n\n\\(\\lambda_X&lt;\\lambda_Y\\)\nPrice jumps down.\nPrice drifts up.\n\n\n\\(\\lambda_X=\\lambda_Y\\)\nNo price response.\nPrice is constant.\n\n\n\nAn event that the asset measure regards as more likely than the pricing measure favors the asset measure, so its likelihood-ratio price rises. The drift compensates for this jump response and preserves the pricing-measure martingale identity.\nIf a local dynamics description is useful, the same process satisfies\n\\[\n\\begin{aligned}\n\\frac{dX(t)}{X(t-)}\n&=(r-1)\\{dN(t)-\\lambda_Ydt\\},\\\\\nr&=\\frac{\\lambda_X}{\\lambda_Y}.\n\\end{aligned}\n\\]\nUnder \\(\\mathbb P^Y\\), the expression in braces is a compensated Poisson increment. This equation is a consequence of the likelihood specification.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html#the-two-information-rates-need-not-match",
+    "href": "likelihood/poisson.html#the-two-information-rates-need-not-match",
+    "title": "Poisson: events become price jumps",
+    "section": "The two information rates need not match",
+    "text": "The two information rates need not match\nDefine \\(k_X\\) as the forward rate and \\(k_Y\\) as the reverse rate:\n\\[\n\\begin{aligned}\nk_X&=\\lambda_X\\log\\frac{\\lambda_X}{\\lambda_Y}\n+\\lambda_Y-\\lambda_X,\\\\\nk_Y&=\\lambda_Y\\log\\frac{\\lambda_Y}{\\lambda_X}\n+\\lambda_X-\\lambda_Y.\n\\end{aligned}\n\\]\nThen\n\\[\n\\begin{aligned}\nE^X\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]&=k_Xt,\\\\\nE^Y\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]&=-k_Yt.\n\\end{aligned}\n\\]\nBoth rates are nonnegative, and both vanish only when the intensities coincide. Unlike the normal example, the divergences are generally asymmetric. The widget controls \\(k_X\\) and displays the resulting \\(k_Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/poisson.html#exact-at-every-horizon",
+    "href": "likelihood/poisson.html#exact-at-every-horizon",
+    "title": "Poisson: events become price jumps",
+    "section": "Exact at every horizon",
+    "text": "Exact at every horizon\nIndependent counts add: Poisson laws with means \\(\\lambda_js\\) and \\(\\lambda_jt\\) sum to a Poisson law with mean \\(\\lambda_j(s+t)\\). The same model therefore works at daily, hourly or finer horizons. In the figure, exponential waiting times produce actual arrival times and the finite sequence of jumps, with the exact drift between them.\nContinue: the gamma model replaces a count of isolated events with accumulated positive activity, generated by infinitely many small jumps.\n\n\n\n\n\n\nNoteSource and conventions\n\n\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 5, “Poisson family (counting driver).” The price is measured in units of \\(Y\\). The asset measure \\(\\mathbb P^X\\) is a subjective investor model only when the investor chooses \\(\\mathbb P^M=\\mathbb P^X\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Poisson: events become price jumps"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html",
+    "href": "likelihood/inverse-gaussian.html",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "",
+    "text": "The inverse Gaussian family supplies a second nonnegative additive driver alongside the gamma model. Its increments have a continuous, right-skewed density, while its paths increase through infinitely many jumps.\nOne interpretation comes from first-passage times. Let a Brownian motion with positive drift \\(\\gamma\\) run until it first reaches height \\(\\delta t\\):\n\\[\n\\begin{aligned}\nB(s)&=W(s)+\\gamma s,\\\\\nI(t)&=\\inf\\{s\\ge0:B(s)\\ge\\delta t\\}.\n\\end{aligned}\n\\]\nAs the target height increases, the required waiting time forms an inverse Gaussian clock. Here \\(t\\) indexes the target level; \\(s\\) is the underlying Brownian clock. The likelihood model can be specified directly through the resulting distributions, without simulating that Brownian first-passage construction.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#fix-the-additive-scale-vary-the-tail-parameter",
+    "href": "likelihood/inverse-gaussian.html#fix-the-additive-scale-vary-the-tail-parameter",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "Fix the additive scale; vary the tail parameter",
+    "text": "Fix the additive scale; vary the tail parameter\nUse a common \\(\\delta&gt;0\\) and two positive parameters \\(\\gamma_X,\\gamma_Y\\):\n\\[\n\\begin{aligned}\nI(t)&\\sim\\operatorname{IG}(\\delta t,\\gamma_X)\n&&\\text{under }\\mathbb P^X,\\\\\nI(t)&\\sim\\operatorname{IG}(\\delta t,\\gamma_Y)\n&&\\text{under }\\mathbb P^Y.\n\\end{aligned}\n\\]\nIn this parameterization, for \\(z&gt;0\\),\n\\[\n\\begin{aligned}\nf_j(z,t)\n&=\\frac{\\delta t}{\\sqrt{2\\pi}}z^{-3/2}e^{\\delta\\gamma_jt}\\\\\n&\\quad\\times\\exp\\!\\left\\{\n-\\frac{\\delta^2t^2}{2z}\n-\\frac{\\gamma_j^2z}{2}\\right\\}.\n\\end{aligned}\n\\]\nThe moments help interpret the parameters:\n\\[\nE^j[I(t)]=\\frac{\\delta t}{\\gamma_j},\n\\qquad\n\\operatorname{Var}^j[I(t)]=\\frac{\\delta t}{\\gamma_j^3}.\n\\]\nIncreasing \\(\\gamma_j\\) reduces both the mean accumulation rate and its variance. Increasing the common scale \\(\\delta\\) increases both linearly.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#a-complicated-density-a-simple-ratio",
+    "href": "likelihood/inverse-gaussian.html#a-complicated-density-a-simple-ratio",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "A complicated density, a simple ratio",
+    "text": "A complicated density, a simple ratio\nThe common prefactor and the term involving \\(1/z\\) cancel in the ratio. Only an affine expression remains:\n\\[\n\\begin{aligned}\n\\log\\frac{X(t)}{X(0)}&=aI(t)+bt,\\\\\na&=-\\frac12(\\gamma_X^2-\\gamma_Y^2),\\\\\nb&=\\delta(\\gamma_X-\\gamma_Y).\n\\end{aligned}\n\\]\nThus\n\\[\n\\frac{X(t)}{X(0)}=\\exp\\{aI(t)+bt\\}.\n\\]\nThe common scale \\(\\delta\\) is what removes the nonlinear \\(1/I(t)\\) term. It is part of the model specification, not an accidental cancellation.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#explore-the-clock-and-its-price",
+    "href": "likelihood/inverse-gaussian.html#explore-the-clock-and-its-price",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "Explore the clock and its price",
+    "text": "Explore the clock and its price\nThe figure fixes \\(\\gamma_Y=2\\). Choose \\(\\delta\\), the information rate and a price-jump direction; the matching \\(\\gamma_X\\) follows from the KL formula. No drift or jump-size parameter is independently added after the densities have been selected.\n\nThe interactive model requires JavaScript. The default common scale is \\(\\delta=2\\), the pricing parameter is \\(\\gamma_Y=2\\) and the forward information rate is \\(k=0.05\\) nats per time unit.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#direction-and-information",
+    "href": "likelihood/inverse-gaussian.html#direction-and-information",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "Direction and information",
+    "text": "Direction and information\nAt a driver jump \\(\\Delta I(t)&gt;0\\), the price multiplier is \\(e^{a\\Delta I(t)}\\). If \\(\\gamma_X&gt;\\gamma_Y\\), then \\(a&lt;0\\): greater realized clock activity decreases the price. The deterministic component has \\(b&gt;0\\). Reversing the parameter ordering reverses both signs.\nThe two information rates have compact forms:\n\\[\n\\begin{aligned}\nk_X&=\\frac{\\delta}{2\\gamma_X}\n(\\gamma_X-\\gamma_Y)^2,\\\\\nk_Y&=\\frac{\\delta}{2\\gamma_Y}\n(\\gamma_X-\\gamma_Y)^2.\n\\end{aligned}\n\\]\nTherefore\n\\[\n\\begin{aligned}\nE^X\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]&=k_Xt,\\\\\nE^Y\\!\\left[\\log\\frac{X(t)}{X(0)}\\right]&=-k_Yt.\n\\end{aligned}\n\\]\nUnless the two laws coincide, the reverse-to-forward information-rate ratio is \\(k_Y/k_X=\\gamma_X/\\gamma_Y\\). Matching the forward rate to another family does not generally match the reverse rate or the path shape.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#what-the-grid-showsand-what-it-cannot",
+    "href": "likelihood/inverse-gaussian.html#what-the-grid-showsand-what-it-cannot",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "What the grid shows—and what it cannot",
+    "text": "What the grid shows—and what it cannot\nUnder \\(\\mathbb P^j\\), the jump intensity density is\n\\[\n\\nu_j(dz)=\\frac{\\delta}{\\sqrt{2\\pi}}\nz^{-3/2}e^{-\\gamma_j^2z/2}\\,dz.\n\\]\nThe \\(z^{-3/2}\\) singularity is stronger than the gamma model’s \\(z^{-1}\\) singularity. Both produce infinitely many small jumps and finite total accumulated jump size on bounded time intervals.\nIndependent increments preserve the family: scales add while \\(\\gamma_j\\) stays fixed. The widget samples the exact law \\(\\operatorname{IG}(\\delta\\Delta t,\\gamma_j)\\) at each grid interval. Its connecting segments visualize observed values and do not resolve the full infinite-activity path. Apparent smoothness at one plotting scale is not evidence of a diffusion.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/inverse-gaussian.html#one-construction-several-forms-of-uncertainty",
+    "href": "likelihood/inverse-gaussian.html#one-construction-several-forms-of-uncertainty",
+    "title": "Inverse Gaussian: a random clock",
+    "section": "One construction, several forms of uncertainty",
+    "text": "One construction, several forms of uncertainty\nNormal, Poisson, gamma and inverse Gaussian models all produce\n\\[\n\\log\\frac{X(t)}{X(0)}=aZ(t)+bt.\n\\]\nTheir differences lie in the additive observation \\(Z(t)\\) and in the two laws assigned to it. The likelihood ratio handles the price normalization in every case. Independent drivers can later be combined by multiplying likelihood ratios, so their log prices and divergences add at the level of the joint observation.\nContinue: return to linear information flow to compare the families, or to the framework to connect prices with portfolio choice.\n\n\n\n\n\n\nNoteSource and conventions\n\n\n\n\n\nJan Vecer, Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective, Chapter 5, “Inverse Gaussian family.” The book’s \\(\\operatorname{IG}(\\delta t,\\gamma)\\) convention corresponds to the usual mean–shape parameters \\(\\mu=\\delta t/\\gamma\\) and \\(\\lambda=(\\delta t)^2\\). Prices are in units of \\(Y\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Models",
+      "Inverse Gaussian: a random clock"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html",
+    "href": "likelihood/mean-variance.html",
+    "title": "Mean–variance & information",
+    "section": "",
+    "text": "Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. Likelihood finance describes its whole payoff through an implied distribution. The connection becomes precise once we specify which measure supplies the quadratic penalty.\nUse \\(G=V(T)/V(0)\\) for a gross payoff and \\(Z=G-1\\) for its excess return, all in units of \\(Y\\). Fair pricing means \\(\\mathbb E^Y[G]=1\\), hence \\(\\mathbb E^Y[Z]=0\\).",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#start-with-classical-meanvariance",
+    "href": "likelihood/mean-variance.html#start-with-classical-meanvariance",
+    "title": "Mean–variance & information",
+    "section": "Start with classical mean–variance",
+    "text": "Start with classical mean–variance\nLet \\(r\\) be the vector of asset excess returns. With a reference asset available, risky weights \\(w\\) produce \\(Z=w^\\top r\\); the remaining budget goes into the reference asset. Define\n\\[\n\\mu=\\mathbb E^M[r],\n\\]\n\\[\n\\Sigma_M=\\operatorname{Cov}^M(r).\n\\]\nClassical mean–variance with risk penalty \\(\\lambda&gt;0\\) maximizes\n\\[\nw^\\top\\mu-\\frac\\lambda2w^\\top\\Sigma_Mw.\n\\]\nBoth the mean and covariance are evaluated under the investor’s probability model. When \\(\\Sigma_M\\) is positive definite and there are no constraints on risky positions,\n\\[\nw^*=\\frac1\\lambda\\Sigma_M^{-1}\\mu.\n\\]\nThis formula does not check that terminal wealth stays nonnegative. Budget, leverage, short-sale and solvency constraints must be imposed separately. Under constraints, the solution is a quadratic program rather than this inverse-matrix formula.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#the-ordinary-taylor-approximation",
+    "href": "likelihood/mean-variance.html#the-ordinary-taylor-approximation",
+    "title": "Mean–variance & information",
+    "section": "The ordinary Taylor approximation",
+    "text": "The ordinary Taylor approximation\nFor \\(Z\\) near zero,\n\\[\n\\log(1+Z)=Z-\\frac12Z^2+O(Z^3).\n\\]\nTaking expectation under the investor’s belief gives\n\\[\nT_M(Z)=\\mathbb E^M[Z]-\\frac12\\mathbb E^M[Z^2].\n\\]\nThe penalty is a second moment, not just a variance:\n\\[\n\\mathbb E^M[Z^2]\n=\\operatorname{Var}^M(Z)+(\\mathbb E^M[Z])^2.\n\\]\nThus the literal second-order approximation to expected log growth differs from classical mean–variance with \\(\\lambda=1\\). It becomes unreliable near \\(Z=-1\\), where log utility diverges but the quadratic remains finite.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#the-books-mixed-measure-quadratic",
+    "href": "likelihood/mean-variance.html#the-books-mixed-measure-quadratic",
+    "title": "Mean–variance & information",
+    "section": "The book’s mixed-measure quadratic",
+    "text": "The book’s mixed-measure quadratic\nThe likelihood construction leads to another objective,\n\\[\nJ(Z)=\\mathbb E^M[Z]-\\frac12\\mathbb E^Y[Z^2].\n\\]\nBeliefs determine the expected reward; prices determine the quadratic geometry. Because \\(\\mathbb E^Y[Z]=0\\), the penalty here also equals \\(\\tfrac12\\operatorname{Var}^Y(Z)\\).\nThis objective has an exact information interpretation. Set\n\\[\nR=\\frac{\\mathbb P^M}{\\mathbb P^Y},\n\\qquad\n\\chi^2=\\mathbb E^Y[(R-1)^2].\n\\]\nCompleting the square gives\n\\[\nJ(Z)=\\frac12\\chi^2\n-\\frac12\\mathbb E^Y[(G-R)^2].\n\\]\nThe first term is fixed. Maximizing \\(J\\) chooses the attainable payoff closest to the likelihood ratio \\(R\\) in squared error under the pricing measure. In a complete market, \\(G=R\\) is attainable and achieves the maximum \\(\\chi^2/2\\) exactly.\n\n\n\n\n\n\nNoteExact optimizer does not mean exact growth value\n\n\n\nIn a complete market, both log growth and this mixed quadratic select \\(G=R\\). Their objective values are different: the log optimum is \\(D(\\mathbb P^M\\Vert\\mathbb P^Y)\\), whereas the quadratic optimum is \\(\\chi^2/2\\). In a restricted asset menu, their best attainable portfolios can also differ.\n\n\n\n\n\n\n\n\nNoteThe square-completion argument\n\n\n\n\n\nSince \\(\\mathbb E^Y[Z]=0\\),\n\\[\n\\mathbb E^M[Z]=\\mathbb E^Y[(R-1)Z].\n\\]\nFor real numbers \\(a,z\\), the identity \\(az-z^2/2=a^2/2-(z-a)^2/2\\) applies state by state with \\(a=R-1\\). Taking \\(\\mathbb E^Y\\) proves the formula. The continuous-state version requires \\(R-1\\) and \\(Z\\) to be square integrable.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#experiment-with-the-approximation",
+    "href": "likelihood/mean-variance.html#experiment-with-the-approximation",
+    "title": "Mean–variance & information",
+    "section": "Experiment with the approximation",
+    "text": "Experiment with the approximation\nThe tool uses three scenarios and a portfolio of the reference asset and one risky asset. Its illustrative inputs are \\(q=(0.30,0.40,0.30)\\) and \\(\\mathbb P^X=(0.60,0.30,0.10)\\). Belief strength moves the investor from \\(q\\) toward \\((0.50,0.35,0.15)\\). These are an asymmetric teaching example, chosen so the optimizers can differ.\nChange belief strength, move the risky allocation \\(w\\) between zero and one, and compare exact growth with the ordinary Taylor and mixed quadratic objectives. Use each optimizer to see whether it chooses the same position.\n\n\n\n\nInteractive comparison. It needs JavaScript.\n\n\n\nFigure 1: The exact log criterion and two quadratic criteria share a zero value at the reference asset. Their differences grow as the payoff moves away from one. The tool uses the stated finite scenario model and the displayed allocation bounds.\n\n\n\nThe approximation depends on the size of statewise returns, not just on an apparently small average return. A small mean can coexist with a substantial probability of a nearly zero payoff.\n\n\n\n\n\n\nNoteWhen do the two quadratic penalties agree locally?\n\n\n\n\n\nTheir difference is\n\\[\nT_M(Z)-J(Z)\n=-\\frac12\\mathbb E^Y[(R-1)Z^2].\n\\]\nIf both \\(R-1\\) and \\(Z\\) are uniformly of order \\(\\varepsilon\\), this difference is of order \\(\\varepsilon^3\\). In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#from-payoffs-to-a-portfolio-calculation",
+    "href": "likelihood/mean-variance.html#from-payoffs-to-a-portfolio-calculation",
+    "title": "Mean–variance & information",
+    "section": "From payoffs to a portfolio calculation",
+    "text": "From payoffs to a portfolio calculation\nFor excess-return vector \\(r\\) with \\(\\mathbb E^Y[r]=0\\), define\n\\[\n\\Sigma_Y=\\mathbb E^Y[rr^\\top].\n\\]\nThe mixed objective becomes\n\\[\nJ(w)=w^\\top\\mu-\\frac12w^\\top\\Sigma_Yw.\n\\]\nWith invertible \\(\\Sigma_Y\\) and unconstrained risky weights, its solution is\n\\[\nw^*=\\Sigma_Y^{-1}\\mu.\n\\]\nThe matrix resembles the classical covariance formula, but its entries come from \\(\\mathbb P^Y\\). A singular matrix can reflect redundant assets; removing redundancy or solving the constrained program avoids treating its inverse as defined. Even when the matrix is invertible, an unrestricted projection can produce negative wealth. The portfolio laboratory keeps long-only cost weights and nonnegative payoffs.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/mean-variance.html#two-geometries-for-a-restricted-menu",
+    "href": "likelihood/mean-variance.html#two-geometries-for-a-restricted-menu",
+    "title": "Mean–variance & information",
+    "section": "Two geometries for a restricted menu",
+    "text": "Two geometries for a restricted menu\nIn finite states, write \\(p_i=\\mathbb P^M(i)\\), \\(q_i=\\mathbb P^Y(i)\\) and \\(v_i=\\mathbb P^V(i)\\). Then \\(G(i)=v_i/q_i\\), and the two projection problems are:\n\n\n\nObjective\nMismatch minimized\n\n\n\n\nExact expected log growth\n\\(D(p\\Vert v)\\)\n\n\nMixed quadratic\n\\(\\tfrac12\\sum_i(v_i-p_i)^2/q_i\\)\n\n\n\nThe second expression is a squared distance weighted by the fixed market distribution. It is generally not \\(D_{\\chi^2}(p\\Vert v)\\), whose denominator would be \\(v_i\\).\nIf the investor’s distribution is attainable, both mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest in market-weighted squared distance.\nContinue: enter several asset densities and compare the resulting allocations in the portfolio laboratory.\n\n\n\n\n\n\nNoteBook connection\n\n\n\n\n\nBased on Chapter 3 of Jan Vecer’s Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective: “Mean-Variance Portfolio Optimization,” “Mean–variance as a quadratic approximation to log growth,” and the Pearson duality and projection results. The separate treatment of classical covariance, ordinary Taylor second moments and the mixed quadratic follows the distinctions made in that chapter.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Mean–variance & information"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html",
+    "href": "likelihood/options.html",
+    "title": "Options as distributions",
+    "section": "",
+    "text": "A call pays in high-price states. A put pays in low-price states. Their densities show which observations the contracts emphasize, including how much weight each observation receives. Here we draw those densities continuously, using the normal model.\nThroughout, prices are in units of the reference asset \\(Y\\), so \\(Y(t)=1\\). The underlying is \\(X(t)\\), and a strike \\(K\\) is fixed in those units. We return to currency prices below.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html#three-densities-on-one-axis",
+    "href": "likelihood/options.html#three-densities-on-one-axis",
+    "title": "Options as distributions",
+    "section": "Three densities on one axis",
+    "text": "Three densities on one axis\nLet \\(z\\) be the standardized normal observation at maturity \\(T\\), and set \\(a=\\sigma\\sqrt T\\). The market and asset assign it different normal laws:\n\\[\n\\begin{aligned}\nf^Y(z)&=\\varphi(z),\\\\\nf^X(z)&=\\varphi(z-a),\n\\end{aligned}\n\\]\nwhere \\(\\varphi\\) is the standard normal density. Thus \\(z\\) has mean zero under \\(\\mathbb P^Y\\) and mean \\(a\\) under \\(\\mathbb P^X\\), with variance one under both.\nDividing the densities determines the terminal price:\n\\[\n\\frac{X(T)}{X(0)}\n=\\frac{f^X(z)}{f^Y(z)}\n=\\exp\\!\\left(az-\\frac{a^2}{2}\\right).\n\\]\nThe observation is normal; the price is lognormal. This is the geometric Brownian motion model from the normal-model page, not a model in which the price itself is normally distributed.\nNow choose an option payoff \\(h(X(T))\\). Its price and density are\n\\[\nC(0)=\\mathbb E^Y[h(X(T))],\n\\]\n\\[\nf^C(z)=\\frac{h(X(T))}{C(0)}\\,f^Y(z).\n\\]\nMultiply the market density by the payoff, then divide by its price. For a positive finite price, the result has area one. A call has no density below the exercise threshold; above it, larger payoffs receive more weight.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html#draw-the-options-view",
+    "href": "likelihood/options.html#draw-the-options-view",
+    "title": "Options as distributions",
+    "section": "Draw the option’s view",
+    "text": "Draw the option’s view\nStart with a call at strike 100. The blue and green curves are the two normal densities; the purple curve is the option’s induced density. Switch to a digital: its flat payoff above the strike conditions the market density on that region, without the call’s extra weighting toward larger gains.\n\nThe interactive density explorer requires JavaScript. With \\(X(0)=K=100\\), \\(\\sigma=0.25\\) and \\(T=1\\), the call price is approximately \\(9.948\\). Its density is proportional to \\(\\bigl(100\\varphi(z-0.25)-100\\varphi(z)\\bigr)^+\\).\n\nThe density plot uses the normal observation \\(z\\) throughout. The separate payoff plot uses the terminal price \\(X(T)\\). Changing coordinates would change density heights; keeping a common observation axis makes the likelihood ratios directly visible.\n\n\n\n\n\n\nNoteWhat this density means\n\n\n\n\\(\\mathbb P^C\\) describes the exposure built into one contract. It is not automatically the investor’s subjective forecast \\(\\mathbb P^M\\). It also differs from recovering the underlying’s market distribution from a whole surface of option prices.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html#a-call-price-is-a-difference-of-two-probabilities",
+    "href": "likelihood/options.html#a-call-price-is-a-difference-of-two-probabilities",
+    "title": "Options as distributions",
+    "section": "A call price is a difference of two probabilities",
+    "text": "A call price is a difference of two probabilities\nLet \\(A=\\{X(T)&gt;K\\}\\). The call pays the underlying on \\(A\\), less the strike payment on the same event. Since \\(X(T)f^Y=X(0)f^X\\),\n\\[\n\\begin{aligned}\nC(0)\n&=X(0)\\mathbb P^X(A)\\\\\n&\\quad-K\\mathbb P^Y(A).\n\\end{aligned}\n\\]\nThe underlying payment is valued using the asset measure; the strike payment is valued using the reference measure. This identity holds before choosing any particular distribution.\nIts density has an equally direct expression:\n\\[\nf^C(z)\n=\\frac{\\bigl(X(0)f^X(z)-Kf^Y(z)\\bigr)^+}{C(0)}.\n\\]\nThe numerator is the positive part of the difference between two scaled densities. Its integral is the call price.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html#blackscholes-from-the-normal-tails",
+    "href": "likelihood/options.html#blackscholes-from-the-normal-tails",
+    "title": "Options as distributions",
+    "section": "Black–Scholes from the normal tails",
+    "text": "Black–Scholes from the normal tails\nIn the normal model, exercise means\n\\[\nz&gt;\\frac{\\log(K/X(0))}{a}+\\frac a2.\n\\]\nWrite \\(\\Phi\\) for the standard normal cumulative distribution function, and define\n\\[\n\\begin{aligned}\nd(2)&=\\frac{\\log(X(0)/K)}{a}-\\frac a2,\\\\\nd(1)&=d(2)+a.\n\\end{aligned}\n\\]\nUnder \\(\\mathbb P^Y\\), the observation has mean zero; under \\(\\mathbb P^X\\), its mean is shifted by \\(a\\). The exercise probabilities are therefore\n\\[\n\\begin{aligned}\n\\mathbb P^Y(A)&=\\Phi(d(2)),\\\\\n\\mathbb P^X(A)&=\\Phi(d(1)).\n\\end{aligned}\n\\]\nSubstitute them into the two-measure price identity:\n\\[\n\\boxed{\n\\begin{aligned}\nC(0)&=X(0)\\Phi(d(1))\\\\\n&\\quad-K\\Phi(d(2)).\n\\end{aligned}}\n\\]\nThis is the Black–Scholes call formula in reference-asset units. The two normal probabilities have financial roles: one values delivery of the underlying, the other values payment of the strike. Neither probability is an investor’s personal forecast unless that investor chooses the corresponding measure.\nFor a put, use the complementary exercise region:\n\\[\n\\begin{aligned}\nP(0)&=K\\Phi(-d(2))\\\\\n&\\quad-X(0)\\Phi(-d(1)).\n\\end{aligned}\n\\]\nSubtracting yields put–call parity,\n\\[\nC(0)-P(0)=X(0)-K.\n\\]\n\n\n\n\n\n\nNoteThe familiar currency formula, with interest\n\n\n\n\n\nLet the reference asset be a bank account \\(B(t)=e^{rt}\\) with constant rate \\(r\\) and \\(B(0)=1\\). For a non-dividend-paying stock with currency price \\(S(t)\\), we have \\(X(t)=S(t)/B(t)\\). A currency strike \\(K^{\\mathrm{cash}}\\) at maturity becomes \\(K=K^{\\mathrm{cash}}e^{-rT}\\) in reference units.\nConsequently,\n\\[\n\\begin{aligned}\nC^{\\mathrm{cash}}(0)\n&=S(0)\\Phi(d(1))\\\\\n&\\quad-K^{\\mathrm{cash}}e^{-rT}\\Phi(d(2)),\n\\end{aligned}\n\\]\nwhere\n\\[\n\\begin{aligned}\nd(1)&=\\frac{\\log(S(0)/K^{\\mathrm{cash}})+rT}{\\sigma\\sqrt T}\\\\\n&\\quad+\\frac{\\sigma\\sqrt T}{2},\\\\\nd(2)&=d(1)-\\sigma\\sqrt T.\n\\end{aligned}\n\\]\nThe discount factor appears when converting the currency strike into reference units. It was already accounted for by the choice of units above.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
+  },
+  {
+    "objectID": "likelihood/options.html#other-payoffs-and-a-reference-asset-reserve",
+    "href": "likelihood/options.html#other-payoffs-and-a-reference-asset-reserve",
+    "title": "Options as distributions",
+    "section": "Other payoffs, and a reference-asset reserve",
+    "text": "Other payoffs, and a reference-asset reserve\nA digital call pays one unit on \\(A\\). Its price is \\(\\mathbb P^Y(A)=\\Phi(d(2))\\), and its induced distribution is \\(\\mathbb P^Y\\) conditioned on \\(A\\).\nA straddle combines a call and a put. Its density is the mixture of their densities with weights \\(C(0)/(C(0)+P(0))\\) and \\(P(0)/(C(0)+P(0))\\). The weights are fractions of the initial cost, even though the position holds one unit of each contract.\nCalls, puts and digitals pay zero on entire regions. If an investor assigns positive probability to a zero-payoff region, committing all wealth to that option gives expected log performance \\(-\\infty\\). The option density is still perfectly valid.\nTo retain a positive payoff floor, keep a fraction \\(b\\) of the budget in \\(Y\\) and allocate \\(1-b\\) to the option. The portfolio density is\n\\[\nf^V(z)=b\\,f^Y(z)+(1-b)f^C(z),\n\\]\nand its gross payoff is at least \\(b\\). The explorer’s reserve control draws this mixture in gold. It is the same cost-weighted construction used in portfolio mixtures.\nHow could trading the underlying reproduce one of these payoffs? The discrete-hedging page compares a target density with the density implemented by rebalancing at finitely many dates.\n\n\n\n\n\n\nNoteBook connection\n\n\n\n\n\nBased on Chapter 4 of Jan Vecer’s Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective: “Option Payoffs,” the call and put induced distributions, the two-measure price identity, and “Black–Scholes Formula from State Prices.” The normal driver is the standardized cumulative return used there. Chapter 5 develops the same likelihood ratio as an additive normal model.",
+    "crumbs": [
+      "Likelihood Finance",
+      "Markets and portfolios",
+      "Options as distributions"
+    ]
   }
 ]

@@ -1,22 +1,132 @@
 project:
   type: website
   output-dir: docs
+  post-render: scripts/finalize-html.ts
+  resources:
+    - CNAME
+    - .nojekyll
+    - assets/
+    - likelihood/*.js
+    - likelihood/*.css
+  render:
+    - index.qmd
+    - jan-vecer.qmd
+    - about.qmd
+    - likelihood/index.qmd
+    - likelihood/relative-entropy.qmd
+    - likelihood/dynamics.qmd
+    - likelihood/linear-information.qmd
+    - likelihood/binomial.qmd
+    - likelihood/trinomial.qmd
+    - likelihood/negative-binomial.qmd
+    - likelihood/normal.qmd
+    - likelihood/poisson.qmd
+    - likelihood/gamma.qmd
+    - likelihood/inverse-gaussian.qmd
+    - likelihood/utility.qmd
+    - likelihood/mean-variance.qmd
+    - likelihood/portfolio-lab.qmd
+    - likelihood/options.qmd
+    - likelihood/hedging.qmd
 
 website:
-  title: "jan-website"
+  title: Jan Vecer
+  site-url: https://janvecer.com
+  description: "Likelihood Finance: prices, portfolios and information. An interactive guide to Jan Vecer's likelihood approach to finance."
+  favicon: assets/favicon.svg
   navbar:
+    background: light
+    foreground: dark
+    pinned: true
+    collapse-below: lg
+    title: Jan Vecer
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: likelihood/index.qmd
+        text: Likelihood Finance
+      - href: jan-vecer.qmd
+        text: Jan Vecer
+  sidebar:
+    - id: likelihood
+      title: Likelihood Finance
+      style: floating
+      search: false
+      collapse-level: 2
+      contents:
+        - section: Start here
+          contents:
+            - href: likelihood/index.qmd
+              text: Likelihood Finance
+            - href: likelihood/relative-entropy.qmd
+              text: Relative entropy
+        - section: Models
+          contents:
+            - href: likelihood/binomial.qmd
+              text: The binomial model
+            - href: likelihood/negative-binomial.qmd
+              text: The negative binomial model
+            - href: likelihood/linear-information.qmd
+              text: Linear information flow
+            - href: likelihood/normal.qmd
+              text: Normal → geometric Brownian motion
+            - href: likelihood/poisson.qmd
+              text: "Poisson: events become price jumps"
+            - href: likelihood/gamma.qmd
+              text: "Gamma: accumulated activity"
+            - href: likelihood/inverse-gaussian.qmd
+              text: "Inverse Gaussian: a random clock"
+        - section: Markets and portfolios
+          contents:
+            - href: likelihood/dynamics.qmd
+              text: Two ways to build a market
+            - href: likelihood/trinomial.qmd
+              text: The trinomial model
+            - href: likelihood/utility.qmd
+              text: Utility & fractional Kelly
+            - href: likelihood/mean-variance.qmd
+              text: Mean–variance & information
+            - href: likelihood/portfolio-lab.qmd
+              text: Portfolio laboratory
+            - href: likelihood/options.qmd
+              text: Options as distributions
+            - href: likelihood/hedging.qmd
+              text: Discrete hedging
+  page-footer:
+    left: "© Jan Vecer · Likelihood Finance"
+    right:
+      - href: likelihood/index.qmd
+        text: Explore the framework
+      - href: jan-vecer.qmd
+        text: About & contact
+  search:
+    location: navbar
+    type: overlay
 
 format:
   html:
     theme:
       - cosmo
-      - brand
-    css: styles.css
+      - offline-theme.scss
+    css:
+      - /styles.css
+      - /likelihood/lr-widgets.css
     toc: true
+    toc-title: On this page
+    toc-depth: 2
+    number-sections: false
+    anchor-sections: true
+    smooth-scroll: true
+    link-external-newwindow: true
+    link-external-icon: false
+    html-math-method:
+      method: mathjax
+      url: /assets/vendor/mathjax/tex-chtml-full.js
+    code-copy: true
+    grid:
+      sidebar-width: 245px
+      body-width: 790px
+      margin-width: 245px
+      gutter-width: 1.5rem
 
-
-
+lang: en

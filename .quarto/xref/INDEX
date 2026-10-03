@@ -1,8 +1,59 @@
 {
-  "about.qmd": {
-    "about.html": "33b64e37"
-  },
   "index.qmd": {
-    "index.html": "9162bc77"
+    "index.html": "12ec0eae"
+  },
+  "likelihood/index.qmd": {
+    "index.html": "335a79f4"
+  },
+  "likelihood/options.qmd": {
+    "options.html": "b53064d2"
+  },
+  "likelihood/hedging.qmd": {
+    "hedging.html": "f3872366"
+  },
+  "jan-vecer.qmd": {
+    "jan-vecer.html": "828ab688"
+  },
+  "about.qmd": {
+    "about.html": "85b9a914"
+  },
+  "likelihood/relative-entropy.qmd": {
+    "relative-entropy.html": "3708dddf"
+  },
+  "likelihood/dynamics.qmd": {
+    "dynamics.html": "cb21f24c"
+  },
+  "likelihood/linear-information.qmd": {
+    "linear-information.html": "4e2552fc"
+  },
+  "likelihood/binomial.qmd": {
+    "binomial.html": "fc618f17"
+  },
+  "likelihood/trinomial.qmd": {
+    "trinomial.html": "789be848"
+  },
+  "likelihood/negative-binomial.qmd": {
+    "negative-binomial.html": "89299083"
+  },
+  "likelihood/normal.qmd": {
+    "normal.html": "a186ab42"
+  },
+  "likelihood/poisson.qmd": {
+    "poisson.html": "6007f217"
+  },
+  "likelihood/gamma.qmd": {
+    "gamma.html": "6ceaf4ae"
+  },
+  "likelihood/inverse-gaussian.qmd": {
+    "inverse-gaussian.html": "4bfa524c"
+  },
+  "likelihood/utility.qmd": {
+    "utility.html": "390e34cc"
+  },
+  "likelihood/mean-variance.qmd": {
+    "mean-variance.html": "975771d4"
+  },
+  "likelihood/portfolio-lab.qmd": {
+    "portfolio-lab.html": "13e1e318"
   }
 }

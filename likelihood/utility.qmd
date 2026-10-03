@@ -1,0 +1,157 @@
+---
+title: "Utility & fractional Kelly"
+subtitle: "Two ways to moderate a likelihood-ratio position"
+description: "Understand how utility transforms an implied measure, how fractional Kelly keeps a reserve, and why the distinction needs more than two states."
+css: portfolio-tools.css
+resources:
+  - portfolio-tools.js
+include-after-body:
+  - text: |
+      <script src="portfolio-tools.js"></script>
+---
+
+The [framework](index.qmd) gives a direct payoff for a belief: invest in the likelihood ratio $R=\mathbb P^M/\mathbb P^Y$. That position maximizes expected log growth under the stated belief. It does not answer how much wealth an investor wants to expose to that belief, or which other preferences she might have.
+
+Two familiar responses fit into the same language. Expected utility chooses a transformed payoff. Fractional Kelly allocates part of the budget to the original likelihood-ratio payoff and keeps the rest in the reference asset.
+
+All wealth on this page is measured in units of the reference asset $Y$. The formulas first describe a complete, finite-state market with positive pricing probabilities. [Restricted asset menus](portfolio-lab.qmd) require a further optimization over attainable portfolios.
+
+## What utility maximization does
+
+Let $W$ be initial wealth and $V(T)$ the terminal payoff. An investor with increasing, strictly concave utility $U$ solves
+
+$$
+\max_{V(T)\geq0}\;\mathbb E^M[U(V(T))]
+$$
+
+subject to the pricing constraint
+
+$$
+\mathbb E^Y[V(T)]=W.
+$$
+
+Write $p_i=\mathbb P^M(i)$ and $q_i=\mathbb P^Y(i)$. An extra unit paid in state $i$ contributes $p_iU'(V(T,i))$ to expected utility and costs $q_i$. At an interior optimum, the marginal utility per unit of cost is the same in every state with $p_i>0$:
+
+$$
+U'(V^*(T,i))=\lambda\frac{q_i}{p_i}.
+$$
+
+If $I=(U')^{-1}$ is inverse marginal utility, then
+
+$$
+V^*(T,i)=I\!\left(\lambda\frac{q_i}{p_i}\right).
+$$
+
+The budget fixes $\lambda$. The resulting portfolio still induces a probability distribution,
+
+$$
+v_i^*=q_i\frac{V^*(T,i)}{W}.
+$$
+
+Utility therefore supplies a rule for turning the investor's belief $p$ and the market's prices $q$ into the implemented measure $v^*$.
+
+::: {.callout-note collapse="true" title="Conditions behind the formula"}
+The inverse-marginal-utility formula applies when $U$ is continuously differentiable and strictly concave, with $U'(0+)=\infty$ and $U'(\infty)=0$. In the finite-state setting, a positive budget determines the multiplier uniquely. A state with $p_i=0$ contributes nothing to the objective; paying it a positive amount would consume budget, so the optimizer assigns it zero. Utility at zero is interpreted through the boundary limit, and states of zero subjective probability do not enter the expectation.
+:::
+
+## CRRA: a power of the likelihood ratio
+
+Constant relative risk aversion uses
+
+$$
+U_\gamma(x)=\frac{x^{1-\gamma}-1}{1-\gamma},
+$$
+
+with $U_1(x)=\log x$. Set $\alpha=1/\gamma$ and $R(i)=p_i/q_i$. The optimal gross payoff is
+
+$$
+G^U(i)=\frac{R(i)^\alpha}{\sum_jq_jR(j)^\alpha}.
+$$
+
+Its implied probabilities are
+
+$$
+v^U(i)=q_iG^U(i).
+$$
+
+At $\gamma=1$, $G^U=R$ and $v^U=p$: utility reproduces the full Kelly position. For $\gamma>1$, the power moderates the likelihood ratios. The denominator is essential: it makes the payoff cost exactly one unit of initial wealth.
+
+For positive $p_i$ in every state, increasing $\gamma$ eventually brings the implemented measure back to $q$. This is normalized geometric interpolation between the two distributions.
+
+## Fractional Kelly: keep a reserve
+
+Invest a fraction $f\in[0,1]$ of wealth in the full Kelly payoff and leave $1-f$ in $Y$. The gross terminal payoff is
+
+$$
+G^F(i)=(1-f)+fR(i).
+$$
+
+Multiplication by $q_i$ gives
+
+$$
+v^F(i)=(1-f)q_i+fp_i.
+$$
+
+The original belief still determines the active position. The total portfolio's measure is an arithmetic mixture because part of the budget stays in reserve. In particular,
+
+$$
+G^F(i)\geq1-f.
+$$
+
+This is a terminal wealth floor in units of $Y$. With $f=0.25$, at least three quarters of initial wealth remains even if the active position pays zero. It is not a claim about purchasing power in another unit, or about every strategy called “fractional Kelly.” Here the definition is a static holding of the reference asset and the full Kelly claim, without repeated rebalancing to a fixed risky weight.
+
+## Compare the two portfolios
+
+Start with $\gamma=2$ and $f=1/2$. Compare the state probabilities and the payoff floor. Keep the fraction linked to $1/\gamma$ for a matched-parameter comparison, or unlink it to choose the reserve independently. Then increase risk aversion and try a belief that assigns zero probability to one state. The three-state view makes the difference between arithmetic and geometric interpolation visible.
+
+:::: {#fig-utility-comparison}
+::: {data-portfolio-tool="utility"}
+Interactive comparison. It needs JavaScript.
+:::
+
+The same market prices and subjective belief generate two moderated portfolios. Their expected log growth is evaluated under the original belief $\mathbb P^M$; it is not the CRRA objective. The simplex shows the three probabilities as a single point.
+::::
+
+The choice $f=1/\gamma$ is a useful comparison, not a general equivalence. For beliefs close to prices, both gross payoffs have the same first-order expansion:
+
+$$
+G\approx1+\frac{R-1}{\gamma}.
+$$
+
+Further from the market distribution, their shapes and downside protection can differ substantially.
+
+::: {.callout-note title="Why two states can conceal the difference"}
+With two states and strictly positive beliefs, both families cover the segment from $q$ to $p$ for $\gamma\geq1$, including cash as a limit. One allocation can be matched by a different parameter in the other family. They generally disagree at the same numerical $\gamma$. With three or more states, they generally follow different curves, so changing one scalar parameter need not match the portfolios.
+:::
+
+::: {.callout-note collapse="true" title="What happens when a belief is zero?"}
+For every finite $\gamma$, CRRA retains the zero wherever $p_i=0$. Fractional Kelly with $f<1$ assigns that state positive mass through the reserve.
+
+Let $B=\{i:p_i>0\}$. As $\gamma\to\infty$, the CRRA probabilities converge to
+
+$$
+v^U(i)\longrightarrow
+\frac{q_i\mathbf1_B(i)}{\sum_{j\in B}q_j}.
+$$
+
+Thus the cash limit requires full subjective support. Otherwise the limit is the pricing distribution conditioned on the states the investor considers possible.
+:::
+
+## The information cost of moderation
+
+Write $D(P\Vert Q)$ for relative entropy and let $v$ be either implemented distribution. The [growth decomposition](index.qmd) gives
+
+$$
+\begin{aligned}
+\mathbb E^M[\log G]&=D(p\Vert q)\\
+&\quad-D(p\Vert v).
+\end{aligned}
+$$
+
+The difference from full Kelly is exactly the mismatch $D(p\Vert v)$. That loss of expected log growth can be an intentional choice made for another objective or a wealth floor. It is measured under the stated belief; changing the belief can change the ranking.
+
+**Continue:** explore [mean–variance approximations](mean-variance.qmd), or choose among available assets in the [portfolio laboratory](portfolio-lab.qmd).
+
+::: {.callout-note collapse="true" title="Book connection"}
+Based on Chapter 3 of Jan Vecer's *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*: “Utility Maximization” and “Risk aversion: utility-based density tempering versus fractional Kelly sizing.” The [normal model](normal.qmd) shows how these constructions behave for Gaussian likelihoods.
+:::

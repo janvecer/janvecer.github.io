@@ -1,0 +1,4 @@
+MathJax 3.2.2, official mathjax npm package.
+Vendored for offline mathematical typesetting.
+Package: https://www.npmjs.com/package/mathjax/v/3.2.2
+License: Apache-2.0 (see LICENSE).

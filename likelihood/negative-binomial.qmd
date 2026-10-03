@@ -1,0 +1,136 @@
+---
+title: "The negative binomial model"
+subtitle: "Keep the likelihood construction. Change the information clock."
+css:
+  - lr-widgets.css
+  - discrete-models.css
+resources:
+  - discrete-models.js
+include-after-body:
+  - text: |
+      <script src="discrete-models.js" defer></script>
+---
+
+In the [binomial model](binomial.qmd), time counts trials. Here it counts **completed failure blocks**: observe successive Bernoulli trials and stop a block at its first failure. Count the successes in each block, then add them.
+
+The information driver changes, while the rule stays the same: two probability laws determine a price through their likelihood ratio.
+
+## A different count
+
+Let $G(j)$ be the number of successes before the failure ending block $j$. The blocks are independent. Under $\mathbb P^X$, each trial succeeds with probability $p\in(0,1)$; under $\mathbb P^Y$, it succeeds with probability $q\in(0,1)$.
+
+After $n$ completed blocks,
+
+$$
+Z(n)=G(1)+\cdots+G(n).
+$$
+
+This counts successes before the $n$-th failure. The book uses the convention
+
+$$
+\begin{aligned}
+&\mathbb P^X(Z(n)=k)\\
+&\quad=\binom{n+k-1}{k}(1-p)^n p^k,
+\end{aligned}
+$$
+
+for $k=0,1,\ldots$, and the same formula with $q$ under $\mathbb P^Y$. We write these laws as $\mathrm{NB}(n,p)$ and $\mathrm{NB}(n,q)$. Unlike the binomial count, $Z(n)$ has no upper bound.
+
+## The likelihood ratio is the price
+
+The combinatorial factor cancels between the two laws. Therefore
+
+$$
+\frac{X(n)}{X(0)}
+=\left(\frac pq\right)^{Z(n)}
+\left(\frac{1-p}{1-q}\right)^n.
+$$
+
+The logarithm is affine in the accumulated count and the number of completed blocks:
+
+$$
+\log\frac{X(n)}{X(0)}=aZ(n)+bn,
+$$
+
+$$
+a=\log\frac pq,
+\qquad b=\log\frac{1-p}{1-q}.
+$$
+
+One block can contain any nonnegative number of successes. Its price multiplier is $(p/q)^{G(j)}(1-p)/(1-q)$, whose expectation under $\mathbb P^Y$ is one. Products over independent blocks therefore form a positive $\mathbb P^Y$-martingale; their reciprocals form a $\mathbb P^X$-martingale.
+
+::: {data-discrete-model="negative-binomial"}
+The interactive figure requires JavaScript. For $p=0.60$, $q=0.40$, the information per completed failure block is approximately $0.20273$ nats, so after ten blocks the expected log return under $\mathbb P^X$ is approximately $2.02733$.
+:::
+
+The distributions are shown on the same success-count axis. Their probabilities are not renormalized when the chart truncates the infinite tail. The simulation displays **the price itself**, starting from $X(0)=1$, and the logarithms of exactly the same six paths under each measure. Paths are sampled at completed blocks; the individual trials inside a block are not shown. The count-to-price figure can also switch to log price.
+
+The horizontal dashed line in the price figure is $\mathbb E^Y[X(n)/X(0)]=1$. In the log figure the dashed lines show expected **log** prices. Exponentiating an expected log price does not give an expected price: rare large outcomes can keep the mean price at one even while most simulated market-measure paths decline. Extremely large prices are explicitly marked as off scale; the log figure retains their full range.
+
+## Information grows linearly in block time
+
+Let $D(n;p\Vert q)$ denote the divergence from $\mathrm{NB}(n,p)$ to $\mathrm{NB}(n,q)$. Since $\mathbb E^X[Z(n)]=np/(1-p)$, expected log growth is
+
+$$
+\mathbb E^X\left[\log\frac{X(n)}{X(0)}\right]
+=D(n;p\Vert q).
+$$
+
+Define information per failure block by
+
+$$
+I(p,q)=\frac{p}{1-p}\log\frac pq
++\log\frac{1-p}{1-q}.
+$$
+
+Then the entire horizon contributes exactly $nI(p,q)$. This is **linear information flow in the book's clock**. It is also the additivity of relative entropy across the independent geometric blocks; their sum $Z(n)$ retains the likelihood ratio.
+
+Under the pricing measure the direction reverses:
+
+$$
+\mathbb E^Y\left[\log\frac{X(n)}{X(0)}\right]
+=-nI(q,p).
+$$
+
+When $p=q$, both information rates are zero and the asset has the reference asset's constant return.
+
+## The binomial connection: same observations, same likelihood
+
+Suppose the realized data contain $k$ successes and $n$ failures. They could have come from an experiment with a fixed total of $k+n$ trials, or from an experiment stopped at the $n$-th failure. For an unknown success probability $\rho$, both likelihoods are proportional to
+
+$$
+L(\rho)\propto\rho^k(1-\rho)^n.
+$$
+
+Their proportionality factor depends on the sampling design and the observed counts, but not on $\rho$. Thus comparing $p$ with $q$ gives the same likelihood ratio in either experiment. This illustrates the **likelihood principle**: proportional likelihood functions carry the same likelihood-based evidence about the parameter.
+
+The sampling distributions differ, so procedures that depend on unobserved outcomes, including conventional fixed-design p-values, can differ. The principle concerns the evidential content of the observed likelihood; it does not say that the two experiments have identical sampling properties.
+
+In financial terms, evaluate the binomial wealth process at the trial when the $n$-th failure occurs. Its wealth agrees with the negative-binomial formula above. Here the negative-binomial index $n$ counts failures, not total trials.
+
+## Wald's identity explains the change of clock
+
+Let $\tau(n)=Z(n)+n$ be the total number of trials needed for $n$ failures. Under $\mathbb P^X$,
+
+$$
+\mathbb E^X[\tau(n)]=\frac{n}{1-p}.
+$$
+
+The same entropy can be written as
+
+$$
+D_{\mathrm{KL}}(\mathrm{NB}(n,p)\Vert\mathrm{NB}(n,q))
+$$
+
+$$
+=\frac{n}{1-p}\,
+D_{\mathrm{KL}}(\mathrm{Bern}(p)\Vert\mathrm{Bern}(q)).
+$$
+
+For these bounded one-trial log-likelihood increments and the integrable stopping time $\tau(n)$, Wald's identity says: **expected accumulated information equals information per trial times the expected number of trials**. There is no extra information created by the new clock.
+
+::: {.callout-tip title="Read alongside the book"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 5, “Negative binomial family.” The likelihood-principle connection is discussed by D. V. Lindley and L. D. Phillips (1976), “Inference for a Bernoulli Process (A Bayesian View),” *The American Statistician* 30(3), 112–119. For the stopped-sum identity, see A. Wald (1947), *Sequential Analysis*.
+:::
+
+[Back to the binomial model](binomial.qmd) · [Back to the framework](index.qmd)

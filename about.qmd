@@ -1,5 +1,7 @@
 ---
-title: "About"
+title: About Jan Vecer
+sidebar: false
+toc: false
 ---
 
-About this site
+The profile page has moved to [Jan Vecer](jan-vecer.qmd). For the research project, visit [Likelihood Finance](likelihood/index.qmd).

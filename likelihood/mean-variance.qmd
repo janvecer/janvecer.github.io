@@ -1,0 +1,173 @@
+---
+title: "Mean–variance & information"
+subtitle: "Three quadratic objectives, and the exact problem behind them"
+description: "Compare classical mean–variance, a Taylor approximation to log growth, and the book's Pearson quadratic objective."
+css: portfolio-tools.css
+resources:
+  - portfolio-tools.js
+include-after-body:
+  - text: |
+      <script src="portfolio-tools.js"></script>
+---
+
+Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. Likelihood finance describes its whole payoff through an implied distribution. The connection becomes precise once we specify **which measure supplies the quadratic penalty**.
+
+Use $G=V(T)/V(0)$ for a gross payoff and $Z=G-1$ for its excess return, all in units of $Y$. Fair pricing means $\mathbb E^Y[G]=1$, hence $\mathbb E^Y[Z]=0$.
+
+## Start with classical mean–variance
+
+Let $r$ be the vector of asset excess returns. With a reference asset available, risky weights $w$ produce $Z=w^\top r$; the remaining budget goes into the reference asset. Define
+
+$$
+\mu=\mathbb E^M[r],
+$$
+
+$$
+\Sigma_M=\operatorname{Cov}^M(r).
+$$
+
+Classical mean–variance with risk penalty $\lambda>0$ maximizes
+
+$$
+w^\top\mu-\frac\lambda2w^\top\Sigma_Mw.
+$$
+
+Both the mean and covariance are evaluated under the investor's probability model. When $\Sigma_M$ is positive definite and there are no constraints on risky positions,
+
+$$
+w^*=\frac1\lambda\Sigma_M^{-1}\mu.
+$$
+
+This formula does not check that terminal wealth stays nonnegative. Budget, leverage, short-sale and solvency constraints must be imposed separately. Under constraints, the solution is a quadratic program rather than this inverse-matrix formula.
+
+## The ordinary Taylor approximation
+
+For $Z$ near zero,
+
+$$
+\log(1+Z)=Z-\frac12Z^2+O(Z^3).
+$$
+
+Taking expectation under the investor's belief gives
+
+$$
+T_M(Z)=\mathbb E^M[Z]-\frac12\mathbb E^M[Z^2].
+$$
+
+The penalty is a **second moment**, not just a variance:
+
+$$
+\mathbb E^M[Z^2]
+=\operatorname{Var}^M(Z)+(\mathbb E^M[Z])^2.
+$$
+
+Thus the literal second-order approximation to expected log growth differs from classical mean–variance with $\lambda=1$. It becomes unreliable near $Z=-1$, where log utility diverges but the quadratic remains finite.
+
+## The book's mixed-measure quadratic
+
+The likelihood construction leads to another objective,
+
+$$
+J(Z)=\mathbb E^M[Z]-\frac12\mathbb E^Y[Z^2].
+$$
+
+Beliefs determine the expected reward; prices determine the quadratic geometry. Because $\mathbb E^Y[Z]=0$, the penalty here also equals $\tfrac12\operatorname{Var}^Y(Z)$.
+
+This objective has an exact information interpretation. Set
+
+$$
+R=\frac{\mathbb P^M}{\mathbb P^Y},
+\qquad
+\chi^2=\mathbb E^Y[(R-1)^2].
+$$
+
+Completing the square gives
+
+$$
+J(Z)=\frac12\chi^2
+-\frac12\mathbb E^Y[(G-R)^2].
+$$
+
+The first term is fixed. Maximizing $J$ chooses the attainable payoff closest to the likelihood ratio $R$ in squared error under the pricing measure. In a complete market, $G=R$ is attainable and achieves the maximum $\chi^2/2$ exactly.
+
+::: {.callout-note title="Exact optimizer does not mean exact growth value"}
+In a complete market, both log growth and this mixed quadratic select $G=R$. Their objective values are different: the log optimum is $D(\mathbb P^M\Vert\mathbb P^Y)$, whereas the quadratic optimum is $\chi^2/2$. In a restricted asset menu, their best attainable portfolios can also differ.
+:::
+
+::: {.callout-note collapse="true" title="The square-completion argument"}
+Since $\mathbb E^Y[Z]=0$,
+
+$$
+\mathbb E^M[Z]=\mathbb E^Y[(R-1)Z].
+$$
+
+For real numbers $a,z$, the identity $az-z^2/2=a^2/2-(z-a)^2/2$ applies state by state with $a=R-1$. Taking $\mathbb E^Y$ proves the formula. The continuous-state version requires $R-1$ and $Z$ to be square integrable.
+:::
+
+## Experiment with the approximation
+
+The tool uses three scenarios and a portfolio of the reference asset and one risky asset. Its illustrative inputs are $q=(0.30,0.40,0.30)$ and $\mathbb P^X=(0.60,0.30,0.10)$. Belief strength moves the investor from $q$ toward $(0.50,0.35,0.15)$. These are an asymmetric teaching example, chosen so the optimizers can differ.
+
+Change belief strength, move the risky allocation $w$ between zero and one, and compare exact growth with the ordinary Taylor and mixed quadratic objectives. Use each optimizer to see whether it chooses the same position.
+
+:::: {#fig-quadratic-comparison}
+::: {data-portfolio-tool="mean-variance"}
+Interactive comparison. It needs JavaScript.
+:::
+
+The exact log criterion and two quadratic criteria share a zero value at the reference asset. Their differences grow as the payoff moves away from one. The tool uses the stated finite scenario model and the displayed allocation bounds.
+::::
+
+The approximation depends on the **size of statewise returns**, not just on an apparently small average return. A small mean can coexist with a substantial probability of a nearly zero payoff.
+
+::: {.callout-note collapse="true" title="When do the two quadratic penalties agree locally?"}
+Their difference is
+
+$$
+T_M(Z)-J(Z)
+=-\frac12\mathbb E^Y[(R-1)Z^2].
+$$
+
+If both $R-1$ and $Z$ are uniformly of order $\varepsilon$, this difference is of order $\varepsilon^3$. In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.
+:::
+
+## From payoffs to a portfolio calculation
+
+For excess-return vector $r$ with $\mathbb E^Y[r]=0$, define
+
+$$
+\Sigma_Y=\mathbb E^Y[rr^\top].
+$$
+
+The mixed objective becomes
+
+$$
+J(w)=w^\top\mu-\frac12w^\top\Sigma_Yw.
+$$
+
+With invertible $\Sigma_Y$ and unconstrained risky weights, its solution is
+
+$$
+w^*=\Sigma_Y^{-1}\mu.
+$$
+
+The matrix resembles the classical covariance formula, but its entries come from $\mathbb P^Y$. A singular matrix can reflect redundant assets; removing redundancy or solving the constrained program avoids treating its inverse as defined. Even when the matrix is invertible, an unrestricted projection can produce negative wealth. The [portfolio laboratory](portfolio-lab.qmd) keeps long-only cost weights and nonnegative payoffs.
+
+## Two geometries for a restricted menu
+
+In finite states, write $p_i=\mathbb P^M(i)$, $q_i=\mathbb P^Y(i)$ and $v_i=\mathbb P^V(i)$. Then $G(i)=v_i/q_i$, and the two projection problems are:
+
+| Objective | Mismatch minimized |
+|:--|:--|
+| Exact expected log growth | $D(p\Vert v)$ |
+| Mixed quadratic | $\tfrac12\sum_i(v_i-p_i)^2/q_i$ |
+
+The second expression is a squared distance weighted by the fixed market distribution. It is generally **not** $D_{\chi^2}(p\Vert v)$, whose denominator would be $v_i$.
+
+If the investor's distribution is attainable, both mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest in market-weighted squared distance.
+
+**Continue:** enter several asset densities and compare the resulting allocations in the [portfolio laboratory](portfolio-lab.qmd).
+
+::: {.callout-note collapse="true" title="Book connection"}
+Based on Chapter 3 of Jan Vecer's *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*: “Mean-Variance Portfolio Optimization,” “Mean–variance as a quadratic approximation to log growth,” and the Pearson duality and projection results. The separate treatment of classical covariance, ordinary Taylor second moments and the mixed quadratic follows the distinctions made in that chapter.
+:::

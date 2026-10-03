@@ -1,0 +1,93 @@
+---
+title: "Linear information flow"
+subtitle: "Six models, one mechanism for accumulating evidence"
+description: "Additive information drivers produce likelihood-ratio prices with linear relative entropy in time."
+---
+
+The binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian models share a structure. An observable driver $Z(t)$ accumulates information. Two measures give different probabilities to its increments. Price is the likelihood ratio of those two models.
+
+The driver is additive; the price is multiplicative. “Linear information flow” refers to the affine log likelihood and its expected accumulation, not to a price moving along a straight line.
+
+## Add increments, multiply likelihoods
+
+Suppose nonoverlapping increments are independent under each of two consistent process laws. Their densities or mass functions belong to the same time-scaled exponential family:
+
+$$
+f(z,t;\theta)=h(z,t)\exp\{\theta z-t\kappa(\theta)\}.
+$$
+
+Keep the common base $h(z,t)$ and any shared shape or variance parameters fixed. Change the natural parameter from $\theta_Y$ to $\theta_X$. The base cancels:
+
+$$
+\log\frac{X(t)}{X(0)}=aZ(t)+bt,
+$$
+
+where the two constants are
+
+$$
+a=\theta_X-\theta_Y,
+$$
+
+$$
+b=-\{\kappa(\theta_X)-\kappa(\theta_Y)\}.
+$$
+
+The likelihood ratio of a full sequence of increments has exactly the same form, because their sums are $Z(t)$ and $t$. Thus the terminal statistic retains the information needed to compare this particular pair of process models. Independently chosen densities at unrelated horizons would not guarantee such a consistent process.
+
+## Why the expected information is linear
+
+If $\mathbb E^X[Z(t)]=m_Xt$, then the two laws of observations through time $t$ satisfy
+
+$$
+\begin{aligned}
+D(\mathbb P^X\Vert\mathbb P^Y)
+&=\mathbb E^X\!\left[\log\frac{X(t)}{X(0)}\right]\\
+&=k_Xt,
+\end{aligned}
+$$
+
+with $k_X=am_X+b\geq0$. Under the market measure the expected log price goes the other way:
+
+$$
+\mathbb E^Y\!\left[\log\frac{X(t)}{X(0)}\right]
+=-k_Yt,
+$$
+
+where $k_Y$ is the reverse divergence over one unit of time. The two information rates need not be equal. Their signs describe the same position evaluated by two different models.
+
+Prices still satisfy $\mathbb E^Y[X(t)]=X(0)$. There is no contradiction: the logarithm is concave, so mean wealth and mean log wealth are different quantities.
+
+## The six clocks
+
+| Family | What accumulates? | What stays common? |
+|:--|:--|:--|
+| [Binomial](binomial.qmd) | Successes in a fixed number of trials | Trial count |
+| [Negative binomial](negative-binomial.qmd) | Successes before a fixed number of failures | Failure-count clock |
+| [Normal](normal.qmd) | Continuous Gaussian increments | Variance rate |
+| [Poisson](poisson.qmd) | Event arrivals | Time and event sizes |
+| [Gamma](gamma.qmd) | Positive gamma increments | Shape rate |
+| [Inverse Gaussian](inverse-gaussian.qmd) | Positive inverse Gaussian increments | Activity parameter |
+
+Binomial time is an integer trial count. Negative-binomial time is an integer failure count; each step contains a random number of trials. Normal, Poisson, gamma, and inverse Gaussian processes can be observed on any positive time grid. Their increment distributions remain in the same family with the appropriate time scaling.
+
+## A common scale for comparison
+
+A raw parameter change has different meanings across families. Moving a Poisson intensity by one is not comparable to moving a normal mean by one. The forward KL rate $k_X$ gives a common information scale: nats per unit of the stated clock.
+
+The continuous-model laboratories therefore start from a chosen $k_X$, then infer the compatible second parameter. Additional controls change the event rate or shape of the information stream. Two models can have the same information rate and still produce very different paths, downside behavior, and higher moments.
+
+These bounded controls are teaching choices. They are not fitted market parameters or limits imposed by the theory. In particular, fixing forward KL does not fix reverse KL or every tail risk.
+
+## What a simulated path shows
+
+- **Normal:** exact Gaussian increments on the chosen grid; joining them visually does not resolve the Brownian motion between grid points.
+- **Poisson:** finite event activity; arrivals produce visible price jumps, with deterministic movement between them.
+- **Gamma and inverse Gaussian:** infinitely many small jumps in every positive interval. Exact increment sampling gives exact distributions at the grid times; the display does not locate all intervening jumps.
+
+The asset price may have upward or downward jumps depending on the sign of $a$, even when the information driver only increases. For all families, the likelihood ratio is evaluated without discretizing an SDE. Exact finite-increment simulation is also available in classical models when their transition law is known—the normal/GBM example is a direct instance of that agreement.
+
+## Where to go next
+
+Use [normal and GBM](normal.qmd) for the connection with stochastic calculus, [Poisson](poisson.qmd) for a visible jump clock, then [gamma](gamma.qmd) and [inverse Gaussian](inverse-gaussian.qmd) for infinite activity. The [negative-binomial model](negative-binomial.qmd) provides the cleanest comparison of different sampling clocks carrying the same likelihood evidence.
+
+**Source:** Jan Vecer, *Principles of Portfolio Choice*, Chapter 5, “Dynamic Price Models with Linear Information Flow.”

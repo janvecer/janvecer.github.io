@@ -1,0 +1,128 @@
+---
+title: "Portfolio laboratory"
+subtitle: "Mix available asset densities to express a belief"
+description: "An editable finite-state portfolio laboratory: choose asset distributions, form cost-weighted mixtures, and optimize exact log growth or quadratic objectives."
+css: portfolio-tools.css
+resources:
+  - portfolio-tools.js
+include-after-body:
+  - text: |
+      <script src="portfolio-tools.js"></script>
+---
+
+A desired probability distribution need not be attainable with the assets a market offers. The [trinomial model](trinomial.qmd) makes that restriction visible. This laboratory turns it into a portfolio problem: enter the distributions carried by the available assets, then find their best mixture for your belief.
+
+This is a finite-state, one-period model. Every number describes the same scenario and horizon, and all prices and payoffs use the same reference asset $Y$.
+
+## A portfolio is a mixture of measures
+
+Write $q_i=\mathbb P^Y(i)>0$ for market pricing probabilities, $p_i=\mathbb P^M(i)$ for beliefs, and $a_{ji}=\mathbb P^{A_j}(i)$ for the distribution carried by asset $j$. A unit of initial wealth invested in that asset pays
+
+$$
+G^j(i)=\frac{a_{ji}}{q_i}.
+$$
+
+Allocate cost weights $w_j\geq0$ with $\sum_jw_j=1$. The portfolio's distribution is
+
+$$
+v_i=\sum_jw_ja_{ji},
+$$
+
+and its gross payoff is
+
+$$
+G(i)=\frac{v_i}{q_i}.
+$$
+
+The weights are fractions of the **initial budget**, not numbers of shares. If the initial asset price is $A_j(0)$ and total wealth is $W$, the holding is $w_jW/A_j(0)$ units. A reference-asset holding has density $a_{0i}=q_i$ and gross payoff one.
+
+## Enter a market and a belief
+
+Each row is a distribution across the same states. For example, “state 1” must mean the same outcome in the market row, belief row and every asset row. The table accepts 2–12 states and up to eight risky asset distributions; the reference asset is always available. Apply the inputs to normalize proportional weights explicitly. The market row must remain strictly positive; beliefs and asset rows may contain zeros.
+
+Start with the book's incomplete three-state example, solve for log growth, and inspect the residual mismatch. Then try the four-state menu or the fully spanned state-claim preset. You can also change an asset density or add another asset. A larger menu can improve the best attainable growth, but it need not change the optimum if the added asset provides no useful new exposure.
+
+:::: {#fig-portfolio-laboratory}
+::: {data-portfolio-tool="mixture"}
+Interactive portfolio laboratory. It needs JavaScript.
+:::
+
+Editable pricing, belief and asset distributions. The solver chooses long-only cost weights. The displayed density and payoff describe the same portfolio; its expected log growth is always evaluated under the belief row, whichever optimization criterion is selected.
+::::
+
+::: {.callout-tip title="A useful three-step experiment"}
+1. Solve with the default asset menu. Inspect where the implemented distribution misses the belief.
+2. Add an asset whose distribution equals your belief. Under exact log optimization, the mismatch can now reach zero.
+3. Change that asset so it no longer matches. Compare the exact log and quadratic solutions, then inspect their statewise payoffs.
+:::
+
+## What the exact solver minimizes
+
+Use $D(P\Vert Q)$ for KL divergence. Expected log growth satisfies
+
+$$
+\begin{aligned}
+\mathbb E^M[\log G]&=D(p\Vert q)\\
+&\quad-D(p\Vert v).
+\end{aligned}
+$$
+
+For fixed prices and beliefs, the first term is constant. The exact problem is therefore
+
+$$
+\min_{w\in\Delta}\;D\bigl(p\Vert v(w)\bigr),
+$$
+
+where $\Delta$ is the simplex of nonnegative weights summing to one.
+
+The feasible distributions form the convex hull of the asset rows. The optimizer finds the closest point in that set in the stated direction of KL divergence. Reversing the arguments would solve a different problem.
+
+If $p$ lies in the hull, the full likelihood-ratio payoff is attainable. If it lies outside, the minimum divergence is the exact amount of expected log growth lost because of the restricted menu. The portfolio measure may be unique even when several weight vectors implement it.
+
+::: {.callout-note collapse="true" title="Why this optimization is convex"}
+Ignoring a constant independent of $w$, the objective is
+
+$$
+-\sum_{i:p_i>0}p_i\log v_i.
+$$
+
+Each $v_i$ is linear in $w$, and $-\log$ is convex. The simplex of nonnegative weights summing to one is a convex feasible set. A valid first-order optimum is therefore globally optimal within this menu and these constraints.
+
+For finite growth, every state with $p_i>0$ needs $v_i>0$. If all available assets assign zero mass to such a state, every allocation has expected log growth $-\infty$. Including the reference asset guarantees a feasible portfolio with finite growth.
+:::
+
+## Read the numerical result
+
+The reported expected growth uses natural logarithms, so it is measured in nats over the chosen horizon. It is model-implied expected log return, not a promised return and not automatically an annual rate. The payoff table provides the statewise outcomes that produce it.
+
+A numerical optimum is assessed by its first-order gap. For exact log growth, define the marginal improvement of asset $j$ by
+
+$$
+b_j=\sum_{i:p_i>0}\frac{p_ia_{ji}}{v_i}.
+$$
+
+At a finite feasible portfolio, $\sum_jw_jb_j=1$. The gap
+
+$$
+\delta=\max_jb_j-1
+$$
+
+bounds the remaining possible improvement in expected log growth. A small gap certifies that the current allocation is close to the global optimum in objective value. It does not guarantee that every individual weight is close to a unique target; redundant assets can give many equivalent portfolios.
+
+## Why the quadratic solution can differ
+
+The laboratory offers exact log growth, the book's mixed quadratic and classical mean–variance. The [mean–variance page](mean-variance.qmd) also explains their relation to the ordinary Taylor approximation. Exact log growth minimizes $D(p\Vert v)$. The mixed quadratic minimizes
+
+$$
+\frac12\sum_i\frac{(v_i-p_i)^2}{q_i}.
+$$
+
+Classical mean–variance instead uses the portfolio mean and covariance under the subjective measure. It has a separate risk-penalty parameter. These are different objectives on the same feasible set; comparing their exact log growth afterward makes the consequences visible.
+
+Long-only mixtures guarantee a nonnegative payoff and make the feasible set easy to interpret. Short selling would enlarge the set to affine combinations, with an additional statewise constraint to keep the payoff nonnegative. That extension changes the feasible geometry and is outside this laboratory.
+
+**Continue:** [options](options.qmd) provide concrete asset-density shapes that can serve as portfolio ingredients. [Utility and fractional Kelly](utility.qmd) explain how a preference or reserve rule changes the target portfolio.
+
+::: {.callout-note collapse="true" title="Book connection"}
+Based on Chapter 1 of Jan Vecer's *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, especially the theorem “State price density of a general static portfolio,” together with the constrained portfolio problems and information projections in Chapter 3. The finite-state laboratory illustrates these constructions without introducing a dynamic trading rule.
+:::

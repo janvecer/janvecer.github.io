@@ -1,0 +1,133 @@
+---
+title: "Gamma: accumulated activity"
+subtitle: "An increasing driver, infinitely many jumps, one simple likelihood ratio"
+css:
+  - lr-widgets.css
+  - continuous-models.css
+resources:
+  - continuous-models.js
+include-after-body:
+  - text: |
+      <script src="continuous-models.js"></script>
+---
+
+The [Poisson model](poisson.qmd) counts isolated events. A gamma driver records a nonnegative amount of accumulated activity. It could represent an abstract operational clock or accumulated volume; the financial interpretation requires a model linking that quantity to the application.
+
+The driver increases by jumps. Although its value at any fixed positive time has a continuous density, its paths are **not continuous**: a gamma process has infinitely many small jumps on every positive time interval.
+
+## Common shape, different rates
+
+Specify one additive driver $G(t)$ under two measures:
+
+$$
+\begin{aligned}
+G(t)&\sim\Gamma(\alpha t,\beta_X)
+&&\text{under }\mathbb P^X,\\
+G(t)&\sim\Gamma(\alpha t,\beta_Y)
+&&\text{under }\mathbb P^Y.
+\end{aligned}
+$$
+
+Here $\alpha>0$ is the common shape rate. The parameters $\beta_X,\beta_Y>0$ are **rates**, so the means and variances are
+
+$$
+E^j[G(t)]=\frac{\alpha t}{\beta_j},
+\qquad
+\operatorname{Var}^j[G(t)]=\frac{\alpha t}{\beta_j^2}.
+$$
+
+For $z>0$ and $j\in\{X,Y\}$, the density is
+
+$$
+f_j(z,t)=\frac{\beta_j^{\alpha t}}{\Gamma(\alpha t)}
+z^{\alpha t-1}e^{-\beta_jz}.
+$$
+
+The common power of $z$ and the gamma-function factor cancel. The resulting price is
+
+$$
+\begin{aligned}
+\frac{X(t)}{X(0)}
+&=\left(\frac{\beta_X}{\beta_Y}\right)^{\alpha t}
+e^{(\beta_Y-\beta_X)G(t)},\\
+\log\frac{X(t)}{X(0)}&=aG(t)+bt,
+\end{aligned}
+$$
+
+$$
+a=\beta_Y-\beta_X,
+\qquad b=\alpha\log\frac{\beta_X}{\beta_Y}.
+$$
+
+The common shape is essential for this affine expression. Different shape rates would leave an additional $\log G(t)$ term.
+
+## Explore the model
+
+The figure fixes $\beta_Y=2$. Choose the common shape rate, forward information rate and jump direction; the corresponding $\beta_X$ is then determined. The displayed horizon is at least $0.5$ and $\alpha\ge2$, keeping the horizon density finite at zero. This is an exploration range, not a restriction on the mathematical gamma family.
+
+::: {data-continuous-model="gamma"}
+The interactive model requires JavaScript. The default common shape rate is $\alpha=3$, the pricing rate is $\beta_Y=2$ and the forward information rate is $k=0.05$ nats per time unit.
+:::
+
+## Driver jumps become price jumps
+
+For a driver jump of size $\Delta G(t)>0$,
+
+$$
+\frac{X(t)}{X(t-)}=e^{a\Delta G(t)}.
+$$
+
+If $\beta_X>\beta_Y$, the asset measure favors smaller amounts of activity. An upward jump in observed activity then produces a downward price jump, while $b>0$ supplies the compensating deterministic component. If $\beta_X<\beta_Y$, the price jumps upward and $b<0$.
+
+There is no positive interval free of all gamma jumps. The decomposition $aG(t)+bt$ still separates the jump contribution from the deterministic contribution, but it should not be described as a succession of isolated jumps with empty waiting periods.
+
+The jump intensity density under measure $\mathbb P^j$ is
+
+$$
+\nu_j(dz)=\alpha z^{-1}e^{-\beta_jz}\,dz,
+\qquad z>0.
+$$
+
+Its integral diverges near zero, giving infinite activity. The integral of jump size against this density is finite, so total accumulated jump size is finite over bounded intervals.
+
+## Information accumulated per unit time
+
+Taking the mean of the affine log likelihood gives the divergence between the two observation laws at horizon $t$:
+
+$$
+\begin{aligned}
+D(\mathbb P^X\Vert\mathbb P^Y)&=k_Xt,\\
+k_X&=\alpha\left[
+\log\frac{\beta_X}{\beta_Y}
+-1+\frac{\beta_Y}{\beta_X}\right].
+\end{aligned}
+$$
+
+Reversing the two measures gives
+
+$$
+k_Y=\alpha\left[
+\log\frac{\beta_Y}{\beta_X}
+-1+\frac{\beta_X}{\beta_Y}\right].
+$$
+
+The expected log-price slopes are $+k_X$ under $\mathbb P^X$ and $-k_Y$ under $\mathbb P^Y$. The price ratio itself remains a mean-one martingale under $\mathbb P^Y$.
+
+## From discrete blocks to an additive clock
+
+The [negative-binomial model](negative-binomial.qmd) sums independent geometric blocks. Gamma laws supply a continuous-valued analogue: independent gamma variables with the same rate add their shape parameters,
+
+$$
+\begin{gathered}
+\Gamma(\alpha s,\beta)+\Gamma(\alpha t,\beta)\\
+\overset{d}{=}\ \Gamma(\alpha(s+t),\beta).
+\end{gathered}
+$$
+
+For integer shape, a gamma variable is a sum of exponential waiting times. Positive noninteger shapes extend that family consistently to every time increment. The simulation uses these exact increment distributions; the connecting segments do not reproduce the infinitely many individual jumps.
+
+**Continue:** the [inverse Gaussian model](inverse-gaussian.qmd) gives another additive positive clock, with a different density and a stronger small-jump singularity.
+
+::: {.callout-note collapse="true" title="Source and conventions"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 5, “Gamma family.” Shape–rate convention: $\Gamma(s,\beta)$ has mean $s/\beta$. All prices are in units of $Y$; $\mathbb P^X$ and an investor's $\mathbb P^M$ are distinct unless explicitly identified.
+:::

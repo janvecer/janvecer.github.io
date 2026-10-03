@@ -1,0 +1,143 @@
+---
+title: "Inverse Gaussian: a random clock"
+subtitle: "A first-passage-time law becomes an explicit likelihood-ratio price"
+css:
+  - lr-widgets.css
+  - continuous-models.css
+resources:
+  - continuous-models.js
+include-after-body:
+  - text: |
+      <script src="continuous-models.js"></script>
+---
+
+The inverse Gaussian family supplies a second nonnegative additive driver alongside the [gamma model](gamma.qmd). Its increments have a continuous, right-skewed density, while its paths increase through infinitely many jumps.
+
+One interpretation comes from first-passage times. Let a Brownian motion with positive drift $\gamma$ run until it first reaches height $\delta t$:
+
+$$
+\begin{aligned}
+B(s)&=W(s)+\gamma s,\\
+I(t)&=\inf\{s\ge0:B(s)\ge\delta t\}.
+\end{aligned}
+$$
+
+As the target height increases, the required waiting time forms an inverse Gaussian clock. Here $t$ indexes the target level; $s$ is the underlying Brownian clock. The likelihood model can be specified directly through the resulting distributions, without simulating that Brownian first-passage construction.
+
+## Fix the additive scale; vary the tail parameter
+
+Use a common $\delta>0$ and two positive parameters $\gamma_X,\gamma_Y$:
+
+$$
+\begin{aligned}
+I(t)&\sim\operatorname{IG}(\delta t,\gamma_X)
+&&\text{under }\mathbb P^X,\\
+I(t)&\sim\operatorname{IG}(\delta t,\gamma_Y)
+&&\text{under }\mathbb P^Y.
+\end{aligned}
+$$
+
+In this parameterization, for $z>0$,
+
+$$
+\begin{aligned}
+f_j(z,t)
+&=\frac{\delta t}{\sqrt{2\pi}}z^{-3/2}e^{\delta\gamma_jt}\\
+&\quad\times\exp\!\left\{
+-\frac{\delta^2t^2}{2z}
+-\frac{\gamma_j^2z}{2}\right\}.
+\end{aligned}
+$$
+
+The moments help interpret the parameters:
+
+$$
+E^j[I(t)]=\frac{\delta t}{\gamma_j},
+\qquad
+\operatorname{Var}^j[I(t)]=\frac{\delta t}{\gamma_j^3}.
+$$
+
+Increasing $\gamma_j$ reduces both the mean accumulation rate and its variance. Increasing the common scale $\delta$ increases both linearly.
+
+## A complicated density, a simple ratio
+
+The common prefactor and the term involving $1/z$ cancel in the ratio. Only an affine expression remains:
+
+$$
+\begin{aligned}
+\log\frac{X(t)}{X(0)}&=aI(t)+bt,\\
+a&=-\frac12(\gamma_X^2-\gamma_Y^2),\\
+b&=\delta(\gamma_X-\gamma_Y).
+\end{aligned}
+$$
+
+Thus
+
+$$
+\frac{X(t)}{X(0)}=\exp\{aI(t)+bt\}.
+$$
+
+The common scale $\delta$ is what removes the nonlinear $1/I(t)$ term. It is part of the model specification, not an accidental cancellation.
+
+## Explore the clock and its price
+
+The figure fixes $\gamma_Y=2$. Choose $\delta$, the information rate and a price-jump direction; the matching $\gamma_X$ follows from the KL formula. No drift or jump-size parameter is independently added after the densities have been selected.
+
+::: {data-continuous-model="inverse-gaussian"}
+The interactive model requires JavaScript. The default common scale is $\delta=2$, the pricing parameter is $\gamma_Y=2$ and the forward information rate is $k=0.05$ nats per time unit.
+:::
+
+## Direction and information
+
+At a driver jump $\Delta I(t)>0$, the price multiplier is $e^{a\Delta I(t)}$. If $\gamma_X>\gamma_Y$, then $a<0$: greater realized clock activity decreases the price. The deterministic component has $b>0$. Reversing the parameter ordering reverses both signs.
+
+The two information rates have compact forms:
+
+$$
+\begin{aligned}
+k_X&=\frac{\delta}{2\gamma_X}
+(\gamma_X-\gamma_Y)^2,\\
+k_Y&=\frac{\delta}{2\gamma_Y}
+(\gamma_X-\gamma_Y)^2.
+\end{aligned}
+$$
+
+Therefore
+
+$$
+\begin{aligned}
+E^X\!\left[\log\frac{X(t)}{X(0)}\right]&=k_Xt,\\
+E^Y\!\left[\log\frac{X(t)}{X(0)}\right]&=-k_Yt.
+\end{aligned}
+$$
+
+Unless the two laws coincide, the reverse-to-forward information-rate ratio is $k_Y/k_X=\gamma_X/\gamma_Y$. Matching the forward rate to another family does not generally match the reverse rate or the path shape.
+
+## What the grid shows—and what it cannot
+
+Under $\mathbb P^j$, the jump intensity density is
+
+$$
+\nu_j(dz)=\frac{\delta}{\sqrt{2\pi}}
+z^{-3/2}e^{-\gamma_j^2z/2}\,dz.
+$$
+
+The $z^{-3/2}$ singularity is stronger than the gamma model's $z^{-1}$ singularity. Both produce infinitely many small jumps and finite total accumulated jump size on bounded time intervals.
+
+Independent increments preserve the family: scales add while $\gamma_j$ stays fixed. The widget samples the exact law $\operatorname{IG}(\delta\Delta t,\gamma_j)$ at each grid interval. Its connecting segments visualize observed values and do not resolve the full infinite-activity path. Apparent smoothness at one plotting scale is not evidence of a diffusion.
+
+## One construction, several forms of uncertainty
+
+Normal, Poisson, gamma and inverse Gaussian models all produce
+
+$$
+\log\frac{X(t)}{X(0)}=aZ(t)+bt.
+$$
+
+Their differences lie in the additive observation $Z(t)$ and in the two laws assigned to it. The likelihood ratio handles the price normalization in every case. Independent drivers can later be combined by multiplying likelihood ratios, so their log prices and divergences add at the level of the joint observation.
+
+**Continue:** return to [linear information flow](linear-information.qmd) to compare the families, or to the [framework](index.qmd) to connect prices with portfolio choice.
+
+::: {.callout-note collapse="true" title="Source and conventions"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 5, “Inverse Gaussian family.” The book's $\operatorname{IG}(\delta t,\gamma)$ convention corresponds to the usual mean–shape parameters $\mu=\delta t/\gamma$ and $\lambda=(\delta t)^2$. Prices are in units of $Y$.
+:::

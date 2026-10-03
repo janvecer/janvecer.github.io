@@ -1,0 +1,138 @@
+---
+title: "The trinomial model"
+subtitle: "One stock. Three states. Two different questions."
+css:
+  - lr-widgets.css
+  - discrete-models.css
+resources:
+  - discrete-models.js
+include-after-body:
+  - text: |
+      <script src="discrete-models.js" defer></script>
+---
+
+The [binomial model](binomial.qmd) has just enough traded payoffs to distinguish its two states. A third state exposes two separate issues: **which pricing measure fits the traded returns, and which investor beliefs can be implemented by trading?**
+
+Work in units of $Y$ and take the book's three-state stock return:
+
+$$
+R^X=\left(\frac32,1,\frac12\right).
+$$
+
+Only $X$ and $Y$ are traded. Every state is possible; borrowing and short selling are available unless a portfolio constraint is explicitly imposed.
+
+## First, find all consistent pricing measures
+
+The pricing weights must satisfy
+
+$$
+q_1+q_2+q_3=1,
+$$
+
+$$
+\frac32q_1+q_2+\frac12q_3=1.
+$$
+
+Subtracting these equations gives $q_1=q_3$. Thus the positive pricing measures form a line:
+
+$$
+\mathbb P^Y(t)=(t,1-2t,t),
+\qquad 0<t<\frac12.
+$$
+
+Each choice gives an asset measure by multiplying the pricing weights by the stock return:
+
+$$
+\mathbb P^X(t)
+=\left(\frac{3t}{2},1-2t,\frac t2\right).
+$$
+
+Both martingale checks now hold:
+
+$$
+\mathbb E^Y[R^X]=1,
+\qquad
+\mathbb E^X[1/R^X]=1.
+$$
+
+The first prices $X$ in units of $Y$. The second prices $Y$ in units of $X$. Choosing another $t$ changes both measures while preserving the same stock returns.
+
+## Then choose an attainable portfolio
+
+Put a fraction $w$ of initial wealth in $X$, and $1-w$ in $Y$. Its return is
+
+$$
+R^{V,w}
+=\left(1+\frac w2,1,1-\frac w2\right).
+$$
+
+For a **fixed** pricing measure, its implied density is
+
+$$
+\mathbb P^{V,w}
+=(1-w)\mathbb P^Y+w\mathbb P^X.
+$$
+
+With no short sales, $0\le w\le1$: the investor can move along a line segment in the probability triangle. Allowing borrowing and short selling extends the line; nonnegative terminal wealth imposes $-2\le w\le2$. Neither case fills the triangle.
+
+::: {data-discrete-model="trinomial"}
+The interactive figure requires JavaScript. At the book's default $t=1/3$, the pricing measure is $(1/3,1/3,1/3)$ and the stock measure is $(1/2,1/3,1/6)$. Every stock-and-cash portfolio retains middle-state probability $1/3$.
+:::
+
+The left triangle varies the **pricing rule**, holding the stock's returns fixed. The right triangle varies the **portfolio**, holding the selected pricing rule fixed. Each corner represents all probability concentrated on one state; interior points assign weight to all three.
+
+## Why a belief can be unattainable
+
+At the book's choice $t=1/3$,
+
+$$
+\mathbb P^{V,w}
+=\left(\frac{2+w}{6},\frac13,\frac{2-w}{6}\right).
+$$
+
+Now consider the investor's beliefs
+
+$$
+\mathbb P^M=\left(\frac12,\frac16,\frac13\right).
+$$
+
+Every attainable portfolio has middle-state weight $1/3$, while the investor assigns $1/6$. No choice of $w$ can make the two distributions equal. The unrestricted likelihood payoff $\mathbb P^M/\mathbb P^Y$ exists as a mathematical claim, but it cannot be replicated using only this stock and cash.
+
+The best attainable portfolio instead minimizes
+
+$$
+D_{\mathrm{KL}}(\mathbb P^M\Vert\mathbb P^{V,w}).
+$$
+
+Equivalently, it maximizes
+
+$$
+\begin{aligned}
+g(w)&=\frac12\log\left(1+\frac w2\right)\\
+&\quad+\frac13\log\left(1-\frac w2\right).
+\end{aligned}
+$$
+
+Here the maximizing weight is $w=2/5$, under either of the displayed constraints. The figure shows its remaining information mismatch. This weight depends on the beliefs and the traded returns, so it stays the same as $t$ changes. The two divergences in the growth decomposition change together.
+
+::: {.callout-note title="A useful special case"}
+At $t=5/12$, this particular belief lies on the attainable line and the mismatch vanishes at $w=2/5$. The market remains incomplete: implementing one selected belief does not mean that every payoff is spanned.
+:::
+
+## Incompleteness also leaves a price range
+
+A claim paying one in the middle state and zero otherwise would have price
+
+$$
+C(0)=\mathbb P^Y(\omega_2)=1-2t.
+$$
+
+The original stock and cash prices permit every value in $(0,1)$. This is an open no-arbitrage interval; its endpoints are limiting bounds, not admissible prices when all three states remain possible. Trading that additional claim at a price inside the interval would identify $t$ and complete this one-period market.
+
+This is the distinction behind the [fundamental theorem of asset pricing](dynamics.qmd): no arbitrage gives existence of a pricing measure; completeness gives uniqueness. A likelihood description respects the same distinction.
+
+::: {.callout-tip title="Read alongside the book"}
+Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 1, “Trinomial model” and “Numerical trinomial mixture: rigid asset densities”; Chapter 3, incomplete markets and relative-entropy projection.
+:::
+
+[Back to the framework](index.qmd) · [Next: negative binomial](negative-binomial.qmd)

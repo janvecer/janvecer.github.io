@@ -1,0 +1,142 @@
+---
+title: "Discrete hedging"
+subtitle: "Match the next interval's density with the assets you can trade"
+description: "Explore discrete hedging in the normal model by comparing conditional option, stock and cash densities and minimizing relative entropy."
+css: hedging.css
+resources:
+  - normal-options.js
+  - hedging.js
+include-after-body:
+  - text: |
+      <script src="normal-options.js"></script>
+      <script src="hedging.js"></script>
+---
+
+An option carries a probability density. A portfolio of stock and cash carries another. **Hedging asks how closely the second can reproduce the first.** Exact agreement means replication; a remaining difference records the exposures the available portfolio cannot match.
+
+The [options page](options.qmd) plots distributions over observations at expiry. Here the question is local: what can a portfolio reproduce **between now and the next trading date**? All prices are in units of $Y$, so the reference asset has value one.
+
+## One trading interval
+
+Suppose the stock is worth $x=X(t)$ today, the call expires in $\tau=T-t$ years, and the next rebalance is in $h$ years, with $0<h\leq\tau$. In the [normal model](normal.qmd), a standard normal shock $z$ produces the stock multiplier
+
+$$
+R(h,z)=\exp\!\left\{\sigma\sqrt h\,z-\tfrac12\sigma^2h\right\}.
+$$
+
+Under the pricing measure, the shock has density $q(z)=\varphi(z)$. The stock's conditional density is therefore
+
+$$
+p(z)=R(h,z)\varphi(z).
+$$
+
+Both integrate to one: $\mathbb E^Y[R(h,Z)]=1$. The plotted horizontal axis is the **same standardized shock** for every density. These are distributions over the next interval's information, not histograms of hedging errors.
+
+Write $C(x,\tau)$ for the Black–Scholes call value at current stock price $x$ and remaining maturity $\tau$. At the next trading date, its value is $C(xR(h,z),\tau-h)$. Consequently the call's conditional density is
+
+$$
+c(z)=
+\frac{C(xR(h,z),\tau-h)}{C(x,\tau)}
+\varphi(z).
+$$
+
+Before expiry, the numerator is the **remaining option value**, rather than its terminal payoff. At $h=\tau$, it becomes $(xR(h,z)-K)^+$. Conditional pricing ensures that this density also integrates to one.
+
+## A target that includes a reserve
+
+The explorer can hedge a call together with a fixed reserve $B\geq0$ in $Y$. Its current value is
+
+$$
+H=C(x,\tau)+B.
+$$
+
+Its density over the next interval becomes
+
+$$
+c_B(z)=
+\frac{C(xR(h,z),\tau-h)+B}{H}
+\varphi(z).
+$$
+
+The default uses $B=K$: the terminal target is $(X(T)-K)^++K=\max(X(T),K)$, a stock position with a protected floor. This is also a put plus the stock by put–call parity.
+
+Adding the reserve changes the **target payoff** as well as its price. It makes the target less concentrated in upside states; it does not supply a cost-free improvement to the original call hedge.
+
+Spend a fraction $w$ of the same budget $H$ on stock and keep the rest in $Y$. Hold that position until the next trading date. Its value and density are
+
+$$
+V(t+h,z)=H\{1-w+wR(h,z)\},
+$$
+
+$$
+v(w,z)=\{1-w+wR(h,z)\}\varphi(z).
+$$
+
+This is a cost-weighted mixture of the stock and reference densities. The share holding is $\Delta(t)=Hw/x$; **the cost fraction $w$ and the number of shares $\Delta(t)$ are different quantities**.
+
+## Move the hedge toward the target
+
+Start with the call plus a reserve equal to the strike, then press **Fit the density**. Change the time to the next rebalance and compare the two curves. Finally select **Call only** to see why the positivity constraint matters.
+
+::: {data-hedging-lab=""}
+The interactive density comparison requires JavaScript. For a stock price of 100, strike of 110, annual volatility 30%, and one year remaining, the call costs about 8.14 and its Black–Scholes delta is about 0.433 shares. With a 110-unit reserve the target costs 118.14; the corresponding delta cost fraction is about 0.367.
+:::
+
+The fitted position minimizes the forward relative entropy
+
+$$
+w^\star=\underset{0\leq w\leq1}{\arg\min}\;
+D_{\mathrm{KL}}(c_B\Vert v(w)),
+$$
+
+$$
+\begin{aligned}
+&D_{\mathrm{KL}}(c_B\Vert v(w))\\
+&\quad=\int c_B(z)\log\frac{c_B(z)}{v(w,z)}\,dz.
+\end{aligned}
+$$
+
+Zero divergence means identical densities, hence identical next-date values for the same initial cost. Positive divergence measures the remaining mismatch in nats. It is also the loss of expected log performance, evaluated under the target measure, relative to holding the target itself.
+
+The optimization is convex in $w$. The figure compares its best value with the chosen position over several interval lengths. **Shorter intervals change the local problem:** they do not simply add more points to the same terminal distribution.
+
+## Why the call-only fit reaches a boundary
+
+In the normal model, the next stock multiplier can be arbitrarily close to zero or arbitrarily large. A position held unchanged over a finite interval must satisfy
+
+$$
+1-w+wR\geq0
+\qquad\text{for every }R>0.
+$$
+
+With only stock and cash, that condition is exactly $0\leq w\leq1$. Borrowing cash would give $w>1$, and sufficiently large downward moves would then make the portfolio negative. Shorting the stock would fail in the other tail. A negative function cannot be used as a probability density.
+
+For the default call without a reserve, Black–Scholes delta requires about 0.433 shares, costing about 43.34, while the call itself costs only 8.14. Its stock cost fraction is about 5.32: the rest is financed by borrowing. The finite-step positive-density fit cannot take that position. The **Call only** preset makes the restriction visible by putting the best admissible fit at the all-stock boundary.
+
+This does not contradict continuous-time replication. A continuously rebalanced strategy changes its position as the stock moves. It is a different admissibility problem from a leveraged position left unchanged across a finite interval.
+
+## Where Black–Scholes delta reappears
+
+For the call plus a fixed reserve, the derivative with respect to stock price is still the call delta:
+
+$$
+\Delta^{\mathrm{BS}}(t)=\Phi(d(1)).
+$$
+
+$$
+w^{\mathrm{BS}}=\frac{x\Phi(d(1))}{H}.
+$$
+
+The [options page](options.qmd) defines $d(1)$ and derives the Black–Scholes formula from two normal tail probabilities. When this cost fraction is strictly inside the admissible interval, the short-interval KL fit approaches the same delta. The default reserve is large enough for this condition to hold. Press **Fit the density**, then reduce $h$ to see the fitted share holding approach the delta benchmark.
+
+The book also develops two quadratic hedges: a target-relative weighted error criterion, and the classical minimum-variance criterion. Their finite-step positions need not agree. In the normal model, both approach delta as the interval shrinks. The direct KL fit shown here retains the full logarithmic objective and its positivity restriction.
+
+::: {.callout-note collapse="true" title="What is being calculated"}
+The lab solves one conditional trading interval at the current stock price. A strategy on a trading grid repeats that calculation after each observed move, using the new stock price and remaining maturity. The graphs do not claim to show a complete multistep replication or a realized hedge profit.
+
+The integrals use deterministic numerical quadrature over standard normal shocks, with a separate breakpoint at the strike when the interval reaches expiry. The plotted range contains nearly all the probability mass for these controls; numerical integration uses a wider range. Zero target density contributes zero to forward KL. The normal family and volatility range keep the integration well behaved.
+:::
+
+::: {.callout-note collapse="true" title="Book connection"}
+Based on Chapter 6 of Jan Vecer's *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*: local Kullback–Leibler projection, cost weights versus hedge shares, the normal model's discrete call hedges, and the full-support positivity restriction. The reserve is an explicit target modification that makes an interior stock-and-cash comparison possible.
+:::

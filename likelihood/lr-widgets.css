@@ -1,0 +1,234 @@
+/* lr-widgets.css
+ * One color per probability measure, used identically in every figure and
+ * in the prose: market P^Y, investor's model P^M, traded asset P^X,
+ * payoff-implied P^V, and red for divergence lost.
+ */
+
+:root {
+  --lrw-market: #3a64a0;
+  --lrw-belief: #a86b0c;
+  --lrw-asset: #2b7a55;
+  --lrw-payoff: #7b4a95;
+  --lrw-loss: #b43f33;
+  --lrw-control: #65717f;
+  --lrw-ink: currentColor;
+  --lrw-muted: color-mix(in srgb, currentColor 62%, transparent);
+  --lrw-rule: color-mix(in srgb, currentColor 16%, transparent);
+  --lrw-panel: color-mix(in srgb, currentColor 4.5%, transparent);
+}
+
+body.quarto-dark {
+  --lrw-market: #8db0e3;
+  --lrw-belief: #e3ad4f;
+  --lrw-asset: #6fc79d;
+  --lrw-payoff: #c29ad8;
+  --lrw-loss: #ec8a7c;
+  --lrw-control: #bac4d2;
+}
+
+.lrw {
+  margin: 1.25rem 0 0.75rem;
+  min-width: 0;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.lrw *, .lrw *::before, .lrw *::after { box-sizing: border-box; }
+
+/* ---------- controls ---------- */
+
+.lrw-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.5rem 2rem;
+  padding: 0.8rem 1rem 0.6rem;
+  background: var(--lrw-panel);
+  border-radius: 3px;
+}
+.lrw-group { min-width: 0; }
+.lrw-group[hidden] { display: none; }
+
+.lrw-group-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.lrw-ctl {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, auto) minmax(0, 1fr) 3.4rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  margin: 0.1rem 0;
+  font-weight: normal;
+}
+.lrw-ctl-name { margin: 0; font-weight: normal; }
+
+.lrw-ctl input[type="range"] {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  accent-color: var(--lrw-control);
+}
+.lrw-ctl input[type="range"]:focus-visible { outline: 2px solid var(--lrw-market); outline-offset: 3px; }
+
+.lrw-ctl output {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.lrw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0.2rem;
+}
+
+.lrw-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.7rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--lrw-rule);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.lrw-btn:hover { background: var(--lrw-panel); }
+.lrw-btn:focus-visible { outline: 2px solid var(--lrw-market); outline-offset: 2px; }
+.lrw-toggle .lrw-btn[aria-pressed="true"] {
+  background: var(--lrw-panel);
+  border-color: var(--lrw-muted);
+  font-weight: 600;
+}
+
+/* ---------- legend and swatches ---------- */
+
+.lrw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.2rem;
+  margin: 0.7rem 0 0.1rem;
+  font-size: 0.85rem;
+}
+.lrw-legend-item { max-width: 100%; }
+
+.lrw-swatch {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-right: 0.4em;
+  border-radius: 1px;
+  vertical-align: -0.05em;
+}
+.lrw-swatch-ring { background: transparent !important; border: 1.5px solid currentColor; border-radius: 50%; }
+.lrw-swatch-diamond { background: transparent !important; border: 1.5px solid currentColor; transform: rotate(45deg) scale(0.85); }
+.lrw-swatch-outline { background: transparent !important; border: 1.5px solid var(--lrw-market); }
+
+.lrw-bg-market { background: var(--lrw-market); }
+.lrw-bg-belief { background: var(--lrw-belief); }
+.lrw-bg-asset { background: var(--lrw-asset); }
+.lrw-bg-payoff { background: var(--lrw-payoff); }
+.lrw-bg-loss { background: var(--lrw-loss); }
+.lrw-bg-ink { background: currentColor; }
+
+/* text colors, used in prose readouts and in the site's own paragraphs */
+.lrw-c-market { color: var(--lrw-market); }
+.lrw-c-belief { color: var(--lrw-belief); }
+.lrw-c-asset { color: var(--lrw-asset); }
+.lrw-c-payoff { color: var(--lrw-payoff); }
+.lrw-c-loss { color: var(--lrw-loss); }
+
+/* ---------- charts ---------- */
+
+.lrw-chart { margin: 0.4rem 0 0; }
+.lrw-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lrw svg text { fill: currentColor; font-size: 12px; }
+.lrw svg .lrw-axis text { fill: var(--lrw-muted); font-size: 11px; }
+.lrw svg .lrw-axis-title { font-size: 11px; }
+.lrw svg .lrw-cat { font-size: 13px; }
+.lrw svg .lrw-bar-label { font-size: 11px; fill: var(--lrw-muted); }
+.lrw svg .lrw-muted { fill: var(--lrw-muted); }
+.lrw svg .lrw-strong { font-weight: 600; }
+
+.lrw-grid { stroke: var(--lrw-rule); stroke-width: 1; }
+.lrw-zero, .lrw-baseline { stroke: var(--lrw-muted); stroke-width: 1; }
+.lrw-tick { stroke: var(--lrw-muted); }
+.lrw-edge { stroke: var(--lrw-muted); stroke-width: 1.5; }
+.lrw-node { fill: currentColor; }
+
+.lrw-fill-market { fill: var(--lrw-market); }
+.lrw-fill-belief { fill: var(--lrw-belief); }
+.lrw-fill-asset { fill: var(--lrw-asset); }
+.lrw-fill-payoff { fill: var(--lrw-payoff); }
+.lrw-fill-loss { fill: var(--lrw-loss); }
+.lrw svg .lrw-tfill-market { fill: var(--lrw-market); }
+.lrw svg .lrw-tfill-belief { fill: var(--lrw-belief); }
+.lrw svg .lrw-tfill-asset { fill: var(--lrw-asset); }
+.lrw svg .lrw-tfill-payoff { fill: var(--lrw-payoff); }
+.lrw svg .lrw-tfill-loss { fill: var(--lrw-loss); }
+.lrw-stroke-market { stroke: var(--lrw-market); }
+.lrw-stroke-belief { stroke: var(--lrw-belief); }
+.lrw-stroke-asset { stroke: var(--lrw-asset); }
+.lrw-stroke-payoff { stroke: var(--lrw-payoff); }
+
+.lrw-translucent { opacity: 0.55; }
+.lrw-hist-asset { fill: var(--lrw-asset); fill-opacity: 0.65; }
+.lrw-hist-market { fill: none; stroke: var(--lrw-market); stroke-width: 1.25; }
+.lrw-marker-leader { stroke: var(--lrw-muted); stroke-width: 0.8; opacity: 0.45; }
+.lrw-marker-key {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.6rem 1rem;
+  margin: 0.4rem 0 0.9rem;
+  font-size: 0.85rem;
+}
+.lrw-marker-key-item > span:last-child { display: block; padding-left: 1.15em; }
+.lrw-curve { stroke: currentColor; stroke-width: 2; }
+.lrw-line { stroke-width: 2; fill: none; }
+.lrw-path { stroke-width: 1.1; opacity: 0.75; fill: none; }
+.lrw-mean { stroke-width: 1.6; stroke-dasharray: 6 4; fill: none; }
+.lrw-threshold { stroke: var(--lrw-loss); stroke-width: 1.4; stroke-dasharray: 2 3; }
+.lrw-shortfall { stroke: var(--lrw-loss); stroke-width: 3; }
+.lrw-peakline { stroke: var(--lrw-belief); stroke-width: 1; stroke-dasharray: 3 3; }
+.lrw-dot { stroke: var(--bs-body-bg, #fff); stroke-width: 1.5; }
+.lrw-ring, .lrw-diamond { fill: none; stroke: currentColor; stroke-width: 1.5; }
+
+/* ---------- ledger table and readouts ---------- */
+
+.lrw-table-wrap { max-width: 100%; overflow-x: auto; }
+.lrw-table-wrap:focus-visible { outline: 2px solid var(--lrw-market); outline-offset: 2px; }
+
+.lrw-table {
+  width: 100%;
+  margin: 0.8rem 0 0.2rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.lrw-table th, .lrw-table td {
+  padding: 0.3rem 0.5rem;
+  text-align: right;
+  border-bottom: 1px solid var(--lrw-rule);
+}
+.lrw-table th:first-child, .lrw-table td:first-child { text-align: left; }
+.lrw-table thead th { font-weight: 600; vertical-align: bottom; }
+
+.lrw-readout { font-size: 0.9rem; margin-top: 0.5rem; }
+.lrw-readout p { margin: 0.25rem 0; }
+.lrw-num { font-weight: 600; }
+.lrw-warn { color: var(--lrw-loss); }
+.lrw-context { font-size: 0.85rem; color: var(--lrw-muted); margin: 0.5rem 0 0; }
+
+@media (max-width: 575px) {
+  .lrw-ctl { grid-template-columns: minmax(0, 1fr) 3.4rem; }
+  .lrw-ctl-name { grid-column: 1 / -1; }
+  .lrw-ctl input[type="range"] { min-height: 1.5rem; }
+  .lrw-table { font-size: 0.8rem; }
+  .lrw-table th, .lrw-table td { padding: 0.25rem 0.3rem; }
+}
+
+/* At 320px viewport width, a 440-unit SVG scales to about 0.65.
+ * These coordinate sizes preserve roughly 12–13px rendered text. */
+.lrw svg.lrw-narrow text { font-size: 20px; }
+.lrw svg.lrw-narrow .lrw-axis text,
+.lrw svg.lrw-narrow .lrw-axis-title { font-size: 18px; }
+.lrw svg.lrw-narrow .lrw-bar-label { display: none; }

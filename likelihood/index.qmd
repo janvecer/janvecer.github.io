@@ -1,0 +1,300 @@
+---
+title: "Likelihood Finance"
+subtitle: "A guided introduction: from the price of one bet to the information in a portfolio"
+description: "Learn likelihood-based finance step by step through state prices, worked examples, relative entropy, and interactive portfolios."
+css: lr-widgets.css
+resources:
+  - lr-widgets.js
+include-after-body:
+  - text: |
+      <script src="lr-widgets.js"></script>
+---
+
+Start with a simple question: **if you and the market disagree about the chances of an outcome, what investment expresses your view?** We will answer it with one bet, work through a football example, and then introduce the mathematics that connects portfolios with information.
+
+This is a web companion to Jan Vecer's *Principles of Portfolio Choice*. No knowledge of information theory is needed to begin.
+
+::: {.hero-actions}
+[Follow the worked example](#one-claim){.action-link .action-primary}
+[What is relative entropy?](relative-entropy.qmd){.action-link .action-quiet}
+[Explore two states](binomial.qmd){.action-link .action-quiet}
+:::
+
+## 1. Choose the unit in which we measure wealth
+
+Fix a strictly positive traded reference asset $Y$, held as a self-financing, total-return investment: any distributions are reinvested, rather than paid out separately. An interest-bearing account is one example. Express every price and payoff in **units of $Y$**: how many units of the reference asset could you exchange it for? In these units, the reference asset itself always has value
+
+$$
+Y(t)=1.
+$$
+
+If $Y$ is a cash account, this means measuring performance relative to that account. We write $X(0)$ for another asset's price now and $X(T)$ for its value at the final date. The ratio $X(T)/X(0)$ is its gross return in these reference units.
+
+Begin with finitely many possible outcomes and a market that lets us buy a separate claim on each one. Each quoted state price is strictly positive; trading is frictionless and arbitrage-free. Later we will ask what changes when only a few bundled assets are available.
+
+## 2. Understand one claim before building a portfolio {#one-claim}
+
+Suppose a football team can win, draw, or lose. A **win claim** pays one unit of $Y$ if the team wins, and zero otherwise. Suppose it costs $0.50$ units of $Y$.
+
+Spending one unit buys two such claims. If the team wins, they pay two units. Thus the claim's price is $q=0.5$, while its payout per unit staked—the decimal odds—is
+
+$$
+\frac{1}{q}=2.
+$$
+
+These are two descriptions of the same contract: **price per claim** and **payout per unit spent**.
+
+Buying one claim on every outcome guarantees exactly one unit of $Y$ at the final date. Holding one unit of the reference investment delivers the same thing. By the law of one price, the claims together cost one unit of $Y$ now, so their prices sum to one.[^reference-units] We denote this distribution of market state prices by $\mathbb P^Y$. It is a pricing distribution; it need not agree with an investor's assessment of the chances.
+
+[^reference-units]: The payoff unit matters. Ordinary state claims paying one unit of **currency** at $T$ have spot-currency prices that sum to the price of a zero-coupon bond maturing at $T$. Our claims instead pay one unit of the **reference investment**. Interest and reinvestment are already included in that investment; setting its value to one in its own units does not assume zero interest rates.
+
+## 3. Turn your probabilities into stakes
+
+Suppose you have $1{,}000$ units to invest. You assign probabilities $0.6$, $0.3$, and $0.1$ to Win, Draw, and Loss. Call your belief distribution $\mathbb P^M$.
+
+Allocate your budget in those proportions: $600$ to Win, $300$ to Draw, and $100$ to Loss. To find the number of claims bought, **divide each stake by the corresponding claim price**.
+
+::: {.intro-example-table}
+| Outcome | Belief | Price | Stake | Payoff |
+|:--|--:|--:|--:|--:|
+| Win | 0.6 | 0.5 | 600 | 1,200 |
+| Draw | 0.3 | 0.3 | 300 | 1,000 |
+| Loss | 0.1 | 0.2 | 100 | 500 |
+:::
+
+If Win occurs, only the win claims pay, so your final wealth is $1{,}200$. If Draw occurs, it is $1{,}000$; if Loss occurs, it is $500$. The three final wealth values are alternatives, not amounts to add together.
+
+Write $M$ for this investment. In outcome $\omega$, its stake is $M(0)\mathbb P^M(\omega)$. Dividing by the price per claim gives
+
+$$
+M(T,\omega)
+=\frac{M(0)\mathbb P^M(\omega)}{\mathbb P^Y(\omega)}.
+$$
+
+Consequently,
+
+$$
+\frac{M(T,\omega)}{M(0)}
+=\frac{\mathbb P^M(\omega)}{\mathbb P^Y(\omega)}.
+$$
+
+This ratio of probabilities is a **likelihood ratio**. The win return is $0.6/0.5=1.2$: your model puts more weight on Win than the market does, and your position pays more if Win occurs. Nothing has yet been optimized; we have simply translated probabilities into an investment.
+
+## 4. Run the construction backwards
+
+A payoff can also be translated into a probability distribution. Suppose a different investment $V$ costs $1{,}000$ and pays $(800,1200,1200)$ in the same three outcomes. Its price is consistent with the market weights because
+
+$$
+\begin{aligned}
+&0.5(800)+0.3(1200)\\
+&\quad+0.2(1200)=1000.
+\end{aligned}
+$$
+
+Divide its payoffs by its cost to obtain the returns $(0.8,1.2,1.2)$. Multiply those returns by the market probabilities:
+
+$$
+\mathbb P^V=(0.4,0.36,0.24).
+$$
+
+The entries sum to one. This is the distribution **implied by the payoff**, whether or not its owner consciously selected those probabilities. In general,
+
+$$
+\mathbb P^V(\omega)
+=\frac{V(T,\omega)}{V(0)}\mathbb P^Y(\omega).
+$$
+
+The budget fixes the size of the investment; this distribution describes how its payoff is spread across outcomes. We can move in either direction: probabilities determine a payoff, and a fairly priced nonnegative payoff determines probabilities.
+
+## 5. Measure the football investment's performance
+
+The football investment $M$ has wealth multipliers $1.2$, $1$, and $0.5$. A multiplier of $1.2$ means a 20% gain; $0.5$ means a 50% loss. Their **log returns** are
+
+$$
+\begin{aligned}
+\log(1.2)&\approx0.1823,\\
+\log(1)&=0,\\
+\log(0.5)&\approx-0.6931.
+\end{aligned}
+$$
+
+Why logarithms? Successive wealth multipliers multiply, while their logarithms add. In repeated independent investments, average log performance approaches expected log performance, provided the log return is integrable. This makes it a measure of long-run compounded growth. We derive that connection on the [relative-entropy page](relative-entropy.qmd#long-run-growth).
+
+An expectation must specify **which probabilities do the averaging**. Start with your beliefs, $(0.6,0.3,0.1)$:
+
+$$
+\begin{aligned}
+&\mathbb E^M\!\left[\log\frac{M(T)}{M(0)}\right]\\
+&=0.6\log(1.2)+0.3\log(1)\\
+&\quad+0.1\log(0.5)\\
+&\approx0.0401.
+\end{aligned}
+$$
+
+Now use the market weights, $(0.5,0.3,0.2)$, to average the **same three log returns**:
+
+$$
+\begin{aligned}
+&\mathbb E^Y\!\left[\log\frac{M(T)}{M(0)}\right]\\
+&=0.5\log(1.2)+0.3\log(1)\\
+&\quad+0.2\log(0.5)\\
+&\approx-0.0475.
+\end{aligned}
+$$
+
+The market assigns twice as much weight to the loss. The investment therefore has positive expected log performance under your beliefs and negative expected log performance under the market weights. Neither average guarantees a particular outcome.
+
+### Those averages have an information interpretation
+
+Recall that each wealth multiplier is a ratio of probabilities. For two distributions $p$ and $q$ on the same outcomes, define
+
+$$
+D(p\Vert q)
+=\sum_i p_i\log\frac{p_i}{q_i}.
+$$
+
+For each outcome, divide its two probabilities, take the logarithm, and then average using **the first distribution**, $p$. This is *relative entropy*, also called Kullback–Leibler divergence. Natural logarithms give units called **nats**.
+
+Our first calculation is exactly this definition:
+
+$$
+D(\mathbb P^M\Vert\mathbb P^Y)\approx0.0401.
+$$
+
+For the market average, reverse the order of the distributions and change the sign:
+
+$$
+-D(\mathbb P^Y\Vert\mathbb P^M)\approx-0.0475.
+$$
+
+Here “information” means average log evidence distinguishing two models. A likelihood ratio above one favors the numerator model; a ratio below one favors the denominator. Relative entropy averages that log evidence under the numerator model. It is nonnegative and vanishes only when the distributions agree. The [relative-entropy page](relative-entropy.qmd#why-the-average-is-nonnegative) explains why and lets you examine each contribution.
+
+## 6. Explore the example, then generalize
+
+Try changing the beliefs first, then the prices. Watch how **stake ÷ price = final wealth in that outcome** changes, along with the two expected log returns.
+
+:::: {#fig-three-state}
+::: {data-lrw="three-state"}
+Interactive figure. It needs JavaScript.
+:::
+
+The defaults reproduce Chapter 1: beliefs $(0.6,0.3,0.1)$, market prices $(0.5,0.3,0.2)$, and initial wealth $1{,}000$.
+::::
+
+### Every asset has the same information identity
+
+Any fairly priced nonnegative asset $X$ of positive cost has its own implied measure $\mathbb P^X$, just as $V$ does in Section 4. The same identity holds with $X$ in place of $M$:
+
+$$
+\begin{gathered}
+\mathbb E^X\!\left[\log\frac{X(T)}{X(0)}\right]\\
+=\mathbb E^X\!\left[\log\frac{d\mathbb P^X}{d\mathbb P^Y}\right]\\
+=D(\mathbb P^X\Vert\mathbb P^Y).
+\end{gathered}
+$$
+
+In our finite example, $d\mathbb P^X/d\mathbb P^Y$ is simply the state-by-state probability ratio. The expectation is under $\mathbb P^X$, **the same measure as the numerator**. This measure describes the asset's payoff; it need not equal your personal belief $\mathbb P^M$. The football investment matched those beliefs because we deliberately constructed it that way.
+
+## 7. What if your payoff expresses a different model?
+
+Your beliefs can stay at $\mathbb P^M$ while you choose a payoff with implied distribution $\mathbb P^V$. Let $G(T)=V(T)/V(0)$ be its gross return. The expected log return now decomposes as
+
+$$
+\begin{aligned}
+\mathbb E^M[\log G(T)]
+&=D(\mathbb P^M\Vert\mathbb P^Y)\\
+&\quad-D(\mathbb P^M\Vert\mathbb P^V).
+\end{aligned}
+$$
+
+Read it in two steps. The first term is the information in your beliefs relative to market prices. The second is the **mismatch between your beliefs and the distribution your payoff implements**. Subtracting it gives your expected log performance.
+
+Because relative entropy is nonnegative, that mismatch cannot improve expected log growth under your beliefs. Choosing $\mathbb P^V=\mathbb P^M$ removes it. This is why the original investment $M$ is log-optimal when all state claims are available: the optimality follows from the construction.
+
+Now choose a payoff below. The figure calculates its implied probabilities and shows the two terms. The likelihood-ratio button returns to the payoff that expresses your beliefs exactly.
+
+:::: {#fig-payoff-first}
+::: {data-lrw="payoff-first"}
+Interactive figure. It needs JavaScript.
+:::
+
+Both figures share the same beliefs and prices. The information bar separates the available information from the mismatch of the chosen payoff.
+::::
+
+::: {.lrw-key}
+The colors now have four distinct roles:
+[[]{.lrw-swatch .lrw-bg-market}market $\mathbb P^Y$]{.lrw-c-market},
+[[]{.lrw-swatch .lrw-bg-belief}belief $\mathbb P^M$]{.lrw-c-belief},
+[[]{.lrw-swatch .lrw-bg-asset}asset $\mathbb P^X$]{.lrw-c-asset},
+[[]{.lrw-swatch .lrw-bg-payoff}chosen payoff $\mathbb P^V$]{.lrw-c-payoff}.
+[[]{.lrw-swatch .lrw-bg-loss}Lost growth]{.lrw-c-loss} marks the mismatch penalty.
+:::
+
+::: {.callout-note collapse="true" title="Support, zero payoffs, and attainability"}
+Beliefs and payoffs may contain zeros. If the investor assigns positive probability to a zero-payoff state, expected log growth is $-\infty$, and the mismatch is $+\infty$. The finite-market identity remains valid in this extended sense.
+
+For general scenario spaces, use densities and require $\mathbb P^M\ll\mathbb P^Y$ and $D(\mathbb P^M\Vert\mathbb P^Y)<\infty$ for the displayed subtraction. This avoids an undefined difference of infinities.
+
+The payoff-to-measure map requires only fair pricing and a nonnegative payoff of positive finite cost. Implementing every desired measure additionally requires a rich enough asset menu. [The trinomial page](trinomial.qmd) shows what happens when that menu is incomplete; the [portfolio laboratory](portfolio-lab.qmd) finds the closest attainable distribution.
+:::
+
+## From distributions to price processes
+
+A traded asset has a measure $\mathbb P^X$, which need not equal any investor's beliefs. Its relative price is the likelihood ratio $\mathbb P^X/\mathbb P^Y$ on the information observed so far. Classical martingale pricing and this construction are compatible; they start from different primitives.
+
+The [likelihood and dynamics page](dynamics.qmd) states the fundamental theorem of asset pricing and compares the two directions. The [linear information flow page](linear-information.qmd) gives the common structure behind all six families.
+
+::: {.lf-model-grid}
+::: {.lf-model-card}
+### [Binomial](binomial.qmd)
+Two outcomes per trial. Recover both measures from the two martingale conditions.
+:::
+::: {.lf-model-card}
+### [Negative binomial](negative-binomial.qmd)
+The same trials, counted until a fixed number of failures. A new clock, the same likelihood evidence.
+:::
+::: {.lf-model-card}
+### [Normal](normal.qmd)
+Continuous information. Derive geometric Brownian motion directly from two normal densities.
+:::
+::: {.lf-model-card}
+### [Poisson](poisson.qmd)
+Information arrives as countable events. Compare event rates and generate jump paths.
+:::
+::: {.lf-model-card}
+### [Gamma](gamma.qmd)
+Positive increments of many sizes. Keep the shape clock fixed and compare rates.
+:::
+::: {.lf-model-card}
+### [Inverse Gaussian](inverse-gaussian.qmd)
+A first-passage interpretation and an alternative pattern of positive jump activity.
+:::
+:::
+
+Each family has explicit prices and linear expected information accumulation. The continuous-model laboratories let you choose a bounded KL rate and an event or shape parameter, then generate paths under both measures. The displayed ranges keep the examples readable; they are illustrative calibrations.
+
+## Choose a portfolio
+
+- [**Trinomial and incomplete markets**](trinomial.qmd): see which pricing measures fit the same dynamics, and which beliefs a limited asset menu can express.
+- [**Utility and fractional Kelly**](utility.qmd): compare normalized geometric tempering with a cash reserve, using three states to see the difference.
+- [**Mean–variance approximation**](mean-variance.qmd): connect quadratic optimization to likelihood ratios and distinguish the ordinary Taylor and Pearson objectives.
+- [**Portfolio laboratory**](portfolio-lab.qmd): enter asset distributions, mix them, and solve exact KL or quadratic portfolio problems.
+- [**Options as densities**](options.qmd): convert calls, puts, digitals, and straddles into their implied scenario weights.
+- [**Discrete hedging**](hedging.qmd): rebalance a normal-model option hedge and compare the resulting payoffs and densities.
+
+::: {.callout-note collapse="true" title="A further connection: statistical testing"}
+The market measure $\mathbb P^Y$ can serve as a null model, and an asset or portfolio measure as an alternative. A fairly priced, normalized, nonnegative payoff is an e-value: its expectation under the null is one. Consistent likelihood ratios through time form a nonnegative martingale. Ville's inequality then controls the chance, under the null, of ever crossing a chosen evidence threshold. [Explore it in the binomial model](binomial.qmd#many-periods).
+
+:::
+
+Kelly (1956) connected information rate and capital growth; Cover and Thomas give the finite horse-race identity. Geman, El Karoui, and Rochet developed the change-of-numeraire relation between traded assets and probability measures. This site uses these connections as a common language for pricing and portfolio choice.
+
+The book continues with **hedging as density approximation** in Chapter 6, introduced here through [discrete hedging](hedging.qmd), and **learning and Bayesian portfolios** in Chapter 7. The learning chapter connects mixture portfolios with Bayesian updating: the changing wealth shares are posterior model weights. That part of the web companion will follow later.
+
+## Reading
+
+- Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapters 1–7. CRC Press. [Book details](https://www.routledge.com/Principles-of-Portfolio-Choice-An-Information-Theoretic-Likelihood-Based-Perspective/Vecer/p/book/9781032951980).
+- J. L. Kelly, Jr. (1956). A new interpretation of information rate. *Bell System Technical Journal* 35(4), 917–926.
+- T. M. Cover and J. A. Thomas (2006). *Elements of Information Theory*, 2nd ed., Chapter 6. Wiley.
+- H. Geman, N. El Karoui, and J.-C. Rochet (1995). Changes of numeraire, changes of probability measure and pricing of options. *Journal of Applied Probability* 32(2), 443–458.
+- A. Ramdas, P. Grünwald, V. Vovk and G. Shafer (2023). [Game-Theoretic Statistics and Safe Anytime-Valid Inference](https://doi.org/10.1214/23-STS894). *Statistical Science*.

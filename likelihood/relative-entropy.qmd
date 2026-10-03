@@ -1,0 +1,241 @@
+---
+title: "Relative entropy"
+subtitle: "From log evidence to expected performance"
+description: "A beginner's guide to likelihood ratios, Kullback–Leibler divergence, and expected log investment returns."
+css: entropy.css
+resources:
+  - entropy.js
+include-after-body:
+  - text: |
+      <script src="entropy.js" defer></script>
+---
+
+Relative entropy answers a specific question: **how much log evidence does one probability model expect to accumulate against another?** In likelihood finance, exactly the same quantity measures an asset's expected log return under its own implied measure.
+
+The [framework](index.qmd) constructs an investment from probabilities. Here we slow down at the information-theoretic step: ratios, logarithms, and the probabilities used to average them.
+
+## First compare one observation
+
+Consider two possible outcomes, A and B. The asset measure and the pricing measure assign these probabilities:
+
+$$
+\begin{aligned}
+\mathbb P^X&=(0.6,0.4),\\
+\mathbb P^Y&=(0.5,0.5).
+\end{aligned}
+$$
+
+If A occurs, its likelihood ratio is $0.6/0.5=1.2$. That observation is 20% more likely under the asset model than under the pricing model. It favors $\mathbb P^X$ over $\mathbb P^Y$.
+
+If B occurs, the ratio is $0.4/0.5=0.8$. That observation favors $\mathbb P^Y$. A likelihood ratio is a comparison between two specified models; it is not, by itself, a probability that either model is true.
+
+::: {.intro-example-table}
+| Outcome | Asset | Market | Ratio |
+|:--|--:|--:|--:|
+| A | 0.6 | 0.5 | 1.2 |
+| B | 0.4 | 0.5 | 0.8 |
+:::
+
+## Take logarithms so evidence adds
+
+Independent likelihood ratios multiply. Taking their logarithms turns that multiplication into addition, which makes accumulated evidence easier to track. For our two outcomes,
+
+$$
+\begin{aligned}
+\log(1.2)&\approx+0.1823216,\\
+\log(0.8)&\approx-0.2231436.
+\end{aligned}
+$$
+
+Positive log evidence favors the numerator model; negative log evidence favors the denominator. Notice that the positive and negative values are not equal in magnitude. Multiplying wealth by $1.2$ and then by $0.8$ leaves $0.96$ of the original wealth, so those two moves do not cancel.
+
+We use natural logarithms throughout. Their information unit is the **nat**. A different logarithm base would rescale every information value; it would not change which model an observation favors.
+
+## Average using the first model
+
+Now ask what the asset model expects. Under $\mathbb P^X$, A has weight $0.6$ and B has weight $0.4$. Multiply each log ratio by that probability:
+
+$$
+\begin{aligned}
+0.6\log(1.2)&\approx+0.109392934,\\
+0.4\log(0.8)&\approx-0.089257421.
+\end{aligned}
+$$
+
+Adding the contributions gives
+
+$$
+\begin{gathered}
+D(\mathbb P^X\Vert\mathbb P^Y)\\
+=0.6\log(1.2)+0.4\log(0.8)\\
+\approx0.02013551\text{ nats}.
+\end{gathered}
+$$
+
+The negative contribution remains part of the calculation. Relative entropy is an average of signed log evidence, not an average of absolute differences.
+
+For any finite set of outcomes, write the two distributions as $p=(p_i)$ and $q=(q_i)$. The definition is
+
+$$
+D(p\Vert q)=\sum_i p_i\log\frac{p_i}{q_i}.
+$$
+
+Read the order carefully: **divide first by second; average with first**. This is also called *Kullback–Leibler divergence*, or KL divergence. We use $D$ and $D_{\mathrm{KL}}$ for the same quantity.
+
+## Try the calculation yourself
+
+In the laboratory, A is called Success and B is called Failure. Move the asset probability first, then the market probability. Watch the individual log returns and their weighted contributions. Finally make the two probabilities equal: each ratio becomes one, every log ratio becomes zero, and relative entropy vanishes.
+
+::: {data-entropy-lab=""}
+The interactive laboratory requires JavaScript. Its default example uses asset probabilities $(0.6,0.4)$ and market probabilities $(0.5,0.5)$. The corresponding returns are $(1.2,0.8)$ and the relative entropy is approximately $0.02013551$ nats.
+:::
+
+## Why the average is nonnegative
+
+The reason is the concavity of the logarithm: the log of an average is at least the average of the logs. This is **Jensen's inequality**.
+
+For the finite-state case, average $q_i/p_i$ using the weights $p_i$. Include only states with $p_i>0$, so no division by zero is needed:
+
+$$
+\sum_{i:p_i>0}p_i\frac{q_i}{p_i}
+=\sum_{i:p_i>0}q_i\le1.
+$$
+
+Applying Jensen gives
+
+$$
+\begin{aligned}
+-D(p\Vert q)
+&=\sum_{i:p_i>0}p_i\log\frac{q_i}{p_i}\\
+&\le\log\!\left(\sum_{i:p_i>0}q_i\right)\\
+&\le0.
+\end{aligned}
+$$
+
+Thus $D(p\Vert q)\ge0$. Equality requires the ratio $q_i/p_i$ to be constant on the support of $p$ and all of $q$'s mass to lie there. Since both distributions sum to one, this means **$p=q$**. If some $p_i>0$ but $q_i=0$, the divergence is infinite, so the inequality still holds.
+
+Individual observations may support either model, but a model expects nonnegative log evidence in its own favor when the averaging uses its probabilities. This does not establish which model describes reality, nor guarantee positive evidence in a particular sample. Even in our example, a run of B outcomes can produce a large loss.
+
+The order generally matters. Reversing our two distributions gives
+
+$$
+D(\mathbb P^Y\Vert\mathbb P^X)
+\approx0.02041100\text{ nats}.
+$$
+
+The ratios are inverted **and the averaging probabilities change**. KL divergence is therefore asymmetric; it is not an ordinary geometric distance between two points.
+
+## The financial meaning of the same calculation
+
+Measure prices in units of a strictly positive traded reference investment, with distributions reinvested, so $Y(T)=1$ in its own units. A nonnegative asset $X$ with positive initial price and implied measure $\mathbb P^X$ has gross return
+
+$$
+\frac{X(T)}{X(0)}
+=\frac{\mathbb P^X(\omega)}{\mathbb P^Y(\omega)}.
+$$
+
+The likelihood ratios $1.2$ and $0.8$ are thus also the asset's two wealth multipliers. Taking logarithms and averaging under $\mathbb P^X$ gives
+
+$$
+\begin{gathered}
+\mathbb E^X\!\left[\log\frac{X(T)}{X(0)}\right]\\
+=D(\mathbb P^X\Vert\mathbb P^Y).
+\end{gathered}
+$$
+
+The value $0.02013551$ is an expected **log** return. It is not the expected ordinary percentage return. In this example, the expected gross return under $\mathbb P^X$ is
+
+$$
+0.6(1.2)+0.4(0.8)=1.04,
+$$
+
+so the expected simple return is 4%. Averaging returns and averaging their logarithms answer different questions.
+
+The superscript on $\mathbb E^X$ matters just as much as the logarithm. An investor may hold beliefs $\mathbb P^M$ different from the asset's implied measure. If that investor assigns probabilities $(0.4,0.6)$ instead, the very same asset has expected log return approximately $-0.06096$ under her beliefs. The nonnegative divergence identity becomes her expected-performance statement only when $\mathbb P^M=\mathbb P^X$.
+
+## Continuous observations use densities
+
+For a continuous observation, an exact point usually has probability zero under both models. Dividing those point probabilities would give no useful ratio. Instead compare **densities** with respect to the same underlying variable:
+
+$$
+\begin{gathered}
+D(f_X\Vert f_Y)\\
+=\int f_X(z)\log\frac{f_X(z)}{f_Y(z)}\,dz.
+\end{gathered}
+$$
+
+This is the same instruction as before: take a density ratio, take its logarithm, and average under the first density. The [normal model](normal.qmd) illustrates it explicitly with two bell-shaped curves and their likelihood-ratio price.
+
+## From expected performance to long-run growth {#long-run-growth}
+
+Why use expected **log** performance as a growth criterion? Repeat the same investment independently. Let $p$ and $q$ be the per-trial asset and market distributions, and write the gross return in period $k$ as
+
+$$
+G(k)=\frac{p(\omega(k))}{q(\omega(k))}.
+$$
+
+Reinvesting the proceeds compounds these returns:
+
+$$
+\begin{aligned}
+\frac{X(n)}{X(0)}&=\prod_{k=1}^{n}G(k),\\
+\log\frac{X(n)}{X(0)}&=\sum_{k=1}^{n}\log G(k).
+\end{aligned}
+$$
+
+The expected log return after $n$ periods is $nD(p\Vert q)$ under the asset model. More is true: if the observations are independent and identically distributed and the one-period log return is integrable, the strong law of large numbers gives
+
+$$
+\frac1n\log\frac{X(n)}{X(0)}
+\longrightarrow D(p\Vert q)
+$$
+
+almost surely under $\mathbb P^X$. This means convergence on a set of paths with probability one under the asset model. **Relative entropy is the long-run log growth rate** in this repeated experiment. The statement is conditional on the chosen model governing the observations; it does not establish that the model is correct.
+
+### The fair-game paradox
+
+Under the market model, each return has mean one. Nevertheless, Jensen's inequality gives
+
+$$
+\begin{aligned}
+\mathbb E^Y[\log G(1)]
+&\le\log\mathbb E^Y[G(1)]\\
+&=0.
+\end{aligned}
+$$
+
+For distinct positive $p$ and $q$, the inequality is strict. Averaging the same log ratios under $q$ gives $-D(q\Vert p)$. With the same independence and integrability assumptions, now under the market model,
+
+$$
+\frac1n\log\frac{X(n)}{X(0)}
+\longrightarrow -D(q\Vert p)
+$$
+
+almost surely under $\mathbb P^Y$. So typical market-model paths decay toward zero even though
+
+$$
+\mathbb E^Y[X(n)]=X(0)
+$$
+
+at every finite date. Increasingly rare, very large outcomes sustain the arithmetic average. There is no contradiction: average wealth across many possible outcomes and long-run growth along a typical path are different quantities. If $p=q$, every multiplier is one and there is no growth or decay.
+
+In our example the two long-run log rates are about $+0.02014$ under the asset model and $-0.02041$ under the market model. [Generate paths in the binomial model](binomial.qmd#many-periods) to see the distinction. The [linear information flow page](linear-information.qmd) develops the common additive structure across model families.
+
+::: {.callout-note collapse="true" title="Market averaging, zeros, and support"}
+When both distributions are positive, averaging the same log return under the market measure reverses the divergence:
+
+$$
+\begin{gathered}
+\mathbb E^Y\!\left[\log\frac{X(T)}{X(0)}\right]\\
+=-D(\mathbb P^Y\Vert\mathbb P^X).
+\end{gathered}
+$$
+
+In the example this is approximately $-0.02041100$, even though the market's expected gross return is one.
+
+Throughout the finite-state construction, market state prices satisfy $q_i>0$. Asset probabilities may be zero: the convention $0\log(0/q_i)=0$ reflects the limiting value of that expression. If $p_i=0$ while $q_i>0$, the asset pays zero in that state. Its expected log return under a model assigning positive probability to that state is $-\infty$; the corresponding reverse divergence is $+\infty$. In independent repetitions under the market model, such a state is eventually encountered with probability one, and reinvested wealth then stays at zero. The finite-log-mean assumption for the displayed market strong law does not apply in this case.
+
+For general density models, positive mass under the numerator outside the denominator's support gives infinite divergence. Finite subtraction identities require suitable support and integrability assumptions; one must not subtract two infinities.
+:::
+
+**Source:** Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapters 1–3. Continue to [utility and risk aversion](utility.qmd) to see how an investor's chosen payoff can differ from the belief-matching investment.

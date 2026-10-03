@@ -1,0 +1,51 @@
+---
+title: Jan Vecer
+subtitle: "Mathematical finance · Statistics · Information theory"
+sidebar: false
+body-classes: profile-page
+---
+
+::: {.profile-lead}
+I teach and conduct research in quantitative finance and statistics at **Charles University in Prague**. I am also a **Visiting Professor at the Frankfurt School of Finance & Management**.
+:::
+
+My work connects financial prices, probability models, and portfolio choice. The [Likelihood Finance](likelihood/index.qmd) project develops this connection through concise explanations, interactive models, and links to the research behind them.
+
+## Research
+
+My research interests include portfolio theory, derivative pricing and hedging, stochastic processes, and prediction markets. A recurring question is what becomes simpler when a price is read as a likelihood ratio and an investment position as a probability distribution over future outcomes.
+
+The interactive guide begins with the [binomial model](likelihood/binomial.qmd). It then follows the same structure through richer distributions, [utility and risk aversion](likelihood/utility.qmd), [mean–variance approximation](likelihood/mean-variance.qmd), and [option-implied measures](likelihood/options.qmd).
+
+[Selected articles on this site](index.qmd#papers) provide entry points into the published work. Further research and professional profiles:
+
+::: {.profile-links}
+[Google Scholar](https://scholar.google.com/scholar?btnG=&hl=en&q=jan+vecer){.profile-link}
+[ORCID](https://orcid.org/0000-0002-1501-4646){.profile-link}
+[Web of Science / Publons](https://www.webofscience.com/wos/author/record/H-9917-2012){.profile-link}
+[Scopus](https://www.scopus.com/authid/detail.uri?authorId=7004226834){.profile-link}
+[LinkedIn](https://www.linkedin.com/in/jan-vecer-6a93102){.profile-link}
+:::
+
+## Books
+
+**[Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective](https://www.routledge.com/Principles-of-Portfolio-Choice-An-Information-Theoretic-Likelihood-Based-Perspective/Vecer/p/book/9781032951980)**, forthcoming from Chapman & Hall/CRC, develops portfolio selection through the correspondence between normalized payoffs and probability measures.
+
+**[Stochastic Finance: A Numeraire Approach](https://www.routledge.com/Stochastic-Finance-A-Numeraire-Approach/Vecer/p/book/9781439812501)**, CRC Press, 2011, presents derivative valuation and hedging through relative prices and changes of numeraire.
+
+## Academic background
+
+I received my PhD in Mathematical Finance from **Carnegie Mellon University in 2000**. I was a faculty member in the Department of Statistics at **Columbia University from 2001 to 2010**, and Professor of Finance at the **Frankfurt School of Finance & Management from 2010 to 2015**, continuing there as a visiting professor since 2015.
+
+My teaching has also included courses at the University of Michigan and Kyoto University. The [publisher's biography](https://www.routledge.com/Principles-of-Portfolio-Choice-An-Information-Theoretic-Likelihood-Based-Perspective/Vecer/p/book/9781032951980) gives further background on my academic and applied work.
+
+## Contact
+
+**Jan Vecer**  
+Department of Probability and Mathematical Statistics  
+Faculty of Mathematics and Physics, Charles University  
+Sokolovská 83, 186 75 Prague 8, Czech Republic
+
+[Jan.Vecer@mff.cuni.cz](mailto:Jan.Vecer@mff.cuni.cz)
+
+[University profile](https://www.mff.cuni.cz/en/faculty/organizational-structure/people?hdl=9010)

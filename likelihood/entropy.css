@@ -1,0 +1,38 @@
+.entropy-lab { --entropy-x: #2b7a55; --entropy-y: #3a64a0; margin: 1.8rem 0; min-width: 0; font-variant-numeric: tabular-nums; }
+.entropy-lab *, .entropy-lab *::before, .entropy-lab *::after { box-sizing: border-box; }
+.entropy-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 1.1rem; background: var(--lf-panel, #eeefe7); border: 1px solid var(--lf-rule, #d9dfd7); }
+.entropy-control { display: grid; grid-template-columns: 1fr auto; gap: .55rem; font-size: .9rem; line-height: 1.5; min-width: 0; }
+.entropy-control output { font-weight: 600; color: var(--entropy-x); }
+.entropy-market output { color: var(--entropy-y); }
+.entropy-control input { grid-column: 1 / -1; width: 100%; min-width: 0; accent-color: var(--entropy-x); }
+.entropy-market input { accent-color: var(--entropy-y); }
+.entropy-control input:focus-visible { outline: 2px solid var(--lf-accent, #235d60); outline-offset: 4px; }
+.entropy-presets { display: flex; flex-wrap: wrap; gap: .55rem; margin: .9rem 0; }
+.entropy-presets button { font: inherit; font-size: .84rem; color: inherit; background: var(--lf-paper, #f8f6ef); border: 1px solid #b8c4bb; padding: .5rem .7rem; cursor: pointer; min-height: 42px; }
+.entropy-presets button:hover { background: var(--lf-panel, #eeefe7); }
+.entropy-presets button:disabled { opacity: .55; cursor: default; }
+.entropy-hint, .entropy-contributions p { font-size: .87rem; line-height: 1.65; }
+.entropy-key { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .87rem; margin: 1.2rem 0 .3rem; }
+.entropy-key-x::before, .entropy-key-y::before { content: ''; display: inline-block; width: .75rem; height: .75rem; margin-right: .45rem; vertical-align: -.02rem; background: var(--entropy-x); }
+.entropy-key-y::before { background: transparent; border: 2px solid var(--entropy-y); }
+.entropy-chart { min-width: 0; }
+.entropy-chart svg { display: block; width: 100%; height: auto; }
+.entropy-chart text { font-family: inherit; font-size: 14px; fill: currentColor; }
+.entropy-grid { stroke: var(--lf-rule, #d9dfd7); stroke-width: 1; }
+.entropy-bar-x { fill: var(--entropy-x); }
+.entropy-bar-y { fill: transparent; stroke: var(--entropy-y); stroke-width: 2; }
+.entropy-calculation table { width: 100%; border-collapse: collapse; font-size: .88rem; line-height: 1.45; margin: .4rem 0 1.3rem; }
+.entropy-calculation caption { caption-side: top; text-align: left; color: inherit; font-weight: 600; padding-bottom: .7rem; font-size: .9rem; }
+.entropy-calculation th, .entropy-calculation td { padding: .65rem .45rem; border-bottom: 1px solid var(--lf-rule, #d9dfd7); text-align: right; }
+.entropy-calculation th:first-child { text-align: left; font-weight: 400; }
+.entropy-calculation thead th { font-weight: 600 !important; }
+.entropy-calculation tbody tr:last-child { background: var(--lf-panel, #eeefe7); }
+.entropy-result { display: grid; gap: .4rem; border-left: 3px solid var(--entropy-x); background: var(--lf-panel, #eeefe7); padding: 1.2rem 1.4rem; margin: 1rem 0; }
+.entropy-result > span { font-size: .88rem; }
+.entropy-result strong { font-family: var(--lf-serif, Georgia, serif); font-size: 2.2rem; color: var(--entropy-x); font-weight: 400; line-height: 1.35; }
+.entropy-result small { font-family: var(--lf-sans, Arial, sans-serif); font-size: .85rem; }
+.entropy-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.entropy-comparison > div { border-top: 1px solid var(--lf-rule, #d9dfd7); padding: .8rem 0; }
+.entropy-comparison span { display: block; font-size: .82rem; line-height: 1.6; }
+.entropy-comparison strong { display: block; font-size: 1.1rem; margin-top: .5rem; font-weight: 500; }
+@media (max-width: 520px) { .entropy-controls { grid-template-columns: 1fr; gap: 1rem; } .entropy-calculation table { font-size: .8rem; } .entropy-calculation th, .entropy-calculation td { padding: .6rem .25rem; } .entropy-result { padding: 1rem; } }
