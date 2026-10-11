@@ -1,7 +1,7 @@
 ---
 title: "Discrete hedging"
 subtitle: "Match the next interval's density with the assets you can trade"
-description: "Explore discrete hedging in the normal model by comparing conditional option, stock and cash densities and minimizing relative entropy."
+description: "Start with a discrete call hedge and its wealth constraint, then compare conditional option, stock and cash densities in the normal model."
 css: hedging.css
 resources:
   - normal-options.js
@@ -15,6 +15,39 @@ include-after-body:
 An option carries a probability density. A portfolio of stock and cash carries another. **Hedging asks how closely the second can reproduce the first.** Exact agreement means replication; a remaining difference records the exposures the available portfolio cannot match.
 
 The [options page](options.qmd) plots distributions over observations at expiry. Here the question is local: what can a portfolio reproduce **between now and the next trading date**? All prices are in units of $Y$, so the reference asset has value one.
+
+## A small example: the wealth constraint matters
+
+In the [geometric-shock model](negative-binomial.qmd), $R_g=\tfrac32(\tfrac12)^g$ and $q_g=2^{-(g+1)}$. A strike-one call pays
+
+$$
+\begin{aligned}
+C&=(R-1)^+=\frac12\mathbf1_{\{G=0\}},\\
+c&=\mathbb E^Y[C]=\frac14.
+\end{aligned}
+$$
+
+Only the first outcome puts the call in the money. Among all stock-and-cash portfolios with the same cost $c$, the unconstrained quadratic fit is
+
+$$
+\begin{aligned}
+H_Q&=\frac7{16}R-\frac3{16},\\
+\mathbb E^Y[(C-H_Q)^2]&=\frac1{128}.
+\end{aligned}
+$$
+
+It has negative terminal wealth whenever $G\geq2$. The squared-error criterion alone permits that result. Such a portfolio cannot induce a probability law.
+
+If terminal wealth must remain nonnegative, write $H_w=c[1+w(R-1)]$. The call's induced law concentrates all probability at $G=0$. Exact KL selects the all-stock boundary:
+
+$$
+\begin{aligned}
+w_{\mathrm{KL}}&=1,\qquad H_{\mathrm{KL}}=\frac14R,\\
+D_{\mathrm{KL}}(\mathbb P^C\Vert\mathbb P^{H_{\mathrm{KL}}})&=\log\frac43.
+\end{aligned}
+$$
+
+Quadratic fitting with the **same nonnegative-wealth constraint** also selects $H=R/4$, with squared error $1/56$. This distinguishes the choice of loss from the choice of admissible portfolios. See [one mismatch, three criteria](hedging-comparison.qmd) for an example where exact KL and the two quadratic losses select different positive portfolios.
 
 ## One trading interval
 
@@ -129,7 +162,7 @@ $$
 
 The [options page](options.qmd) defines $d(1)$ and derives the Black–Scholes formula from two normal tail probabilities. When this cost fraction is strictly inside the admissible interval, the short-interval KL fit approaches the same delta. The default reserve is large enough for this condition to hold. Press **Fit the density**, then reduce $h$ to see the fitted share holding approach the delta benchmark.
 
-The book also develops two quadratic hedges: a target-relative weighted error criterion, and the classical minimum-variance criterion. Their finite-step positions need not agree. In the normal model, both approach delta as the interval shrinks. The direct KL fit shown here retains the full logarithmic objective and its positivity restriction.
+The book also develops two quadratic hedges. For a positive normalized target payoff $L$ and an equal-cost approximation $V$, the target-centered KL approximation minimizes $\tfrac12\mathbb E^Y[(V-L)^2/L]$; ordinary quadratic hedging minimizes $\mathbb E^Y[(V-L)^2]$. Their finite-step positions need not agree. Under the local regularity and interior conditions, they approach delta as the interval shrinks in the normal model. The direct KL fit shown here retains the full logarithmic objective and its positivity restriction. The [mean–variance page](mean-variance.qmd) explains the two quadratic geometries and the limits needed to connect them.
 
 ::: {.callout-note collapse="true" title="What is being calculated"}
 The lab solves one conditional trading interval at the current stock price. A strategy on a trading grid repeats that calculation after each observed move, using the new stock price and remaining maturity. The graphs do not claim to show a complete multistep replication or a realized hedge profit.

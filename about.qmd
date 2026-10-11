@@ -4,4 +4,4 @@ sidebar: false
 toc: false
 ---
 
-The profile page has moved to [Jan Vecer](jan-vecer.qmd). For the research project, visit [Likelihood Finance](likelihood/index.qmd).
+The profile page has moved to [Jan Vecer](jan-vecer.qmd). For the research project, visit [Prices as Information](likelihood/index.qmd).

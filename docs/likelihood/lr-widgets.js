@@ -348,7 +348,7 @@
 
   var STORES = {
     three: makeStore({ pm: [0.6, 0.3, 0.1], py: [0.5, 0.3, 0.2] }),
-    binom: makeStore({ p: 0.6, q: 0.5, pm: 0.7 })
+    binom: makeStore({ p: 0.75, q: 0.5, pm: 2 / 3 })
   };
 
   var OUTCOMES = ['Win', 'Draw', 'Loss'];
@@ -542,13 +542,13 @@
     var st0 = store.get();
     var u = st0.p / st0.q, d = (1 - st0.p) / (1 - st0.q);
 
-    var sp = slider({ label: Pm('X') + '(success) = p', min: 0.01, max: 0.99, step: 0.01, value: st0.p, tone: 'asset',
+    var sp = slider({ label: Pm('X') + '(H) = p', min: 0.01, max: 0.99, step: 0.01, value: st0.p, tone: 'asset',
       onInput: function (v) { store.set({ p: v }); } });
-    var sq = slider({ label: Pm('Y') + '(success) = q', min: 0.01, max: 0.99, step: 0.01, value: st0.q, tone: 'market',
+    var sq = slider({ label: Pm('Y') + '(H) = q', min: 0.01, max: 0.99, step: 0.01, value: st0.q, tone: 'market',
       onInput: function (v) { store.set({ q: v }); } });
-    var su = slider({ label: 'success multiplier u', min: 0.01, max: 3, step: 0.01, value: u, tone: 'asset',
+    var su = slider({ label: 'H multiplier u', min: 0.01, max: 3, step: 0.01, value: u, tone: 'asset',
       format: function (v) { return fmt(v, 3); }, onInput: function (v) { u = v; fromMultipliers(); } });
-    var sd = slider({ label: 'failure multiplier d', min: 0.01, max: 3, step: 0.01, value: d, tone: 'asset',
+    var sd = slider({ label: 'T multiplier d', min: 0.01, max: 3, step: 0.01, value: d, tone: 'asset',
       format: function (v) { return fmt(v, 3); }, onInput: function (v) { d = v; fromMultipliers(); } });
 
     var bProb = button('Start from probabilities', function () { setMode('prob'); }, { 'aria-pressed': 'true' });
@@ -624,12 +624,12 @@
         }
       }
       var ok = !invalid;
-      nodeLabels(nu, 'u = ' + fmt(uu, 3), 'success', ok && ('p = ' + fmt(st.p, 3)), ok && ('q = ' + fmt(st.q, 3)));
-      nodeLabels(nd, 'd = ' + fmt(dd, 3), 'failure', ok && ('1' + MINUS + 'p = ' + fmt(1 - st.p, 3)), ok && ('1' + MINUS + 'q = ' + fmt(1 - st.q, 3)));
+      nodeLabels(nu, 'u = ' + fmt(uu, 3), 'H', ok && ('p = ' + fmt(st.p, 3)), ok && ('q = ' + fmt(st.q, 3)));
+      nodeLabels(nd, 'd = ' + fmt(dd, 3), 'T', ok && ('1' + MINUS + 'p = ' + fmt(1 - st.p, 3)), ok && ('1' + MINUS + 'q = ' + fmt(1 - st.q, 3)));
       if (ok && wide) {
         var f = frame({ x: 430, y: 16, w: 190, h: 170, xlo: 0, xhi: 1, ylo: 0, yhi: 1 });
         yAxis(svg, f, [0, 0.5, 1], null, 'probability');
-        probBars(svg, f, ['success', 'failure'], [{ tone: 'asset', values: [st.p, 1 - st.p] }, { tone: 'market', values: [st.q, 1 - st.q] }]);
+        probBars(svg, f, ['H', 'T'], [{ tone: 'asset', values: [st.p, 1 - st.p] }, { tone: 'market', values: [st.q, 1 - st.q] }]);
       }
       svgWrap.appendChild(svg);
 
@@ -679,7 +679,7 @@
    * ============================================================= */
   function binomialGrowth(root) {
     var store = STORES.binom;
-    var v = 0.85, gamma = 2;
+    var v = 2 / 3, gamma = 2;
 
     function g(pm, q, x) {
       var s = 0;
@@ -692,11 +692,11 @@
       return up / (up + dn);
     }
 
-    var spm = slider({ label: Pm('M') + '(success)', min: 0, max: 1, step: 0.01, value: store.get().pm, tone: 'belief',
+    var spm = slider({ label: Pm('M') + '(H)', min: 0, max: 1, step: 0.01, value: store.get().pm, tone: 'belief',
       onInput: function (x) { store.set({ pm: x }); } });
-    var sq = slider({ label: Pm('Y') + '(success) = q', min: 0.01, max: 0.99, step: 0.01, value: store.get().q, tone: 'market',
+    var sq = slider({ label: Pm('Y') + '(H) = q', min: 0.01, max: 0.99, step: 0.01, value: store.get().q, tone: 'market',
       onInput: function (x) { store.set({ q: x }, 'growth-probability'); } });
-    var sv_ = slider({ label: Pm('V') + '(success) = v', min: 0.01, max: 0.99, step: 0.01, value: v, tone: 'payoff',
+    var sv_ = slider({ label: Pm('V') + '(H) = v', min: 0.01, max: 0.99, step: 0.01, value: v, tone: 'payoff',
       onInput: function (x) { v = x; render(store.get()); } });
     var sg = slider({ label: 'risk aversion \u03b3', min: 1, max: 10, step: 0.1, value: gamma,
       format: function (x) { return fmt(x, 1); }, onInput: function (x) { gamma = x; render(store.get()); } });
@@ -708,6 +708,10 @@
       h('div', { class: 'lrw-controls' }, [
         group('Beliefs and prices', null, [spm.node, sq.node]),
         group('Your position', null, [sv_.node, sg.node])
+      ]),
+      h('div', { class: 'lrw-actions' }, [
+        button('Match the belief target', function () { v = store.get().pm; render(store.get()); }),
+        button('Restore Columbia example', function () { v = 2 / 3; gamma = 2; store.set({ p: .75, q: .5, pm: 2 / 3 }, 'growth-probability'); })
       ]),
       svgWrap, markerKey, readout
     ]));
@@ -729,7 +733,7 @@
       clear(svgWrap);
       var svg = newSvg(W, 522, 'Expected log return curve with a separate marker lane for each of the six positions');
       yAxis(svg, f, niceTicks(ylo, yhi, W < 600 ? 4 : 6), null, 'expected log return');
-      xAxis(svg, f, [0, 0.2, 0.4, 0.6, 0.8, 1], null, W >= 600 ? 'fraction of wealth on the success claim, v = \u2119\u2c7d(success)' : 'v = \u2119\u2c7d(success)');
+      xAxis(svg, f, [0, 0.2, 0.4, 0.6, 0.8, 1], null, W >= 600 ? 'fraction of wealth on the H claim, v = \u2119\u2c7d(H)' : 'v = \u2119\u2c7d(H)');
       var clip = clipTo(svg, f);
       var pts = [];
       for (var i = 1; i < 600; i++) { var x = i / 600; pts.push([f.X(x), f.Y(Math.max(g(pm, q, x), ylo - 10))]); }
@@ -837,9 +841,9 @@
       format: function (x) { return String(Math.round(x)); }, onInput: function (x) { n = Math.round(x); render(store.get()); } });
     var sa = slider({ label: 'test level \u03b1', min: 0.01, max: 0.2, step: 0.01, value: alpha, tone: 'loss',
       onInput: function (x) { alpha = x; render(store.get()); } });
-    var sp = slider({ label: Pm('X') + '(success) = p', min: 0.01, max: 0.99, step: 0.01, value: store.get().p, tone: 'asset',
+    var sp = slider({ label: Pm('X') + '(H) = p', min: 0.01, max: 0.99, step: 0.01, value: store.get().p, tone: 'asset',
       onInput: function (x) { store.set({ p: x }, 'time-probability'); } });
-    var sq = slider({ label: Pm('Y') + '(success) = q', min: 0.01, max: 0.99, step: 0.01, value: store.get().q, tone: 'market',
+    var sq = slider({ label: Pm('Y') + '(H) = q', min: 0.01, max: 0.99, step: 0.01, value: store.get().q, tone: 'market',
       onInput: function (x) { store.set({ q: x }, 'time-probability'); } });
     var bNew = button('Draw new paths', function () { seed = (seed * 1103515245 + 12345) >>> 0; simKey = ''; render(store.get()); });
 
@@ -866,7 +870,7 @@
       clear(lawWrap);
       var W = widthOf(root);
       var left = W < 600 ? 80 : 64;
-      var svg = newSvg(W, 330, 'Laws of the number of successes and the log price as a function of it');
+      var svg = newSvg(W, 330, 'Laws of the number of H outcomes and the log price as a function of it');
       var pX = binomPMF(n, p), pY = binomPMF(n, q);
       var pmax = Math.max(Math.max.apply(null, pX), Math.max.apply(null, pY));
       var f1 = frame({ x: left, y: 16, w: W - left - 24, h: 124, xlo: -0.5, xhi: n + 0.5, ylo: 0, yhi: pmax * 1.1 });
@@ -884,7 +888,7 @@
       if (hi2 - lo2 < 1e-9) { lo2 = -1; hi2 = 1; }
       var f2 = frame({ x: left, y: 172, w: W - left - 24, h: 110, xlo: -0.5, xhi: n + 0.5, ylo: lo2, yhi: hi2 });
       yAxis(svg, f2, niceTicks(lo2, hi2, 4), null, 'log X(n)/X(0)');
-      xAxis(svg, f2, niceTicks(0, n, W < 600 ? 4 : 6).filter(function (t) { return t === Math.round(t); }), null, 'number of successes S(n)');
+      xAxis(svg, f2, niceTicks(0, n, W < 600 ? 4 : 6).filter(function (t) { return t === Math.round(t); }), null, 'number of H outcomes S(n)');
       polyline([[f2.X(0), f2.Y(lp0)], [f2.X(n), f2.Y(lpn)]], { class: 'lrw-stroke-asset lrw-line' }, svg);
       if (Math.abs(a) > 1e-12) {
         var kstar = -b * n / a;

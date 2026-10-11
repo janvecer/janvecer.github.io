@@ -12,6 +12,12 @@ project:
     - index.qmd
     - jan-vecer.qmd
     - about.qmd
+    - resources.qmd
+    - likelihood/markets-portfolios.qmd
+    - likelihood/pricing-hedging.qmd
+    - likelihood/dynamics-learning.qmd
+    - likelihood/hedging-comparison.qmd
+    - likelihood/bayesian-learning.qmd
     - likelihood/index.qmd
     - likelihood/relative-entropy.qmd
     - likelihood/dynamics.qmd
@@ -32,7 +38,7 @@ project:
 website:
   title: Jan Vecer
   site-url: https://janvecer.com
-  description: "Likelihood Finance: prices, portfolios and information. An interactive guide to Jan Vecer's likelihood approach to finance."
+  description: "Prices as Information. An information-theoretic perspective on pricing, portfolio choice, hedging, and learning, by Jan Vecer."
   favicon: assets/favicon.svg
   navbar:
     background: light
@@ -44,56 +50,86 @@ website:
       - href: index.qmd
         text: Home
       - href: likelihood/index.qmd
-        text: Likelihood Finance
+        text: Information Theory & Finance
+      - href: resources.qmd
+        text: Resources
       - href: jan-vecer.qmd
         text: Jan Vecer
   sidebar:
     - id: likelihood
-      title: Likelihood Finance
+      title: Information Theory & Finance
       style: floating
       search: false
-      collapse-level: 2
+      collapse-level: 1
       contents:
         - section: Start here
+          href: likelihood/index.qmd
           contents:
             - href: likelihood/index.qmd
-              text: Likelihood Finance
+              text: Prices as information
             - href: likelihood/relative-entropy.qmd
               text: Relative entropy
-        - section: Models
+        - section: Portfolio choice
+          href: likelihood/markets-portfolios.qmd
           contents:
-            - href: likelihood/binomial.qmd
-              text: The binomial model
-            - href: likelihood/negative-binomial.qmd
-              text: The negative binomial model
-            - href: likelihood/linear-information.qmd
-              text: Linear information flow
-            - href: likelihood/normal.qmd
-              text: Normal → geometric Brownian motion
-            - href: likelihood/poisson.qmd
-              text: "Poisson: events become price jumps"
-            - href: likelihood/gamma.qmd
-              text: "Gamma: accumulated activity"
-            - href: likelihood/inverse-gaussian.qmd
-              text: "Inverse Gaussian: a random clock"
-        - section: Markets and portfolios
-          contents:
-            - href: likelihood/dynamics.qmd
-              text: Two ways to build a market
+            - href: likelihood/markets-portfolios.qmd
+              text: Beliefs and attainable portfolios
             - href: likelihood/trinomial.qmd
-              text: The trinomial model
+              text: Incomplete markets
             - href: likelihood/utility.qmd
               text: Utility & fractional Kelly
             - href: likelihood/mean-variance.qmd
               text: Mean–variance & information
             - href: likelihood/portfolio-lab.qmd
               text: Portfolio laboratory
+        - section: Pricing and hedging
+          href: likelihood/pricing-hedging.qmd
+          contents:
+            - href: likelihood/pricing-hedging.qmd
+              text: Replication and approximation
             - href: likelihood/options.qmd
               text: Options as distributions
+            - href: likelihood/hedging-comparison.qmd
+              text: Three hedging criteria
             - href: likelihood/hedging.qmd
-              text: Discrete hedging
+              text: Discrete hedging laboratory
+        - section: Dynamics and learning
+          href: likelihood/dynamics-learning.qmd
+          contents:
+            - href: likelihood/dynamics-learning.qmd
+              text: Information through time
+            - href: likelihood/dynamics.qmd
+              text: Two ways to build a market
+            - section: Linear information flow
+              href: likelihood/linear-information.qmd
+              contents:
+                - href: likelihood/linear-information.qmd
+                  text: Model catalogue
+                - href: likelihood/binomial.qmd
+                  text: Binomial
+                - href: likelihood/negative-binomial.qmd
+                  text: Negative binomial
+                - href: likelihood/normal.qmd
+                  text: Normal / GBM
+                - href: likelihood/poisson.qmd
+                  text: Poisson
+                - href: likelihood/gamma.qmd
+                  text: Gamma
+                - href: likelihood/inverse-gaussian.qmd
+                  text: Inverse Gaussian
+            - href: likelihood/bayesian-learning.qmd
+              text: Bayesian learning & commitment
+        - section: Research and resources
+          href: resources.qmd
+          contents:
+            - href: resources.qmd
+              text: Talks and reading routes
+            - href: index.qmd#books
+              text: Books
+            - href: index.qmd#papers
+              text: Selected research
   page-footer:
-    left: "© Jan Vecer · Likelihood Finance"
+    left: "© Jan Vecer · Prices as Information"
     right:
       - href: likelihood/index.qmd
         text: Explore the framework

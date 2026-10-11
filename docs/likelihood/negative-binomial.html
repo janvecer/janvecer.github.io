@@ -2,23 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The negative binomial model – Jan Vecer</title>
+<title>The negative-binomial model – Jan Vecer</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a435622ae35cc41ac2c5e25b0c4cfd6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9e4eb090ca0a53e894ba11f51061e81c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -131,7 +128,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../likelihood/index.html" aria-current="page"> 
-<span class="menu-text">Likelihood Finance</span></a>
+<span class="menu-text">Information Theory &amp; Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html"> 
+<span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../jan-vecer.html"> 
@@ -148,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Models</a></li><li class="breadcrumb-item"><a href="../likelihood/negative-binomial.html">The negative binomial model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics-learning.html">Dynamics and learning</a></li><li class="breadcrumb-item"><a href="../likelihood/linear-information.html">Linear information flow</a></li><li class="breadcrumb-item"><a href="../likelihood/negative-binomial.html">Negative binomial</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -162,17 +163,17 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Start here</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Likelihood Finance</span></a>
+ <span class="menu-text">Prices as information</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -185,76 +186,23 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio choice</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">The negative binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Normal → geometric Brownian motion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Poisson: events become price jumps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Gamma: accumulated activity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inverse Gaussian: a random clock</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Markets and portfolios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
+  <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beliefs and attainable portfolios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/trinomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The trinomial model</span></a>
+ <span class="menu-text">Incomplete markets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,6 +223,23 @@ window.Quarto = {
  <span class="menu-text">Portfolio laboratory</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pricing and hedging</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Replication and approximation</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/options.html" class="sidebar-item-text sidebar-link">
@@ -283,8 +248,125 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Three hedging criteria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../likelihood/hedging.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete hedging</span></a>
+ <span class="menu-text">Discrete hedging laboratory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flow</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model catalogue</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Negative binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normal / GBM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gamma</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inverse Gaussian</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian learning &amp; commitment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research and resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#books" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Books</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#papers" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selected research</span></a>
   </div>
 </li>
       </ul>
@@ -299,21 +381,22 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#a-different-count" id="toc-a-different-count" class="nav-link active" data-scroll-target="#a-different-count">A different count</a></li>
-  <li><a href="#the-likelihood-ratio-is-the-price" id="toc-the-likelihood-ratio-is-the-price" class="nav-link" data-scroll-target="#the-likelihood-ratio-is-the-price">The likelihood ratio is the price</a></li>
-  <li><a href="#information-grows-linearly-in-block-time" id="toc-information-grows-linearly-in-block-time" class="nav-link" data-scroll-target="#information-grows-linearly-in-block-time">Information grows linearly in block time</a></li>
-  <li><a href="#the-binomial-connection-same-observations-same-likelihood" id="toc-the-binomial-connection-same-observations-same-likelihood" class="nav-link" data-scroll-target="#the-binomial-connection-same-observations-same-likelihood">The binomial connection: same observations, same likelihood</a></li>
-  <li><a href="#walds-identity-explains-the-change-of-clock" id="toc-walds-identity-explains-the-change-of-clock" class="nav-link" data-scroll-target="#walds-identity-explains-the-change-of-clock">Wald’s identity explains the change of clock</a></li>
+  <li><a href="#three-laws-for-the-same-geometric-shock" id="toc-three-laws-for-the-same-geometric-shock" class="nav-link active" data-scroll-target="#three-laws-for-the-same-geometric-shock">Three laws for the same geometric shock</a></li>
+  <li><a href="#from-geometric-shocks-to-a-negative-binomial-count" id="toc-from-geometric-shocks-to-a-negative-binomial-count" class="nav-link" data-scroll-target="#from-geometric-shocks-to-a-negative-binomial-count">From geometric shocks to a negative-binomial count</a></li>
+  <li><a href="#linear-information-in-the-shock-clock" id="toc-linear-information-in-the-shock-clock" class="nav-link" data-scroll-target="#linear-information-in-the-shock-clock">Linear information in the shock clock</a></li>
+  <li><a href="#walds-identity-information-per-trial-versus-per-shock" id="toc-walds-identity-information-per-trial-versus-per-shock" class="nav-link" data-scroll-target="#walds-identity-information-per-trial-versus-per-shock">Wald’s identity: information per trial versus per shock</a></li>
+  <li><a href="#restricted-trading" id="toc-restricted-trading" class="nav-link" data-scroll-target="#restricted-trading">What changes when trading is restricted?</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Models</a></li><li class="breadcrumb-item"><a href="../likelihood/negative-binomial.html">The negative binomial model</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics-learning.html">Dynamics and learning</a></li><li class="breadcrumb-item"><a href="../likelihood/linear-information.html">Linear information flow</a></li><li class="breadcrumb-item"><a href="../likelihood/negative-binomial.html">Negative binomial</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The negative binomial model</h1>
-<p class="subtitle lead">Keep the likelihood construction. Change the information clock.</p>
+<h1 class="title">The negative-binomial model</h1>
+<p class="subtitle lead">The same binary observations, a new clock, and fewer trading opportunities</p>
 </div>
 
 
@@ -330,106 +413,249 @@ window.Quarto = {
 </header>
 
 
-<p>In the <a href="../likelihood/binomial.html">binomial model</a>, time counts trials. Here it counts <strong>completed failure blocks</strong>: observe successive Bernoulli trials and stop a block at its first failure. Count the successes in each block, then add them.</p>
-<p>The information driver changes, while the rule stays the same: two probability laws determine a price through their likelihood ratio.</p>
-<section id="a-different-count" class="level2">
-<h2 class="anchored" data-anchor-id="a-different-count">A different count</h2>
-<p>Let <span class="math inline">\(G(j)\)</span> be the number of successes before the failure ending block <span class="math inline">\(j\)</span>. The blocks are independent. Under <span class="math inline">\(\mathbb P^X\)</span>, each trial succeeds with probability <span class="math inline">\(p\in(0,1)\)</span>; under <span class="math inline">\(\mathbb P^Y\)</span>, it succeeds with probability <span class="math inline">\(q\in(0,1)\)</span>.</p>
-<p>After <span class="math inline">\(n\)</span> completed blocks,</p>
+<p>Start with the <a href="../likelihood/binomial.html">binomial example</a>: the stock rises by <span class="math inline">\(u=3/2\)</span> or falls by <span class="math inline">\(d=1/2\)</span>, with up probabilities <span class="math inline">\(1/2\)</span> under the market law, <span class="math inline">\(3/4\)</span> under the stock law, and <span class="math inline">\(2/3\)</span> under investor beliefs.</p>
+<p><strong>One completed shock consists of <span class="math inline">\(G\)</span> down moves followed by the first up move.</strong> For example, <span class="math inline">\(G=0\)</span> means an immediate up move; <span class="math inline">\(G=2\)</span> means down, down, up. The duration is <span class="math inline">\(\tau=G+1\)</span> binary trials. This page changes the observation clock; <a href="../likelihood/hedging-comparison.html">the portfolio comparison</a> also restricts trading to the boundaries between shocks.</p>
+<section id="three-laws-for-the-same-geometric-shock" class="level2">
+<h2 class="anchored" data-anchor-id="three-laws-for-the-same-geometric-shock">Three laws for the same geometric shock</h2>
+<p>Let <span class="math inline">\(a^Y=1/2\)</span>, <span class="math inline">\(a^X=1/4\)</span>, and <span class="math inline">\(a^M=1/3\)</span> denote the <strong>down probabilities</strong>. For <span class="math inline">\(g=0,1,2,\ldots\)</span>,</p>
+<p><span class="math display">\[
+\begin{gathered}
+\mathbb P^i(G=g)=(1-a^i)(a^i)^g,\\
+i\in\{Y,X,M\}.
+\end{gathered}
+\]</span></p>
+<p>Consequently, the stock return and desired likelihood payoff are</p>
+<p><span class="math display">\[
+R=\frac{\mathbb P^X(G)}{\mathbb P^Y(G)}
+=\frac32\left(\frac12\right)^G.
+\]</span></p>
+<p><span class="math display">\[
+L_M=\frac{\mathbb P^M(G)}{\mathbb P^Y(G)}
+=\frac43\left(\frac23\right)^G.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Down moves <span class="math inline">\(G\)</span></th>
+<th style="text-align: right;">Duration <span class="math inline">\(\tau\)</span></th>
+<th style="text-align: right;">Stock return <span class="math inline">\(R\)</span></th>
+<th style="text-align: right;">Desired payoff <span class="math inline">\(L_M\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4/3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3/4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(8/9\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3/8\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(16/27\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(g\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(g+1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\((3/2)(1/2)^g\)</span></td>
+<td style="text-align: right;"><span class="math inline">\((4/3)(2/3)^g\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>All values are normalized by initial wealth and expressed in reference-asset units. The terminal stock return is positive in every state but can approach zero as <span class="math inline">\(G\)</span> grows.</p>
+</section>
+<section id="from-geometric-shocks-to-a-negative-binomial-count" class="level2">
+<h2 class="anchored" data-anchor-id="from-geometric-shocks-to-a-negative-binomial-count">From geometric shocks to a negative-binomial count</h2>
+<p>Independent shocks <span class="math inline">\(G(1),\ldots,G(n)\)</span> give the total number of down moves</p>
 <p><span class="math display">\[
 Z(n)=G(1)+\cdots+G(n).
 \]</span></p>
-<p>This counts successes before the <span class="math inline">\(n\)</span>-th failure. The book uses the convention</p>
+<p>Under each law,</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\mathbb P^X(Z(n)=k)\\
-&amp;\quad=\binom{n+k-1}{k}(1-p)^n p^k,
+&amp;\mathbb P^i(Z(n)=k)\\
+&amp;\quad=\binom{n+k-1}{k}(1-a^i)^n(a^i)^k,\\
+&amp;\qquad k=0,1,\ldots.
 \end{aligned}
 \]</span></p>
-<p>for <span class="math inline">\(k=0,1,\ldots\)</span>, and the same formula with <span class="math inline">\(q\)</span> under <span class="math inline">\(\mathbb P^Y\)</span>. We write these laws as <span class="math inline">\(\mathrm{NB}(n,p)\)</span> and <span class="math inline">\(\mathrm{NB}(n,q)\)</span>. Unlike the binomial count, <span class="math inline">\(Z(n)\)</span> has no upper bound.</p>
-</section>
-<section id="the-likelihood-ratio-is-the-price" class="level2">
-<h2 class="anchored" data-anchor-id="the-likelihood-ratio-is-the-price">The likelihood ratio is the price</h2>
-<p>The combinatorial factor cancels between the two laws. Therefore</p>
+<p>This is the negative-binomial convention used here: <strong>count down moves before the <span class="math inline">\(n\)</span>th up move</strong>. Other texts may exchange the names “success” and “failure”; the displayed mass function fixes the convention without ambiguity.</p>
+<p>The combinatorial factor cancels in the likelihood ratio:</p>
 <p><span class="math display">\[
+\begin{aligned}
 \frac{X(n)}{X(0)}
-=\left(\frac pq\right)^{Z(n)}
-\left(\frac{1-p}{1-q}\right)^n.
+&amp;=\left(\frac{a^X}{a^Y}\right)^{Z(n)}
+\left(\frac{1-a^X}{1-a^Y}\right)^n\\
+&amp;=u^n d^{Z(n)}.
+\end{aligned}
 \]</span></p>
-<p>The logarithm is affine in the accumulated count and the number of completed blocks:</p>
+<p>Thus the log price is affine in accumulated count and completed shocks:</p>
 <p><span class="math display">\[
-\log\frac{X(n)}{X(0)}=aZ(n)+bn,
+\log\frac{X(n)}{X(0)}=A Z(n)+Bn,
 \]</span></p>
+<p>where</p>
 <p><span class="math display">\[
-a=\log\frac pq,
-\qquad b=\log\frac{1-p}{1-q}.
+\begin{aligned}
+A&amp;=\log\frac{a^X}{a^Y},\\
+B&amp;=\log\frac{1-a^X}{1-a^Y}.
+\end{aligned}
 \]</span></p>
-<p>One block can contain any nonnegative number of successes. Its price multiplier is <span class="math inline">\((p/q)^{G(j)}(1-p)/(1-q)\)</span>, whose expectation under <span class="math inline">\(\mathbb P^Y\)</span> is one. Products over independent blocks therefore form a positive <span class="math inline">\(\mathbb P^Y\)</span>-martingale; their reciprocals form a <span class="math inline">\(\mathbb P^X\)</span>-martingale.</p>
+<p>The one-shock likelihood ratio has expectation one under <span class="math inline">\(\mathbb P^Y\)</span>. Products across independent shocks therefore form a positive <span class="math inline">\(\mathbb P^Y\)</span>-martingale; their reciprocals form a <span class="math inline">\(\mathbb P^X\)</span>-martingale. This follows directly from the geometric laws, without requiring an unrestricted optional-stopping argument.</p>
 <div data-discrete-model="negative-binomial">
-<p>The interactive figure requires JavaScript. For <span class="math inline">\(p=0.60\)</span>, <span class="math inline">\(q=0.40\)</span>, the information per completed failure block is approximately <span class="math inline">\(0.20273\)</span> nats, so after ten blocks the expected log return under <span class="math inline">\(\mathbb P^X\)</span> is approximately <span class="math inline">\(2.02733\)</span>.</p>
+<p>The interactive figure requires JavaScript. At the Columbia settings <span class="math inline">\(a^X=1/4\)</span>, <span class="math inline">\(a^Y=1/2\)</span>, and <span class="math inline">\(a^M=1/3\)</span>, ideal information is <span class="math inline">\(0.0849495\)</span> nats per completed shock, while the stock’s own-law information is <span class="math inline">\(0.1744160\)</span> nats per shock.</p>
 </div>
-<p>The distributions are shown on the same success-count axis. Their probabilities are not renormalized when the chart truncates the infinite tail. The simulation displays <strong>the price itself</strong>, starting from <span class="math inline">\(X(0)=1\)</span>, and the logarithms of exactly the same six paths under each measure. Paths are sampled at completed blocks; the individual trials inside a block are not shown. The count-to-price figure can also switch to log price.</p>
-<p>The horizontal dashed line in the price figure is <span class="math inline">\(\mathbb E^Y[X(n)/X(0)]=1\)</span>. In the log figure the dashed lines show expected <strong>log</strong> prices. Exponentiating an expected log price does not give an expected price: rare large outcomes can keep the mean price at one even while most simulated market-measure paths decline. Extremely large prices are explicitly marked as off scale; the log figure retains their full range.</p>
-</section>
-<section id="information-grows-linearly-in-block-time" class="level2">
-<h2 class="anchored" data-anchor-id="information-grows-linearly-in-block-time">Information grows linearly in block time</h2>
-<p>Let <span class="math inline">\(D(n;p\Vert q)\)</span> denote the divergence from <span class="math inline">\(\mathrm{NB}(n,p)\)</span> to <span class="math inline">\(\mathrm{NB}(n,q)\)</span>. Since <span class="math inline">\(\mathbb E^X[Z(n)]=np/(1-p)\)</span>, expected log growth is</p>
-<p><span class="math display">\[
-\mathbb E^X\left[\log\frac{X(n)}{X(0)}\right]
-=D(n;p\Vert q).
-\]</span></p>
-<p>Define information per failure block by</p>
-<p><span class="math display">\[
-I(p,q)=\frac{p}{1-p}\log\frac pq
-+\log\frac{1-p}{1-q}.
-\]</span></p>
-<p>Then the entire horizon contributes exactly <span class="math inline">\(nI(p,q)\)</span>. This is <strong>linear information flow in the book’s clock</strong>. It is also the additivity of relative entropy across the independent geometric blocks; their sum <span class="math inline">\(Z(n)\)</span> retains the likelihood ratio.</p>
-<p>Under the pricing measure the direction reverses:</p>
-<p><span class="math display">\[
-\mathbb E^Y\left[\log\frac{X(n)}{X(0)}\right]
-=-nI(q,p).
-\]</span></p>
-<p>When <span class="math inline">\(p=q\)</span>, both information rates are zero and the asset has the reference asset’s constant return.</p>
-</section>
-<section id="the-binomial-connection-same-observations-same-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="the-binomial-connection-same-observations-same-likelihood">The binomial connection: same observations, same likelihood</h2>
-<p>Suppose the realized data contain <span class="math inline">\(k\)</span> successes and <span class="math inline">\(n\)</span> failures. They could have come from an experiment with a fixed total of <span class="math inline">\(k+n\)</span> trials, or from an experiment stopped at the <span class="math inline">\(n\)</span>-th failure. For an unknown success probability <span class="math inline">\(\rho\)</span>, both likelihoods are proportional to</p>
-<p><span class="math display">\[
-L(\rho)\propto\rho^k(1-\rho)^n.
-\]</span></p>
-<p>Their proportionality factor depends on the sampling design and the observed counts, but not on <span class="math inline">\(\rho\)</span>. Thus comparing <span class="math inline">\(p\)</span> with <span class="math inline">\(q\)</span> gives the same likelihood ratio in either experiment. This illustrates the <strong>likelihood principle</strong>: proportional likelihood functions carry the same likelihood-based evidence about the parameter.</p>
-<p>The sampling distributions differ, so procedures that depend on unobserved outcomes, including conventional fixed-design p-values, can differ. The principle concerns the evidential content of the observed likelihood; it does not say that the two experiments have identical sampling properties.</p>
-<p>In financial terms, evaluate the binomial wealth process at the trial when the <span class="math inline">\(n\)</span>-th failure occurs. Its wealth agrees with the negative-binomial formula above. Here the negative-binomial index <span class="math inline">\(n\)</span> counts failures, not total trials.</p>
-</section>
-<section id="walds-identity-explains-the-change-of-clock" class="level2">
-<h2 class="anchored" data-anchor-id="walds-identity-explains-the-change-of-clock">Wald’s identity explains the change of clock</h2>
-<p>Let <span class="math inline">\(\tau(n)=Z(n)+n\)</span> be the total number of trials needed for <span class="math inline">\(n\)</span> failures. Under <span class="math inline">\(\mathbb P^X\)</span>,</p>
-<p><span class="math display">\[
-\mathbb E^X[\tau(n)]=\frac{n}{1-p}.
-\]</span></p>
-<p>The same entropy can be written as</p>
-<p><span class="math display">\[
-D_{\mathrm{KL}}(\mathrm{NB}(n,p)\Vert\mathrm{NB}(n,q))
-\]</span></p>
-<p><span class="math display">\[
-=\frac{n}{1-p}\,
-D_{\mathrm{KL}}(\mathrm{Bern}(p)\Vert\mathrm{Bern}(q)).
-\]</span></p>
-<p>For these bounded one-trial log-likelihood increments and the integrable stopping time <span class="math inline">\(\tau(n)\)</span>, Wald’s identity says: <strong>expected accumulated information equals information per trial times the expected number of trials</strong>. There is no extra information created by the new clock.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Read alongside the book">
+<p>The first plot compares the <strong>market, stock, and investor laws</strong> on the same count axis. The price and log-price simulations show the same six paths under each of <span class="math inline">\(\mathbb P^X\)</span> and <span class="math inline">\(\mathbb P^Y\)</span>, sampled at completed shocks. Trials inside each shock are not displayed. The infinite distributions are truncated only for plotting; neither their displayed probabilities nor the simulated shocks are renormalized or truncated.</p>
+<p>The dashed blue line on the price plot is <span class="math inline">\(\mathbb E^Y[X(n)/X(0)]=1\)</span>. Dashed lines on the log plot are expected <strong>log</strong> prices. Exponentiating an expected log price does not give an expected price. Extremely large prices are marked as off scale; their log paths remain visible in full.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="What the sliders count">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Read alongside the book
+<span class="screen-reader-only">Note</span>What the sliders count
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Jan Vecer, <em>Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective</em>, Chapter 5, “Negative binomial family.” The likelihood-principle connection is discussed by D. V. Lindley and L. D. Phillips (1976), “Inference for a Bernoulli Process (A Bayesian View),” <em>The American Statistician</em> 30(3), 112–119. For the stopped-sum identity, see A. Wald (1947), <em>Sequential Analysis</em>.</p>
+<p>The counted trial is the down move in the Columbia preset, where <span class="math inline">\(a^X&lt;a^Y\)</span>. The laboratory also permits <span class="math inline">\(a^X&gt;a^Y\)</span>; then that trial raises the stock price and the terminating trial lowers it. The geometric count and likelihood formulas remain valid. The neutral label “counted trials” in the charts accommodates both directions.</p>
 </div>
 </div>
-<p><a href="../likelihood/binomial.html">Back to the binomial model</a> · <a href="../likelihood/index.html">Back to the framework</a></p>
+</section>
+<section id="linear-information-in-the-shock-clock" class="level2">
+<h2 class="anchored" data-anchor-id="linear-information-in-the-shock-clock">Linear information in the shock clock</h2>
+<p>For geometric parameters <span class="math inline">\(a,b\in(0,1)\)</span>, define</p>
+<p><span class="math display">\[
+\begin{aligned}
+I(a,b)&amp;=\log\frac{1-a}{1-b}\\
+&amp;\quad+\frac{a}{1-a}\log\frac ab.
+\end{aligned}
+\]</span></p>
+<p>Relative entropy between the corresponding negative-binomial laws is <span class="math inline">\(nI(a,b)\)</span>. Applied to investor beliefs and the market,</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;D_{\mathrm{KL}}(\mathbb P^M_n\Vert\mathbb P^Y_n)\\
+&amp;\quad=nI(a^M,a^Y)\\
+&amp;\quad=n\times0.0849495.
+\end{aligned}
+\]</span></p>
+<p>This is ideal expected log growth, attained if the payoff <span class="math inline">\(L_M(n)=\mathbb P^M_n/\mathbb P^Y_n\)</span> can be implemented. The stock has its own separate information rate:</p>
+<p><span class="math display">\[
+\mathbb E^X\!\left[\log\frac{X(n)}{X(0)}\right]
+=nI(a^X,a^Y).
+\]</span></p>
+<p><span class="math display">\[
+\mathbb E^Y\!\left[\log\frac{X(n)}{X(0)}\right]
+=-nI(a^Y,a^X).
+\]</span></p>
+<p>Under investor beliefs the stock’s expected log return instead equals</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\mathbb E^M\!\left[\log\frac{X(n)}{X(0)}\right]\\
+&amp;\quad=n\{I(a^M,a^Y)-I(a^M,a^X)\}.
+\end{aligned}
+\]</span></p>
+<p>This keeps ideal information, the stock’s induced law, and the investor’s actual assessment distinct.</p>
+</section>
+<section id="walds-identity-information-per-trial-versus-per-shock" class="level2">
+<h2 class="anchored" data-anchor-id="walds-identity-information-per-trial-versus-per-shock">Wald’s identity: information per trial versus per shock</h2>
+<p>The total number of binary trials is <span class="math inline">\(\tau(n)=Z(n)+n\)</span>. Under beliefs,</p>
+<p><span class="math display">\[
+\mathbb E^M[\tau(n)]=\frac{n}{1-a^M}=\frac32n.
+\]</span></p>
+<p>The one-trial log-likelihood increments are bounded and this stopping time has finite expectation. With <span class="math inline">\(d(a\Vert b)\)</span> denoting Bernoulli relative entropy, as on the binomial page, Wald’s identity gives</p>
+<p><span class="math display">\[
+I(a^M,a^Y)=\frac{d(a^M\Vert a^Y)}{1-a^M}.
+\]</span></p>
+<p>Numerically, information per shock equals expected trials per shock times information per trial:</p>
+<p><span class="math display">\[
+0.0849495=\frac32\times0.0566330.
+\]</span></p>
+<p>The new clock creates no extra information. It packages a random number of observations into each unit of time.</p>
+<p>If trading is available after every binary trial, rebalancing to the stock weight <span class="math inline">\(w=2/3\)</span> produces an up multiplier <span class="math inline">\(4/3\)</span> and a down multiplier <span class="math inline">\(2/3\)</span>. Its wealth at the end of a shock is exactly <span class="math inline">\(L_M=(4/3)(2/3)^G\)</span>, so it attains the full <span class="math inline">\(0.0849495\)</span> nats.</p>
+</section>
+<section id="restricted-trading" class="level2">
+<h2 class="anchored" data-anchor-id="restricted-trading">What changes when trading is restricted?</h2>
+<p>Now permit trading <strong>only between completed shocks</strong>. A stock/cash portfolio held through one shock has payoff</p>
+<p><span class="math display">\[
+V_w=1+w(R-1).
+\]</span></p>
+<p><span class="math display">\[
+\mathbb P^{V_w}=w\mathbb P^X+(1-w)\mathbb P^Y.
+\]</span></p>
+<p>There are infinitely many possible <span class="math inline">\(G\)</span> values but only two traded securities. No single <span class="math inline">\(w\)</span> matches the desired payoff in every state. The old binary weight <span class="math inline">\(2/3\)</span> matches the mass of <span class="math inline">\(G=0\)</span> and the combined tail <span class="math inline">\(G\geq1\)</span>; it does not match the individual tail outcomes.</p>
+<p>The best fixed shock-level weight is <span class="math inline">\(w_{\mathrm{KL}}\approx0.745331\)</span>. Its expected log growth is <span class="math inline">\(0.0814623\)</span>, leaving a KL gap of <span class="math inline">\(0.0034872\)</span> nats per shock. That gap is the gain available from the ideal within-shock rebalancing strategy in this frictionless example.</p>
+<p><a href="../likelihood/hedging-comparison.html">Compare exact KL, KL2, and quadratic hedging</a> for the derivation, the full comparison table, and the distinction between ordinary squared error and a local approximation to information loss.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Optional detail: what binary coarsening discards">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Optional detail: what binary coarsening discards
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Keep only the partition <span class="math inline">\(C=\{G=0,G\geq1\}\)</span>. Its market probabilities are <span class="math inline">\((1/2,1/2)\)</span> and its belief probabilities are <span class="math inline">\((2/3,1/3)\)</span>. The coarse KL divergence is the same <span class="math inline">\(0.0566330\)</span> as one binary trial.</p>
+<p>The KL chain rule separates coarse information from conditional detail. Write <span class="math inline">\(M_c=\mathbb P^M(G\mid c)\)</span> and <span class="math inline">\(Y_c=\mathbb P^Y(G\mid c)\)</span> for the two conditional laws:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;D_{\mathrm{KL}}(\mathbb P^M_G\Vert\mathbb P^Y_G)\\
+&amp;\quad=D_{\mathrm{KL}}(\mathbb P^M_C\Vert\mathbb P^Y_C)\\
+&amp;\qquad+\sum_{c\in C}\mathbb P^M(c)D_{\mathrm{KL}}(M_c\Vert Y_c).
+\end{aligned}
+\]</span></p>
+<p>The event <span class="math inline">\(G=0\)</span> contains no remaining uncertainty. Conditional on <span class="math inline">\(G\geq1\)</span>, the shifted count <span class="math inline">\(G-1\)</span> has the original geometric law under each measure. Hence</p>
+<p><span class="math display">\[
+D_{\mathrm{fine}}=D_{\mathrm{coarse}}+\frac13D_{\mathrm{fine}},
+\]</span></p>
+<p><span class="math display">\[
+0.0849495=0.0566330+0.0283165.
+\]</span></p>
+<p>The coarsening loss <span class="math inline">\(0.0283165\)</span> and the portfolio implementation gap <span class="math inline">\(0.0034872\)</span> are different quantities. The first discards outcome detail; the second retains the full outcome space but restricts the available payoff.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Optional detail: the likelihood principle">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Optional detail: the likelihood principle
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Suppose the observed data contain <span class="math inline">\(k\)</span> counted down-type trials and <span class="math inline">\(n\)</span> terminating up-type trials. For an unknown counted-trial probability <span class="math inline">\(a\)</span>, both a fixed-trial design and a design stopped at the <span class="math inline">\(n\)</span>th terminating trial have likelihood proportional to <span class="math inline">\(a^k(1-a)^n\)</span>. Their combinatorial factors depend on the observed counts and design but not on <span class="math inline">\(a\)</span>.</p>
+<p>Thus the realized likelihood ratio is the same in either design. This does not make their sampling distributions identical: procedures depending on unobserved outcomes, including fixed-design p-values, can differ. Evaluating the original binary wealth process at the <span class="math inline">\(n\)</span>th terminating trial produces the negative-binomial wealth shown here.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Jan Vecer, <em>Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective</em>, Chapter 5, “Negative binomial family.”</li>
+<li>Jan Vecer, <em>Portfolio Optimization through Information Theory: Discrete Models (Prediction Markets)</em>, Columbia University, 9 October 2026; available in <a href="../resources.html">talk resources</a>.</li>
+<li>A. Wald (1947). <em>Sequential Analysis</em>.</li>
+<li>T. M. Cover and J. A. Thomas (2006). <em>Elements of Information Theory</em>, Chapter 2.</li>
+<li>D. V. Lindley and L. D. Phillips (1976). “Inference for a Bernoulli Process (A Bayesian View).” <em>The American Statistician</em> 30(3), 112–119.</li>
+</ul>
+<p><a href="../likelihood/binomial.html">Back to the binomial example</a> · <a href="../likelihood/linear-information.html">Linear information flow models</a></p>
 
 
 </section>
@@ -844,7 +1070,7 @@ D_{\mathrm{KL}}(\mathrm{Bern}(p)\Vert\mathrm{Bern}(q)).
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© Jan Vecer · Likelihood Finance</p>
+<p>© Jan Vecer · Prices as Information</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

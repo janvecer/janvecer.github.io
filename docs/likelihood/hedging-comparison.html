@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A worked geometric-shock example comparing exact KL, its target-centered quadratic approximation, and ordinary quadratic hedging, with an interactive loss explorer.">
+
+<title>One mismatch, three criteria – Jan Vecer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e4eb090ca0a53e894ba11f51061e81c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+  <script defer="" src="../assets/vendor/mathjax/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../likelihood/lr-widgets.css">
+<link rel="stylesheet" href="hedging-comparison.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Jan Vecer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../likelihood/index.html" aria-current="page"> 
+<span class="menu-text">Information Theory &amp; Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../jan-vecer.html"> 
+<span class="menu-text">Jan Vecer</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/pricing-hedging.html">Pricing and hedging</a></li><li class="breadcrumb-item"><a href="../likelihood/hedging-comparison.html">Three hedging criteria</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start here</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prices as information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/relative-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Relative entropy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio choice</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beliefs and attainable portfolios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/trinomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Incomplete markets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/utility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utility &amp; fractional Kelly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/mean-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mean–variance &amp; information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/portfolio-lab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio laboratory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pricing and hedging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Replication and approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Options as distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging-comparison.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Three hedging criteria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete hedging laboratory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flow</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model catalogue</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Negative binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normal / GBM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gamma</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inverse Gaussian</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian learning &amp; commitment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research and resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#books" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Books</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#papers" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selected research</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-same-binary-tree-a-different-trading-rule" id="toc-the-same-binary-tree-a-different-trading-rule" class="nav-link active" data-scroll-target="#the-same-binary-tree-a-different-trading-rule">The same binary tree, a different trading rule</a></li>
+  <li><a href="#three-ways-to-measure-the-remaining-mismatch" id="toc-three-ways-to-measure-the-remaining-mismatch" class="nav-link" data-scroll-target="#three-ways-to-measure-the-remaining-mismatch">Three ways to measure the remaining mismatch</a></li>
+  <li><a href="#the-resulting-portfolios" id="toc-the-resulting-portfolios" class="nav-link" data-scroll-target="#the-resulting-portfolios">The resulting portfolios</a></li>
+  <li><a href="#explore-the-losses" id="toc-explore-the-losses" class="nav-link" data-scroll-target="#explore-the-losses">Explore the losses</a></li>
+  <li><a href="#what-changes-when-the-pricing-law-changes" id="toc-what-changes-when-the-pricing-law-changes" class="nav-link" data-scroll-target="#what-changes-when-the-pricing-law-changes">What changes when the pricing law changes?</a></li>
+  <li><a href="#the-gap-has-a-trading-interpretation" id="toc-the-gap-has-a-trading-interpretation" class="nav-link" data-scroll-target="#the-gap-has-a-trading-interpretation">The gap has a trading interpretation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/pricing-hedging.html">Pricing and hedging</a></li><li class="breadcrumb-item"><a href="../likelihood/hedging-comparison.html">Three hedging criteria</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">One mismatch, three criteria</h1>
+<p class="subtitle lead">How trading restrictions separate exact information loss from quadratic hedging</p>
+</div>
+
+<div>
+  <div class="description">
+    A worked geometric-shock example comparing exact KL, its target-centered quadratic approximation, and ordinary quadratic hedging, with an interactive loss explorer.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>The desired payoff can be clear even when trading cannot produce it.</strong> The investor supplies a target distribution; stock and cash span a smaller set of distributions. The choice of loss determines which attainable portfolio comes closest.</p>
+<p>This page continues the <a href="../likelihood/binomial.html">binomial example</a> and the <a href="../likelihood/negative-binomial.html">negative-binomial trading clock</a>. All payoffs are expressed in units of the reference asset <span class="math inline">\(Y\)</span> and normalized to initial cost one.</p>
+<section id="the-same-binary-tree-a-different-trading-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-same-binary-tree-a-different-trading-rule">The same binary tree, a different trading rule</h2>
+<p>In the binary model, stock returns are <span class="math inline">\(u=3/2\)</span> and <span class="math inline">\(d=1/2\)</span>. The up probabilities are <span class="math inline">\(1/2\)</span> under the pricing law and <span class="math inline">\(2/3\)</span> under the investor’s beliefs. Rebalancing a stock fraction <span class="math inline">\(w=2/3\)</span> after every step produces the desired likelihood payoff.</p>
+<p>Now let one trading period contain <span class="math inline">\(G\)</span> down moves followed by the first up move. You may trade <strong>before and after the completed shock</strong>, but not during it. For <span class="math inline">\(g=0,1,\ldots\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+q_g&amp;=\mathbb P^Y(G=g)=2^{-(g+1)},\\
+m_g&amp;=\mathbb P^M(G=g)=\frac23\left(\frac13\right)^g.
+\end{aligned}
+\]</span></p>
+<p>The stock return and desired payoff are</p>
+<p><span class="math display">\[
+\begin{aligned}
+R_g&amp;=\frac32\left(\frac12\right)^g,\\
+L_{M,g}&amp;=\frac{m_g}{q_g}=\frac43\left(\frac23\right)^g.
+\end{aligned}
+\]</span></p>
+<p>The stock’s law is <span class="math inline">\(p^X_g=q_gR_g=\tfrac34(\tfrac14)^g\)</span>. Holding a stock fraction <span class="math inline">\(w\)</span> unchanged throughout the shock gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+V_w&amp;=1+w(R-1),\\
+v_g(w)&amp;=q_gV_w(g).
+\end{aligned}
+\]</span></p>
+<p>This is an affine payoff in <span class="math inline">\(R\)</span>. The desired <span class="math inline">\(L_M\)</span> is nonlinear in <span class="math inline">\(R\)</span>, so no single stock-and-cash holding matches it in every state. Strictly positive wealth in every state requires <span class="math inline">\(-2&lt;w\leq1\)</span>. The explorer focuses on <span class="math inline">\(0\leq w\leq1\)</span>, which contains all three optima in the examples below.</p>
+<p>At <span class="math inline">\(w=2/3\)</span>, the portfolio matches the probability of <span class="math inline">\(G=0\)</span> and the total probability of <span class="math inline">\(G\geq1\)</span>. It does <strong>not</strong> match the individual outcomes inside that tail. This is why the binary solution need not solve the completed-shock problem.</p>
+</section>
+<section id="three-ways-to-measure-the-remaining-mismatch" class="level2">
+<h2 class="anchored" data-anchor-id="three-ways-to-measure-the-remaining-mismatch">Three ways to measure the remaining mismatch</h2>
+<p>Write <span class="math inline">\(e_g=v_g(w)-m_g\)</span>. Exact information loss is</p>
+<p><span class="math display">\[
+\begin{aligned}
+D(w)&amp;=D_{\mathrm{KL}}(m\Vert v(w))\\
+&amp;=\sum_gm_g\log\frac{m_g}{v_g(w)}.
+\end{aligned}
+\]</span></p>
+<p>It is exactly equivalent to maximizing expected log growth:</p>
+<p><span class="math display">\[
+\mathbb E^M[\log V_w]=D_{\mathrm{KL}}(m\Vert q)-D(w).
+\]</span></p>
+<p>Two quadratic alternatives are</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{KL}_2(w)
+&amp;=\frac12\sum_g\frac{e_g^2}{m_g}\\
+&amp;=\frac12\mathbb E^Y\left[\frac{(V_w-L_M)^2}{L_M}\right],
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+Q(w)=\sum_g\frac{e_g^2}{q_g}
+=\mathbb E^Y[(V_w-L_M)^2].
+\]</span></p>
+<p>The target-centered <span class="math inline">\(\operatorname{KL}_2\)</span> is the second-order expansion of exact KL when the <strong>relative mismatch</strong> <span class="math inline">\((V_w-L_M)/L_M\)</span> is small with suitable integrability. Ordinary quadratic hedging weights payoff errors using the pricing law. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="A local approximation can have a different optimum">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A local approximation can have a different optimum
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The target approaches zero in the tail, while a portfolio with <span class="math inline">\(w&lt;1\)</span> retains a positive cash intercept. Relative errors can therefore be large even when absolute errors are small. There is no guarantee that minimizing <span class="math inline">\(\operatorname{KL}_2\)</span> gives a better exact-KL fit than minimizing ordinary squared error.</p>
+</div>
+</div>
+</section>
+<section id="the-resulting-portfolios" class="level2">
+<h2 class="anchored" data-anchor-id="the-resulting-portfolios">The resulting portfolios</h2>
+<p>The quadratic hedge has the regression coefficient</p>
+<p><span class="math display">\[
+\begin{aligned}
+w_Q&amp;=\frac{\mathbb E^M[R]-1}{\operatorname{Var}^Y(R)}\\
+&amp;=\frac{1/5}{2/7}=\frac7{10}.
+\end{aligned}
+\]</span></p>
+<p>For this target, the other quadratic criterion is explicitly</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{KL}_2(w)&amp;=\frac{24}{65}w^2-\frac35w+\frac14,\\
+w_{\mathrm{KL}_2}&amp;=\frac{13}{16}.
+\end{aligned}
+\]</span></p>
+<p>Exact log growth is strictly concave. Its interior maximizer solves</p>
+<p><span class="math display">\[
+\mathbb E^M\left[\frac{R-1}{1+w(R-1)}\right]=0.
+\]</span></p>
+<p>The solution is <span class="math inline">\(w_{\mathrm{KL}}\approx0.745331\)</span>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Portfolio</th>
+<th style="text-align: right;">Stock fraction</th>
+<th style="text-align: right;">Expected log growth</th>
+<th style="text-align: right;">Exact KL gap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Binary-model fraction, held throughout</td>
+<td style="text-align: right;">0.666667</td>
+<td style="text-align: right;">0.0802308</td>
+<td style="text-align: right;">0.0047187</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Target-centered quadratic (<span class="math inline">\(\operatorname{KL}_2\)</span>)</td>
+<td style="text-align: right;">0.812500</td>
+<td style="text-align: right;">0.0804213</td>
+<td style="text-align: right;">0.0045282</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ordinary quadratic hedge</td>
+<td style="text-align: right;">0.700000</td>
+<td style="text-align: right;">0.0810414</td>
+<td style="text-align: right;">0.0039081</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exact KL optimum</td>
+<td style="text-align: right;">0.745331</td>
+<td style="text-align: right;">0.0814623</td>
+<td style="text-align: right;">0.0034872</td>
+</tr>
+</tbody>
+</table>
+<p>Growth and exact KL are in nats per completed shock. In each row their sum is <span class="math inline">\(D_{\mathrm{KL}}(m\Vert q)=0.0849495\)</span>. Ordinary quadratic hedging beats <span class="math inline">\(\operatorname{KL}_2\)</span> on exact growth in this example; each quadratic criterion still minimizes its own loss.</p>
+</section>
+<section id="explore-the-losses" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-losses">Explore the losses</h2>
+<p>Move the stock fraction or select an optimizer. The graph shows exact KL, <span class="math inline">\(\operatorname{KL}_2\)</span>, and <strong>half</strong> the ordinary squared error; the factor <span class="math inline">\(1/2\)</span> changes only the scale, not its optimizer. Only the exact-KL curve is an information loss in nats. A local view makes the distinct minima easier to see.</p>
+<div data-hedging-comparison="">
+<p>The interactive explorer requires JavaScript. The table above contains its default results. With the alternative pricing law below, the exact-KL optimum remains 0.745331, while the quadratic optimum becomes 0.640858 and the KL2 optimum becomes 0.827898.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Numerical method">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Numerical method
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The explorer evaluates the geometric sums over <span class="math inline">\(g=0,\ldots,159\)</span> and solves the exact first-order condition by bisection. This truncation is far below displayed precision on the selected range, including the slower <span class="math inline">\((3/4)^g\)</span> tail in the target-centered quadratic. The original-law quadratic solutions above provide independent analytical checks. The slider restricts only the displayed allocation range; the stated optima are also the optima on the full positive-wealth domain.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-changes-when-the-pricing-law-changes" class="level2">
+<h2 class="anchored" data-anchor-id="what-changes-when-the-pricing-law-changes">What changes when the pricing law changes?</h2>
+<p>With only terminal stock and cash traded, many probability laws price those same payoffs. Keep the original probabilities for <span class="math inline">\(g\geq3\)</span>, and set</p>
+<p><span class="math display">\[
+q'_0=\frac{17}{32},\qquad
+q'_1=\frac5{32},\qquad
+q'_2=\frac3{16}.
+\]</span></p>
+<p>Both <span class="math inline">\(q\)</span> and <span class="math inline">\(q'\)</span> sum to one and satisfy <span class="math inline">\(\mathbb E^Q[R]=1\)</span>. Hold beliefs <span class="math inline">\(m\)</span>, stock returns <span class="math inline">\(R\)</span>, and the portfolio menu <span class="math inline">\(V_w\)</span> fixed. Relative to any such law,</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;D_{\mathrm{KL}}(m\Vert QV_w)\\
+&amp;\quad=D_{\mathrm{KL}}(m\Vert Q)-\mathbb E^M[\log V_w].
+\end{aligned}
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: right;">Original <span class="math inline">\(q\)</span></th>
+<th style="text-align: right;">Alternative <span class="math inline">\(q'\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Exact-KL stock fraction</td>
+<td style="text-align: right;">0.745331</td>
+<td style="text-align: right;">0.745331</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Attained optimal log growth</td>
+<td style="text-align: right;">0.0814623</td>
+<td style="text-align: right;">0.0814623</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Quadratic-hedge stock fraction</td>
+<td style="text-align: right;">0.700000</td>
+<td style="text-align: right;">0.640858</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KL2 stock fraction</td>
+<td style="text-align: right;">0.812500</td>
+<td style="text-align: right;">0.827898</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ideal information <span class="math inline">\(D_{\mathrm{KL}}(m\Vert Q)\)</span></td>
+<td style="text-align: right;">0.0849495</td>
+<td style="text-align: right;">0.1189439</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Optimal exact KL gap</td>
+<td style="text-align: right;">0.0034872</td>
+<td style="text-align: right;">0.0374816</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>exact decision and attained growth are invariant</strong>. The ideal payoff <span class="math inline">\(m/Q\)</span>, the absolute information benchmark, and the two quadratic criteria change. This comparison holds beliefs fixed; it does not hold a separately specified hedge target fixed while changing its valuation.</p>
+</section>
+<section id="the-gap-has-a-trading-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="the-gap-has-a-trading-interpretation">The gap has a trading interpretation</h2>
+<p>On the original binary tree, rebalancing to <span class="math inline">\(w=2/3\)</span> at every binary step produces</p>
+<p><span class="math display">\[
+\frac43\left(\frac23\right)^G=L_M.
+\]</span></p>
+<p>Its expected log gain per completed shock is <span class="math inline">\(0.0849495\)</span>. The best portfolio held unchanged during the shock earns <span class="math inline">\(0.0814623\)</span>. Thus</p>
+<p><span class="math display">\[
+0.0849495-0.0814623=0.0034872
+\]</span></p>
+<p>is the expected log growth lost because intermediate rebalancing is unavailable. This difference between two attainable growth values does not depend on a chosen pricing law. Its equality to the absolute KL gap above uses the original law <span class="math inline">\(q\)</span>, which is fixed by pricing every step of the binary tree. The alternative <span class="math inline">\(q'\)</span> prices the terminal stock and cash, but not those intermediate trading opportunities.</p>
+<p><strong>Continue:</strong> <a href="../likelihood/mean-variance.html">Mean–variance and the local quadratic limits</a> · <a href="../likelihood/hedging.html">Hedging a specified option payoff</a> · <a href="../likelihood/trinomial.html">Pricing-law geometry and the dual problem</a></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Source and scope">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Source and scope
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The worked example follows Jan Vecer’s Columbia presentation, <em>Portfolio Optimization through Information Theory: Discrete Models (Prediction Markets)</em>, 9 October 2026, especially slides 22–37 and 43–48. The presentation is available from <a href="../resources.html">Research and resources</a>. All portfolio comparisons here concern expected log growth under the stated beliefs. A full-market utility-selected target can also be approximated by KL, but that procedure does not generally equal constrained expected-utility maximization for the original utility.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/janvecer\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Jan Vecer · Prices as Information</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../likelihood/index.html">
+<p>Explore the framework</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../jan-vecer.html">
+<p>About &amp; contact</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="hedging-comparison.js" defer=""></script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,66 @@
+{
+  "created": "2026-10-03T16:14:35.369Z",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390
+  ],
+  "pages": 1,
+  "results": [
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [
+        "Tables exceed viewport: OutcomeℙM(ω)ℙY(ω)StakePayout per unit stakedPayoff M(1,ω)Gross returnWin0.6000.5"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.lrw-table",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [
+        "Tables exceed viewport: OutcomeℙM(ω)ℙY(ω)StakePayout per unit stakedPayoff M(1,ω)Gross returnWin0.6000.5"
+      ],
+      "requests": [],
+      "overflow": [
+        "TABLE.lrw-table",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    }
+  ]
+}

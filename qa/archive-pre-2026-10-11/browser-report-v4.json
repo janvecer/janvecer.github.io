@@ -1,0 +1,982 @@
+{
+  "created": "2026-10-03T16:26:17.901267+00:00",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390,
+    1024,
+    1440
+  ],
+  "pages": 19,
+  "results": [
+    {
+      "page": "about.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 21.25,
+        "right": 368.75,
+        "width": 347.5,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 390,
+      "widgets": 3,
+      "sliderCount": 12,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/dynamics.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/gamma.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/hedging.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.lrw-table",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    },
+    {
+      "page": "likelihood/inverse-gaussian.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/linear-information.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/mean-variance.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    },
+    {
+      "page": "likelihood/negative-binomial.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/normal.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/options.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 4,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/poisson.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/portfolio-lab.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.",
+        "CAPTION.",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD."
+      ]
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/trinomial.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/utility.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 8,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD."
+      ]
+    },
+    {
+      "page": "about.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 119.59375,
+        "right": 904.40625,
+        "width": 784.8125,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 34,
+        "right": 990,
+        "width": 956,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 119.59375,
+        "right": 762.3125,
+        "width": 642.71875,
+        "centerOffset": -71.046875
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1024,
+      "widgets": 3,
+      "sliderCount": 12,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/dynamics.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/gamma.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/hedging.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1024,
+      "widgets": 2,
+      "sliderCount": 9,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/inverse-gaussian.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/linear-information.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/mean-variance.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/negative-binomial.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/normal.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/options.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 4,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/poisson.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/portfolio-lab.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/trinomial.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/utility.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 8,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "about.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 325.5,
+        "right": 1114.5,
+        "width": 789,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 115,
+        "right": 1325,
+        "width": 1210,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 254.453125,
+        "right": 1043.453125,
+        "width": 789,
+        "centerOffset": -71.046875
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1440,
+      "widgets": 3,
+      "sliderCount": 12,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/dynamics.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/gamma.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/hedging.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1440,
+      "widgets": 2,
+      "sliderCount": 9,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/inverse-gaussian.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/linear-information.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/mean-variance.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/negative-binomial.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/normal.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/options.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 4,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/poisson.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/portfolio-lab.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 3,
+      "selectCount": 1,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/trinomial.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/utility.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 8,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    }
+  ],
+  "failures": [],
+  "provenance": {
+    "baseline": "browser-report-v4-initial.json",
+    "baseline_cases": 57,
+    "focused_rerun": "browser-report-v4-fixed.json",
+    "focused_cases": 3,
+    "replaced_cases": [
+      {
+        "page": "likelihood/hedging.html",
+        "width": 390
+      },
+      {
+        "page": "likelihood/hedging.html",
+        "width": 1024
+      },
+      {
+        "page": "likelihood/hedging.html",
+        "width": 1440
+      }
+    ],
+    "note": "Consolidated final state: the baseline covered all 19 pages at three widths; only the changed hedging page was rerun after the two equation splits and chart-label correction."
+  }
+}

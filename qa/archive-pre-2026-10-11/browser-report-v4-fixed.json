@@ -1,0 +1,61 @@
+{
+  "created": "2026-10-03T16:25:50.734Z",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390,
+    1024,
+    1440
+  ],
+  "pages": 1,
+  "results": [
+    {
+      "page": "likelihood/hedging.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 25.5,
+        "right": 364.5,
+        "width": 339,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/hedging.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 240.65625,
+        "right": 783.328125,
+        "width": 542.671875,
+        "centerOffset": -0.0078125
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/hedging.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 6,
+      "selectCount": 0,
+      "readingColumn": {
+        "left": 350.5,
+        "right": 1089.5,
+        "width": 739,
+        "centerOffset": 0
+      },
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    }
+  ],
+  "failures": []
+}

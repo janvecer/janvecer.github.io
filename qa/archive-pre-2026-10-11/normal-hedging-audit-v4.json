@@ -1,0 +1,255 @@
+{
+  "option_cases": 52,
+  "max_price_absolute_error": 2.842170943040401e-14,
+  "max_density_mass_error": 8.837375276016246e-14,
+  "max_pointwise_option_density_error": 1.6153745008296028e-13,
+  "hedging_cases": 12,
+  "hedging_max_weight_error": 3.9362335613191135e-10,
+  "hedging_max_kl_error": 9.39673228117499e-10,
+  "hedging_max_mass_error": 1.0022449536961631e-10,
+  "hedging_max_boundary_derivative_error": 1.1502637731197751e-10,
+  "hedging_max_scipy_derivative_analytic_error": 6.661338147750939e-16,
+  "hedging_max_chosen_kl_error": 9.755249941179045e-10,
+  "hedging_results": [
+    {
+      "params": {
+        "spot": 100,
+        "strike": 110,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 110,
+        "h": 0.08333333333333333
+      },
+      "js_optimal_weight": 0.3679469794514585,
+      "scipy_optimal_weight": 0.3679469794514843,
+      "weight_error": 2.581268532253489e-14,
+      "js_min_kl": 1.726802088167762e-05,
+      "scipy_min_kl": 1.7268020881675998e-05,
+      "kl_error": 1.6229151269392394e-18,
+      "mass_error": 5.551115123125783e-16,
+      "boundary_derivative_error": 5.0306980803327406e-17,
+      "scipy_derivative_analytic_error": 7.719519468096792e-17,
+      "chosen_kl_error": 1.6957599604031093e-17
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 110,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 110,
+        "h": 0.003968253968253968
+      },
+      "js_optimal_weight": 0.36691044328199673,
+      "scipy_optimal_weight": 0.36691044328192907,
+      "weight_error": 6.766809335090329e-14,
+      "js_min_kl": 3.927396532559146e-08,
+      "scipy_min_kl": 3.927396532753827e-08,
+      "kl_error": 1.946805967590503e-18,
+      "mass_error": 9.992007221626409e-16,
+      "boundary_derivative_error": 6.101347725662176e-17,
+      "scipy_derivative_analytic_error": 4.277177570455315e-17,
+      "chosen_kl_error": 3.525509945150008e-19
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 110,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 110,
+        "h": 1
+      },
+      "js_optimal_weight": 0.37784045454489323,
+      "scipy_optimal_weight": 0.3778404549385166,
+      "weight_error": 3.9362335613191135e-10,
+      "js_min_kl": 0.002827960681434594,
+      "scipy_min_kl": 0.002827960682490774,
+      "kl_error": 1.056179883135444e-12,
+      "mass_error": 7.985301309076931e-11,
+      "boundary_derivative_error": 2.5862506580764943e-11,
+      "scipy_derivative_analytic_error": 1.6653345369377348e-16,
+      "chosen_kl_error": 1.2484488269570715e-12
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 100,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 0,
+        "h": 0.08333333333333333
+      },
+      "js_optimal_weight": 1,
+      "scipy_optimal_weight": 1.0,
+      "weight_error": 0.0,
+      "js_min_kl": 0.05173349618236288,
+      "scipy_min_kl": 0.05173349618236287,
+      "kl_error": 6.938893903907228e-18,
+      "mass_error": 5.551115123125783e-16,
+      "boundary_derivative_error": 5.93275428784068e-16,
+      "scipy_derivative_analytic_error": 6.279698983036042e-16,
+      "chosen_kl_error": 5.551115123125783e-17
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 100,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 0,
+        "h": 0.003968253968253968
+      },
+      "js_optimal_weight": 1,
+      "scipy_optimal_weight": 1.0,
+      "weight_error": 0.0,
+      "js_min_kl": 0.0024371811146275285,
+      "scipy_min_kl": 0.0024371811146275436,
+      "kl_error": 1.5178830414797062e-17,
+      "mass_error": 5.551115123125783e-16,
+      "boundary_derivative_error": 1.5959455978986625e-16,
+      "scipy_derivative_analytic_error": 1.3552527156068805e-16,
+      "chosen_kl_error": 2.7321894746634712e-17
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 100,
+        "sigma": 0.3,
+        "tau": 1,
+        "reserve": 0,
+        "h": 1
+      },
+      "js_optimal_weight": 1,
+      "scipy_optimal_weight": 1.0,
+      "weight_error": 0.0,
+      "js_min_kl": 0.803227169977552,
+      "scipy_min_kl": 0.8032271690378787,
+      "kl_error": 9.39673228117499e-10,
+      "mass_error": 1.0022449536961631e-10,
+      "boundary_derivative_error": 3.552713678800501e-15,
+      "scipy_derivative_analytic_error": 6.661338147750939e-16,
+      "chosen_kl_error": 9.755249941179045e-10
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 120,
+        "sigma": 0.15,
+        "tau": 0.25,
+        "reserve": 150,
+        "h": 0.25
+      },
+      "js_optimal_weight": 0.006158843749959786,
+      "scipy_optimal_weight": 0.006158843708963681,
+      "weight_error": 4.099610494828765e-11,
+      "js_min_kl": 2.3966583270068063e-06,
+      "scipy_min_kl": 2.396658326811055e-06,
+      "kl_error": 1.9575143169283694e-16,
+      "mass_error": 1.49741330446318e-11,
+      "boundary_derivative_error": 7.552552333534024e-14,
+      "scipy_derivative_analytic_error": 1.2576745200831851e-16,
+      "chosen_kl_error": 3.8762287650484506e-14
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 120,
+        "sigma": 0.15,
+        "tau": 0.25,
+        "reserve": 150,
+        "h": 0.000992063492063492
+      },
+      "js_optimal_weight": 0.0055650009196615,
+      "scipy_optimal_weight": 0.005565000919675089,
+      "weight_error": 1.3588956349064318e-14,
+      "js_min_kl": 5.135451403438671e-12,
+      "scipy_min_kl": 5.135451442461351e-12,
+      "kl_error": 3.90226799901281e-20,
+      "mass_error": 1.1102230246251565e-15,
+      "boundary_derivative_error": 3.525351126472398e-17,
+      "scipy_derivative_analytic_error": 3.624623387890602e-17,
+      "chosen_kl_error": 1.8450918690040424e-17
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 80,
+        "sigma": 0.45,
+        "tau": 2,
+        "reserve": 150,
+        "h": 2
+      },
+      "js_optimal_weight": 0.41630121238429574,
+      "scipy_optimal_weight": 0.4163012126314621,
+      "weight_error": 2.4716634294819073e-10,
+      "js_min_kl": 0.0030968472542549606,
+      "scipy_min_kl": 0.003096847253470522,
+      "kl_error": 7.844384863897602e-13,
+      "mass_error": 9.528511313305899e-11,
+      "boundary_derivative_error": 1.1502637731197751e-10,
+      "scipy_derivative_analytic_error": 2.220446049250313e-16,
+      "chosen_kl_error": 6.088419698957459e-13
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 80,
+        "sigma": 0.45,
+        "tau": 2,
+        "reserve": 150,
+        "h": 0.16666666666666666
+      },
+      "js_optimal_weight": 0.4079462461094625,
+      "scipy_optimal_weight": 0.4079462461094609,
+      "weight_error": 1.609823385706477e-15,
+      "js_min_kl": 2.0756622509784188e-05,
+      "scipy_min_kl": 2.0756622509779695e-05,
+      "kl_error": 4.492662752236809e-18,
+      "mass_error": 9.992007221626409e-16,
+      "boundary_derivative_error": 2.983724378680108e-16,
+      "scipy_derivative_analytic_error": 2.5326962749261384e-16,
+      "chosen_kl_error": 2.053207864144424e-18
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 120,
+        "sigma": 0.45,
+        "tau": 2,
+        "reserve": 30,
+        "h": 1
+      },
+      "js_optimal_weight": 0.9461655025552478,
+      "scipy_optimal_weight": 0.9461655025552436,
+      "weight_error": 4.218847493575595e-15,
+      "js_min_kl": 0.015136046055521733,
+      "scipy_min_kl": 0.015136046055521778,
+      "kl_error": 4.5102810375396984e-17,
+      "mass_error": 1.9984014443252818e-15,
+      "boundary_derivative_error": 2.8102520310824275e-16,
+      "scipy_derivative_analytic_error": 2.8275992658421956e-16,
+      "chosen_kl_error": 6.938893903907228e-18
+    },
+    {
+      "params": {
+        "spot": 100,
+        "strike": 80,
+        "sigma": 0.15,
+        "tau": 0.25,
+        "reserve": 0,
+        "h": 0.25
+      },
+      "js_optimal_weight": 1,
+      "scipy_optimal_weight": 1.0,
+      "weight_error": 0.0,
+      "js_min_kl": 0.04903959094988364,
+      "scipy_min_kl": 0.049039590938786466,
+      "kl_error": 1.1097171792595617e-11,
+      "mass_error": 1.0298650821027877e-11,
+      "boundary_derivative_error": 4.106437412332298e-14,
+      "scipy_derivative_analytic_error": 5.863365348801608e-16,
+      "chosen_kl_error": 1.1765852181433445e-11
+    }
+  ]
+}

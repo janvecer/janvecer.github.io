@@ -1,7 +1,7 @@
 ---
-title: "Likelihood Finance"
-subtitle: "A guided introduction: from the price of one bet to the information in a portfolio"
-description: "Learn likelihood-based finance step by step through state prices, worked examples, relative entropy, and interactive portfolios."
+title: "Prices as Information"
+subtitle: "An information-theoretic perspective on finance, starting with one bet"
+description: "Discover how prices encode probability distributions, portfolio choice expresses beliefs, and trading restrictions create a measurable information gap."
 css: lr-widgets.css
 resources:
   - lr-widgets.js
@@ -10,14 +10,16 @@ include-after-body:
       <script src="lr-widgets.js"></script>
 ---
 
-Start with a simple question: **if you and the market disagree about the chances of an outcome, what investment expresses your view?** We will answer it with one bet, work through a football example, and then introduce the mathematics that connects portfolios with information.
+An asset distributes wealth across possible outcomes. Once we divide by its price, that distribution of wealth can also be read as a probability model. **Prices, portfolios, and information then become parts of the same calculation.**
+
+Start with a simple question: **if you and the market disagree about the chances of an outcome, what investment expresses your view?** We will answer it with one bet, work through a football example, and see how limited trading opportunities prevent some views from being implemented exactly.
 
 This is a web companion to Jan Vecer's *Principles of Portfolio Choice*. No knowledge of information theory is needed to begin.
 
 ::: {.hero-actions}
 [Follow the worked example](#one-claim){.action-link .action-primary}
 [What is relative entropy?](relative-entropy.qmd){.action-link .action-quiet}
-[Explore two states](binomial.qmd){.action-link .action-quiet}
+[What if only one bet trades?](#incomplete-market){.action-link .action-quiet}
 :::
 
 ## 1. Choose the unit in which we measure wealth
@@ -105,6 +107,21 @@ $$
 $$
 
 The budget fixes the size of the investment; this distribution describes how its payoff is spread across outcomes. We can move in either direction: probabilities determine a payoff, and a fairly priced nonnegative payoff determines probabilities.
+
+### Even a one-dollar bet has an induced probability
+
+Start with \$100 in an idealized fair, even-money game. Bet \$1 on Red and keep \$99 in cash. Final wealth is \$101 on Red and \$99 otherwise, so the induced probabilities are
+
+$$
+\begin{aligned}
+\mathbb P^V
+&=\left(\frac12\frac{101}{100},\frac12\frac{99}{100}\right)\\
+&=(0.505,0.495).
+\end{aligned}
+$$
+
+The small position is a small change from the pricing law $(0.5,0.5)$. This is a description of the portfolio, not a claim that its owner truly believes the chance of Red is $50.5\%$.
+
 
 ## 5. Measure the football investment's performance
 
@@ -238,47 +255,79 @@ For general scenario spaces, use densities and require $\mathbb P^M\ll\mathbb P^
 The payoff-to-measure map requires only fair pricing and a nonnegative payoff of positive finite cost. Implementing every desired measure additionally requires a rich enough asset menu. [The trinomial page](trinomial.qmd) shows what happens when that menu is incomplete; the [portfolio laboratory](portfolio-lab.qmd) finds the closest attainable distribution.
 :::
 
-## From distributions to price processes
+## 8. What if only the Win contract and cash trade? {#incomplete-market}
 
-A traded asset has a measure $\mathbb P^X$, which need not equal any investor's beliefs. Its relative price is the likelihood ratio $\mathbb P^X/\mathbb P^Y$ on the information observed so far. Classical martingale pricing and this construction are compatible; they start from different primitives.
+Return to the same football beliefs $(0.6,0.3,0.1)$ and prices $(0.5,0.3,0.2)$. Now remove the separate Draw and Loss claims. The Win contract costs $0.5$ and pays $(1,0,0)$, so its return per unit invested is $R_W=(2,0,0)$.
 
-The [likelihood and dynamics page](dynamics.qmd) states the fundamental theorem of asset pricing and compares the two directions. The [linear information flow page](linear-information.qmd) gives the common structure behind all six families.
+Invest a fraction $w$ in that contract and the rest in the reference asset. The unit-cost portfolio pays
 
-::: {.lf-model-grid}
-::: {.lf-model-card}
-### [Binomial](binomial.qmd)
-Two outcomes per trial. Recover both measures from the two martingale conditions.
-:::
-::: {.lf-model-card}
-### [Negative binomial](negative-binomial.qmd)
-The same trials, counted until a fixed number of failures. A new clock, the same likelihood evidence.
-:::
-::: {.lf-model-card}
-### [Normal](normal.qmd)
-Continuous information. Derive geometric Brownian motion directly from two normal densities.
-:::
-::: {.lf-model-card}
-### [Poisson](poisson.qmd)
-Information arrives as countable events. Compare event rates and generate jump paths.
-:::
-::: {.lf-model-card}
-### [Gamma](gamma.qmd)
-Positive increments of many sizes. Keep the shape clock fixed and compare rates.
-:::
-::: {.lf-model-card}
-### [Inverse Gaussian](inverse-gaussian.qmd)
-A first-passage interpretation and an alternative pattern of positive jump activity.
-:::
-:::
+$$
+\begin{aligned}
+V_w&=1+w(R_W-1)\\
+&=(1+w,1-w,1-w).
+\end{aligned}
+$$
 
-Each family has explicit prices and linear expected information accumulation. The continuous-model laboratories let you choose a bounded KL rate and an event or shape parameter, then generate paths under both measures. The displayed ranges keep the examples readable; they are illustrative calibrations.
+It cannot distinguish Draw from Loss. Expected log growth is
 
-## Choose a portfolio
+$$
+g(w)=0.6\log(1+w)+0.4\log(1-w).
+$$
+
+The first-order condition $0.6/(1+w)-0.4/(1-w)=0$ gives $w^*=0.2$. This is feasible even if borrowing and short selling are excluded. The implemented payoff is $(1.2,0.8,0.8)$ and the corresponding law is
+
+$$
+\mathbb P^{V_{0.2}}=(0.6,0.24,0.16).
+$$
+
+| Outcome | Pricing law $\mathbb P^Y$ | Belief $\mathbb P^M$ | Implemented $\mathbb P^{V_{0.2}}$ |
+|:--|--:|--:|--:|
+| Win | 0.50 | 0.60 | 0.60 |
+| Draw | 0.30 | 0.30 | 0.24 |
+| Loss | 0.20 | 0.10 | 0.16 |
+
+Win is matched exactly. Within the other outcomes, the implemented law retains the market's **60:40 Draw/Loss split**, while the investor would prefer 75:25. The information identity makes the cost of that restriction explicit, in nats:
+
+$$
+\begin{aligned}
+\underbrace{0.0400782}_{\text{ideal information}}
+&=\underbrace{0.0201355}_{\text{attained log growth}}\\
+&\quad+\underbrace{0.0199427}_{\text{KL gap}}.
+\end{aligned}
+$$
+
+A trading restriction has become an information gap. [The portfolio laboratory](portfolio-lab.qmd) explores this idea with other asset menus; the [trinomial page](trinomial.qmd) also shows what changes when the pricing law is not unique.
+
+## 9. Where do preferences enter?
+
+We first translated payoffs into probabilities and established log optimality. Other preferences can now select a different payoff, and hence a different induced law $\mathbb P^U$. A positive payoff selected by utility is itself log-optimal **under $\mathbb P^U$**. The original belief remains $\mathbb P^M$; these two laws need not agree.
+
+For example, CRRA utility with relative risk aversion $\gamma$ selects the normalized payoff
+
+$$
+\begin{gathered}
+G^U=\frac{L_M^{1/\gamma}}{\mathbb E^Y[L_M^{1/\gamma}]},\\
+L_M=\frac{d\mathbb P^M}{d\mathbb P^Y},
+\end{gathered}
+$$
+
+when all state claims are available. At $\gamma=1$, the denominator is one and $\mathbb P^U=\mathbb P^M$. The [utility page](utility.qmd) explains the change of law, compares it with keeping a cash reserve, and distinguishes a full-menu target from constrained utility optimization.
+
+## From probabilities to price processes
+
+The same language extends through time: a positive traded asset's relative price is a likelihood-ratio process on the information observed so far. The [dynamics page](dynamics.qmd) connects this construction with classical martingale pricing.
+
+[Linear information flow](linear-information.qmd) is one useful modeling class. Its binomial, negative-binomial, normal, Poisson, gamma, and inverse-Gaussian examples share an additive information clock. They are supporting model families: the payoff, information, and portfolio principles above do not depend on choosing one of them. Begin with [the binary example](binomial.qmd) to connect likelihoods with the familiar stock-and-cash replication formula.
+
+## Continue by financial question
+
+The [portfolio-choice overview](markets-portfolios.qmd) brings the next steps together.
 
 - [**Trinomial and incomplete markets**](trinomial.qmd): see which pricing measures fit the same dynamics, and which beliefs a limited asset menu can express.
 - [**Utility and fractional Kelly**](utility.qmd): compare normalized geometric tempering with a cash reserve, using three states to see the difference.
 - [**Mean–variance approximation**](mean-variance.qmd): connect quadratic optimization to likelihood ratios and distinguish the ordinary Taylor and Pearson objectives.
 - [**Portfolio laboratory**](portfolio-lab.qmd): enter asset distributions, mix them, and solve exact KL or quadratic portfolio problems.
+- [**Exact KL, KL2, and quadratic hedging**](hedging-comparison.qmd): compare three criteria on the same target and quantify the value of unavailable rebalancing.
 - [**Options as densities**](options.qmd): convert calls, puts, digitals, and straddles into their implied scenario weights.
 - [**Discrete hedging**](hedging.qmd): rebalance a normal-model option hedge and compare the resulting payoffs and densities.
 
@@ -289,7 +338,7 @@ The market measure $\mathbb P^Y$ can serve as a null model, and an asset or port
 
 Kelly (1956) connected information rate and capital growth; Cover and Thomas give the finite horse-race identity. Geman, El Karoui, and Rochet developed the change-of-numeraire relation between traded assets and probability measures. This site uses these connections as a common language for pricing and portfolio choice.
 
-The book continues with **hedging as density approximation** in Chapter 6, introduced here through [discrete hedging](hedging.qmd), and **learning and Bayesian portfolios** in Chapter 7. The learning chapter connects mixture portfolios with Bayesian updating: the changing wealth shares are posterior model weights. That part of the web companion will follow later.
+The book continues with **hedging as density approximation** in Chapter 6 and **learning and Bayesian portfolios** in Chapter 7. The [Bayesian learning page](bayesian-learning.qmd) explains when wealth shares follow Bayes, how partial commitment changes the update, and why adapting to a new regime requires more than reducing exposure. The [presentations and resources](../resources.qmd) give complementary routes through these ideas.
 
 ## Reading
 

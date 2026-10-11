@@ -1,0 +1,16 @@
+::: {.callout-note collapse="true" title="Notation: beliefs, prices, and implemented payoffs"}
+All returns are measured in units of a strictly positive reference asset $Y$. Its own return is one, so interest and reinvestment are included in the choice of unit.
+
+| Symbol | Role |
+|:--|:--|
+| $\mathbb P^M$ | Investor's beliefs about outcomes |
+| $\mathbb P^Y$ | Pricing law in reference-asset units |
+| $\mathbb P^X$ | Law induced by the traded stock |
+| $\mathbb P^V$ | Law induced by the implemented portfolio |
+| $\mathbb P^U$ | Law induced by a utility-selected payoff |
+| $R=d\mathbb P^X/d\mathbb P^Y$ | Stock's gross return |
+| $L_M=d\mathbb P^M/d\mathbb P^Y$ | Ideal payoff for the belief |
+| $V_w=1+w(R-1)$ | Unit-cost stock-and-cash payoff |
+
+For $0\leq w\leq1$, $\mathbb P^{V_w}=w\mathbb P^X+(1-w)\mathbb P^Y$ is a convex mixture. Outside that range, admissibility still requires nonnegative wealth in every relevant state. In incomplete markets, the chosen pricing law need not be unique.
+:::

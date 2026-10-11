@@ -1,10 +1,10 @@
 ---
 title: "Linear information flow"
-subtitle: "Six models, one mechanism for accumulating evidence"
+subtitle: "A model family within dynamics and learning"
 description: "Additive information drivers produce likelihood-ratio prices with linear relative entropy in time."
 ---
 
-The binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian models share a structure. An observable driver $Z(t)$ accumulates information. Two measures give different probabilities to its increments. Price is the likelihood ratio of those two models.
+This subsection collects examples of [price dynamics](dynamics.qmd). The binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian models share a structure. An observable driver $Z(t)$ accumulates information. Two measures give different probabilities to its increments. Price is the likelihood ratio of those two models.
 
 The driver is additive; the price is multiplicative. “Linear information flow” refers to the affine log likelihood and its expected accumulation, not to a price moving along a straight line.
 
@@ -61,14 +61,16 @@ Prices still satisfy $\mathbb E^Y[X(t)]=X(0)$. There is no contradiction: the lo
 
 | Family | What accumulates? | What stays common? |
 |:--|:--|:--|
-| [Binomial](binomial.qmd) | Successes in a fixed number of trials | Trial count |
-| [Negative binomial](negative-binomial.qmd) | Successes before a fixed number of failures | Failure-count clock |
+| [Binomial](binomial.qmd) | Up-type outcomes in a fixed number of trials | Trial count |
+| [Negative binomial](negative-binomial.qmd) | Down moves before a fixed number of up moves | Completed-shock clock |
 | [Normal](normal.qmd) | Continuous Gaussian increments | Variance rate |
 | [Poisson](poisson.qmd) | Event arrivals | Time and event sizes |
 | [Gamma](gamma.qmd) | Positive gamma increments | Shape rate |
 | [Inverse Gaussian](inverse-gaussian.qmd) | Positive inverse Gaussian increments | Activity parameter |
 
-Binomial time is an integer trial count. Negative-binomial time is an integer failure count; each step contains a random number of trials. Normal, Poisson, gamma, and inverse Gaussian processes can be observed on any positive time grid. Their increment distributions remain in the same family with the appropriate time scaling.
+Binomial time is an integer trial count. In our negative-binomial example, time counts completed shocks: down moves followed by one up move. Each shock contains a random number of binary trials. The two discrete pages use the same pricing, stock, and investor laws, so the clock change can be followed numerically. Normal, Poisson, gamma, and inverse Gaussian processes can be observed on any positive time grid. Their increment distributions remain in the same family with the appropriate time scaling.
+
+The investor's law $\mathbb P^M$ can be another member of the same family. Then $D(\mathbb P^M\Vert\mathbb P^Y)$ measures ideal log growth; $D(\mathbb P^X\Vert\mathbb P^Y)$ is the stock's expected log return under its own induced law. They coincide only if those laws coincide. Whether the investor's ideal payoff can be implemented depends on the available securities and trading times, as the [discrete comparison](hedging-comparison.qmd) shows.
 
 ## A common scale for comparison
 

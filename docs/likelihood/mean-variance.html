@@ -2,24 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Compare classical mean–variance, a Taylor approximation to log growth, and the book’s Pearson quadratic objective.">
+<meta name="description" content="Compare classical mean–variance, near-cash log growth, target-centered KL2, and pricing-measure quadratic hedging.">
 
 <title>Mean–variance &amp; information – Jan Vecer</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -43,10 +40,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a435622ae35cc41ac2c5e25b0c4cfd6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9e4eb090ca0a53e894ba11f51061e81c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -131,7 +128,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../likelihood/index.html" aria-current="page"> 
-<span class="menu-text">Likelihood Finance</span></a>
+<span class="menu-text">Information Theory &amp; Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html"> 
+<span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../jan-vecer.html"> 
@@ -148,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics.html">Markets and portfolios</a></li><li class="breadcrumb-item"><a href="../likelihood/mean-variance.html">Mean–variance &amp; information</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/markets-portfolios.html">Portfolio choice</a></li><li class="breadcrumb-item"><a href="../likelihood/mean-variance.html">Mean–variance &amp; information</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -162,17 +163,17 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Start here</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Likelihood Finance</span></a>
+ <span class="menu-text">Prices as information</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -185,8 +186,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Models</span></a>
+            <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio choice</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -194,67 +195,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The negative binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Normal → geometric Brownian motion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Poisson: events become price jumps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Gamma: accumulated activity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inverse Gaussian: a random clock</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Markets and portfolios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
+  <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beliefs and attainable portfolios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/trinomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The trinomial model</span></a>
+ <span class="menu-text">Incomplete markets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,6 +223,23 @@ window.Quarto = {
  <span class="menu-text">Portfolio laboratory</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pricing and hedging</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Replication and approximation</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/options.html" class="sidebar-item-text sidebar-link">
@@ -283,8 +248,125 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Three hedging criteria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../likelihood/hedging.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete hedging</span></a>
+ <span class="menu-text">Discrete hedging laboratory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flow</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model catalogue</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Negative binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normal / GBM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gamma</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inverse Gaussian</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian learning &amp; commitment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research and resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#books" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Books</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#papers" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selected research</span></a>
   </div>
 </li>
       </ul>
@@ -302,24 +384,25 @@ window.Quarto = {
   <li><a href="#start-with-classical-meanvariance" id="toc-start-with-classical-meanvariance" class="nav-link active" data-scroll-target="#start-with-classical-meanvariance">Start with classical mean–variance</a></li>
   <li><a href="#the-ordinary-taylor-approximation" id="toc-the-ordinary-taylor-approximation" class="nav-link" data-scroll-target="#the-ordinary-taylor-approximation">The ordinary Taylor approximation</a></li>
   <li><a href="#the-books-mixed-measure-quadratic" id="toc-the-books-mixed-measure-quadratic" class="nav-link" data-scroll-target="#the-books-mixed-measure-quadratic">The book’s mixed-measure quadratic</a></li>
+  <li><a href="#a-different-expansion-close-to-the-desired-payoff" id="toc-a-different-expansion-close-to-the-desired-payoff" class="nav-link" data-scroll-target="#a-different-expansion-close-to-the-desired-payoff">A different expansion: close to the desired payoff</a></li>
   <li><a href="#experiment-with-the-approximation" id="toc-experiment-with-the-approximation" class="nav-link" data-scroll-target="#experiment-with-the-approximation">Experiment with the approximation</a></li>
   <li><a href="#from-payoffs-to-a-portfolio-calculation" id="toc-from-payoffs-to-a-portfolio-calculation" class="nav-link" data-scroll-target="#from-payoffs-to-a-portfolio-calculation">From payoffs to a portfolio calculation</a></li>
-  <li><a href="#two-geometries-for-a-restricted-menu" id="toc-two-geometries-for-a-restricted-menu" class="nav-link" data-scroll-target="#two-geometries-for-a-restricted-menu">Two geometries for a restricted menu</a></li>
+  <li><a href="#three-geometries-for-a-restricted-menu" id="toc-three-geometries-for-a-restricted-menu" class="nav-link" data-scroll-target="#three-geometries-for-a-restricted-menu">Three geometries for a restricted menu</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics.html">Markets and portfolios</a></li><li class="breadcrumb-item"><a href="../likelihood/mean-variance.html">Mean–variance &amp; information</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/markets-portfolios.html">Portfolio choice</a></li><li class="breadcrumb-item"><a href="../likelihood/mean-variance.html">Mean–variance &amp; information</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Mean–variance &amp; information</h1>
-<p class="subtitle lead">Three quadratic objectives, and the exact problem behind them</p>
+<p class="subtitle lead">Where quadratic methods meet exact information loss</p>
 </div>
 
 <div>
   <div class="description">
-    Compare classical mean–variance, a Taylor approximation to log growth, and the book’s Pearson quadratic objective.
+    Compare classical mean–variance, near-cash log growth, target-centered KL2, and pricing-measure quadratic hedging.
   </div>
 </div>
 
@@ -336,7 +419,7 @@ window.Quarto = {
 </header>
 
 
-<p>Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. Likelihood finance describes its whole payoff through an implied distribution. The connection becomes precise once we specify <strong>which measure supplies the quadratic penalty</strong>.</p>
+<p>Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. The information-theoretic perspective describes its whole payoff through an induced distribution. The connection becomes precise once we specify <strong>which measure supplies the quadratic penalty</strong>, and <strong>where the approximation is taken</strong>.</p>
 <p>Use <span class="math inline">\(G=V(T)/V(0)\)</span> for a gross payoff and <span class="math inline">\(Z=G-1\)</span> for its excess return, all in units of <span class="math inline">\(Y\)</span>. Fair pricing means <span class="math inline">\(\mathbb E^Y[G]=1\)</span>, hence <span class="math inline">\(\mathbb E^Y[Z]=0\)</span>.</p>
 <section id="start-with-classical-meanvariance" class="level2">
 <h2 class="anchored" data-anchor-id="start-with-classical-meanvariance">Start with classical mean–variance</h2>
@@ -383,16 +466,16 @@ J(Z)=\mathbb E^M[Z]-\frac12\mathbb E^Y[Z^2].
 <p>Beliefs determine the expected reward; prices determine the quadratic geometry. Because <span class="math inline">\(\mathbb E^Y[Z]=0\)</span>, the penalty here also equals <span class="math inline">\(\tfrac12\operatorname{Var}^Y(Z)\)</span>.</p>
 <p>This objective has an exact information interpretation. Set</p>
 <p><span class="math display">\[
-R=\frac{\mathbb P^M}{\mathbb P^Y},
+L_M=\frac{d\mathbb P^M}{d\mathbb P^Y},
 \qquad
-\chi^2=\mathbb E^Y[(R-1)^2].
+\chi^2=\mathbb E^Y[(L_M-1)^2].
 \]</span></p>
 <p>Completing the square gives</p>
 <p><span class="math display">\[
 J(Z)=\frac12\chi^2
--\frac12\mathbb E^Y[(G-R)^2].
+-\frac12\mathbb E^Y[(G-L_M)^2].
 \]</span></p>
-<p>The first term is fixed. Maximizing <span class="math inline">\(J\)</span> chooses the attainable payoff closest to the likelihood ratio <span class="math inline">\(R\)</span> in squared error under the pricing measure. In a complete market, <span class="math inline">\(G=R\)</span> is attainable and achieves the maximum <span class="math inline">\(\chi^2/2\)</span> exactly.</p>
+<p>The first term is fixed. Maximizing <span class="math inline">\(J\)</span> chooses the attainable payoff closest to the likelihood ratio <span class="math inline">\(L_M\)</span> in squared error under the pricing measure. In a complete market, <span class="math inline">\(G=L_M\)</span> is attainable and achieves the maximum <span class="math inline">\(\chi^2/2\)</span> exactly. We reserve <span class="math inline">\(R\)</span> for a traded asset’s gross return, as on the <a href="../likelihood/hedging-comparison.html">comparison page</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exact optimizer does not mean exact growth value">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -403,7 +486,7 @@ J(Z)=\frac12\chi^2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In a complete market, both log growth and this mixed quadratic select <span class="math inline">\(G=R\)</span>. Their objective values are different: the log optimum is <span class="math inline">\(D(\mathbb P^M\Vert\mathbb P^Y)\)</span>, whereas the quadratic optimum is <span class="math inline">\(\chi^2/2\)</span>. In a restricted asset menu, their best attainable portfolios can also differ.</p>
+<p>In a complete market, both log growth and this mixed quadratic select <span class="math inline">\(G=L_M\)</span>. Their objective values are different: the log optimum is <span class="math inline">\(D(\mathbb P^M\Vert\mathbb P^Y)\)</span>, whereas the quadratic optimum is <span class="math inline">\(\chi^2/2\)</span>. In a restricted asset menu, their best attainable portfolios can also differ.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="The square-completion argument">
@@ -420,12 +503,55 @@ J(Z)=\frac12\chi^2
 <div class="callout-body-container callout-body">
 <p>Since <span class="math inline">\(\mathbb E^Y[Z]=0\)</span>,</p>
 <p><span class="math display">\[
-\mathbb E^M[Z]=\mathbb E^Y[(R-1)Z].
+\mathbb E^M[Z]=\mathbb E^Y[(L_M-1)Z].
 \]</span></p>
-<p>For real numbers <span class="math inline">\(a,z\)</span>, the identity <span class="math inline">\(az-z^2/2=a^2/2-(z-a)^2/2\)</span> applies state by state with <span class="math inline">\(a=R-1\)</span>. Taking <span class="math inline">\(\mathbb E^Y\)</span> proves the formula. The continuous-state version requires <span class="math inline">\(R-1\)</span> and <span class="math inline">\(Z\)</span> to be square integrable.</p>
+<p>For real numbers <span class="math inline">\(a,z\)</span>, the identity <span class="math inline">\(az-z^2/2=a^2/2-(z-a)^2/2\)</span> applies state by state with <span class="math inline">\(a=L_M-1\)</span>. Taking <span class="math inline">\(\mathbb E^Y\)</span> proves the formula. The continuous-state version requires <span class="math inline">\(L_M-1\)</span> and <span class="math inline">\(Z\)</span> to be square integrable.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="a-different-expansion-close-to-the-desired-payoff" class="level2">
+<h2 class="anchored" data-anchor-id="a-different-expansion-close-to-the-desired-payoff">A different expansion: close to the desired payoff</h2>
+<p>The near-cash Taylor expansion uses <span class="math inline">\(G\approx1\)</span>. A target-centered expansion instead uses <span class="math inline">\(G\approx L_M\)</span>. For a strictly positive target <span class="math inline">\(L_M\)</span> and an equal-cost positive approximation <span class="math inline">\(G\)</span>, define</p>
+<p><span class="math display">\[
+\delta=\frac{G-L_M}{L_M}.
+\]</span></p>
+<p>Because both payoffs cost one, <span class="math inline">\(\mathbb E^M[\delta]=\mathbb E^Y[G-L_M]=0\)</span>. Expanding <span class="math inline">\(-\log(1+\delta)\)</span> gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+D_{\mathrm{KL}}(\mathbb P^M\Vert\mathbb P^G)
+&amp;=-\mathbb E^M[\log(1+\delta)]\\
+&amp;\approx\frac12\mathbb E^M[\delta^2]\\
+&amp;=\frac12\mathbb E^Y\left[\frac{(G-L_M)^2}{L_M}\right].
+\end{aligned}
+\]</span></p>
+<p>This criterion is <span class="math inline">\(\operatorname{KL}_2=\tfrac12\chi^2(\mathbb P^G\Vert\mathbb P^M)\)</span>. Its weight <span class="math inline">\(1/L_M\)</span> emphasizes errors relative to the target size. It differs from ordinary quadratic hedging, which minimizes <span class="math inline">\(\mathbb E^Y[(G-L_M)^2]\)</span>.</p>
+<p>For <span class="math inline">\(G=1+w(R-1)\)</span>, its unconstrained regression coefficient is</p>
+<p><span class="math display">\[
+w_{\mathrm{KL}_2}
+=\frac{\mathbb E^Y[(R-1)(L_M-1)/L_M]}
+{\mathbb E^Y[(R-1)^2/L_M]},
+\]</span></p>
+<p>provided these moments are finite and the denominator is positive. Feasibility still needs to be checked.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Two different notions of 'small'">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Two different notions of ‘small’
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Small absolute payoff error is not enough for the target-centered expansion when <span class="math inline">\(L_M\)</span> can approach zero. A sufficient condition is uniformly small relative error, with integrability controlling the Taylor remainder. In the <a href="../likelihood/hedging-comparison.html">geometric-shock example</a>, KL2 selects <span class="math inline">\(w=0.8125\)</span>, ordinary quadratic hedging selects <span class="math inline">\(0.7\)</span>, and exact KL selects approximately <span class="math inline">\(0.745331\)</span>. The local approximation does not rank those portfolios by exact growth.</p>
+</div>
+</div>
+<p>Ordinary quadratic hedging emerges in an <strong>additional near-cash limit</strong>. If <span class="math inline">\(L_M=1+\varepsilon h\)</span> and <span class="math inline">\(G=1+\varepsilon a\)</span>, with bounded <span class="math inline">\(h,a\)</span> of zero <span class="math inline">\(\mathbb P^Y\)</span> mean, then</p>
+<p><span class="math display">\[
+D_{\mathrm{KL}}(\mathbb P^M\Vert\mathbb P^G)
+=\frac{\varepsilon^2}{2}\mathbb E^Y[(h-a)^2]+O(\varepsilon^3).
+\]</span></p>
+<p>Here both beliefs relative to prices and the chosen payoff approach the reference asset. A target far from cash need not have this unweighted local geometry.</p>
 </section>
 <section id="experiment-with-the-approximation" class="level2">
 <h2 class="anchored" data-anchor-id="experiment-with-the-approximation">Experiment with the approximation</h2>
@@ -445,7 +571,7 @@ Figure&nbsp;1: The exact log criterion and two quadratic criteria share a zero v
 </div>
 <p>The approximation depends on the <strong>size of statewise returns</strong>, not just on an apparently small average return. A small mean can coexist with a substantial probability of a nearly zero payoff.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="When do the two quadratic penalties agree locally?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -454,14 +580,14 @@ Figure&nbsp;1: The exact log criterion and two quadratic criteria share a zero v
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Their difference is</p>
 <p><span class="math display">\[
 T_M(Z)-J(Z)
-=-\frac12\mathbb E^Y[(R-1)Z^2].
+=-\frac12\mathbb E^Y[(L_M-1)Z^2].
 \]</span></p>
-<p>If both <span class="math inline">\(R-1\)</span> and <span class="math inline">\(Z\)</span> are uniformly of order <span class="math inline">\(\varepsilon\)</span>, this difference is of order <span class="math inline">\(\varepsilon^3\)</span>. In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.</p>
+<p>If both <span class="math inline">\(L_M-1\)</span> and <span class="math inline">\(Z\)</span> are uniformly of order <span class="math inline">\(\varepsilon\)</span>, this difference is of order <span class="math inline">\(\varepsilon^3\)</span>. In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.</p>
 </div>
 </div>
 </div>
@@ -482,9 +608,9 @@ w^*=\Sigma_Y^{-1}\mu.
 \]</span></p>
 <p>The matrix resembles the classical covariance formula, but its entries come from <span class="math inline">\(\mathbb P^Y\)</span>. A singular matrix can reflect redundant assets; removing redundancy or solving the constrained program avoids treating its inverse as defined. Even when the matrix is invertible, an unrestricted projection can produce negative wealth. The <a href="../likelihood/portfolio-lab.html">portfolio laboratory</a> keeps long-only cost weights and nonnegative payoffs.</p>
 </section>
-<section id="two-geometries-for-a-restricted-menu" class="level2">
-<h2 class="anchored" data-anchor-id="two-geometries-for-a-restricted-menu">Two geometries for a restricted menu</h2>
-<p>In finite states, write <span class="math inline">\(p_i=\mathbb P^M(i)\)</span>, <span class="math inline">\(q_i=\mathbb P^Y(i)\)</span> and <span class="math inline">\(v_i=\mathbb P^V(i)\)</span>. Then <span class="math inline">\(G(i)=v_i/q_i\)</span>, and the two projection problems are:</p>
+<section id="three-geometries-for-a-restricted-menu" class="level2">
+<h2 class="anchored" data-anchor-id="three-geometries-for-a-restricted-menu">Three geometries for a restricted menu</h2>
+<p>In finite states, write <span class="math inline">\(p_i=\mathbb P^M(i)\)</span>, <span class="math inline">\(q_i=\mathbb P^Y(i)\)</span> and <span class="math inline">\(v_i=\mathbb P^V(i)\)</span>. Then <span class="math inline">\(G(i)=v_i/q_i\)</span>, and the projection problems are:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -498,16 +624,20 @@ w^*=\Sigma_Y^{-1}\mu.
 <td style="text-align: left;"><span class="math inline">\(D(p\Vert v)\)</span></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Target-centered KL2</td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac12\sum_i(v_i-p_i)^2/p_i\)</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Mixed quadratic</td>
 <td style="text-align: left;"><span class="math inline">\(\tfrac12\sum_i(v_i-p_i)^2/q_i\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>The second expression is a squared distance weighted by the fixed market distribution. It is generally <strong>not</strong> <span class="math inline">\(D_{\chi^2}(p\Vert v)\)</span>, whose denominator would be <span class="math inline">\(v_i\)</span>.</p>
-<p>If the investor’s distribution is attainable, both mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest in market-weighted squared distance.</p>
+<p>KL2 is half the Pearson divergence <span class="math inline">\(\chi^2(v\Vert p)\)</span>. The mixed quadratic instead uses the fixed market distribution in its denominator. Neither expression is <span class="math inline">\(\chi^2(p\Vert v)\)</span>, whose denominator would be <span class="math inline">\(v_i\)</span>.</p>
+<p>If the investor’s distribution is attainable, all three mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest under either squared distance. The <a href="../likelihood/hedging-comparison.html">worked comparison</a> calculates all three and lets you vary the pricing law.</p>
 <p><strong>Continue:</strong> enter several asset densities and compare the resulting allocations in the <a href="../likelihood/portfolio-lab.html">portfolio laboratory</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Book connection">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -516,7 +646,7 @@ w^*=\Sigma_Y^{-1}\mu.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Based on Chapter 3 of Jan Vecer’s <em>Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective</em>: “Mean-Variance Portfolio Optimization,” “Mean–variance as a quadratic approximation to log growth,” and the Pearson duality and projection results. The separate treatment of classical covariance, ordinary Taylor second moments and the mixed quadratic follows the distinctions made in that chapter.</p>
 </div>
@@ -936,7 +1066,7 @@ w^*=\Sigma_Y^{-1}\mu.
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© Jan Vecer · Likelihood Finance</p>
+<p>© Jan Vecer · Prices as Information</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

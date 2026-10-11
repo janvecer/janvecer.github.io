@@ -1,0 +1,100 @@
+---
+title: "Portfolio choice"
+subtitle: "Beliefs specify a target; trading determines what can be implemented"
+description: "An information-theoretic guide to portfolio choice: beliefs, utility, attainable distributions, log growth, and the connections to mean–variance analysis and hedging."
+---
+
+Portfolio choice has three inputs: **what you believe, what you want, and what you can trade**. Information theory provides a common way to describe them. Beliefs give a probability distribution; preferences select a payoff; the asset menu determines which payoff distributions are attainable.
+
+Start with [one bet and the payoff–probability correspondence](index.qmd) if these ideas are new. This page maps the next steps.
+
+## 1. Specify the target
+
+For expected log growth, investor beliefs $\mathbb P^M$ are the target. With pricing law $\mathbb P^Y$, the ideal unit-cost payoff is
+
+$$
+L_M=\frac{d\mathbb P^M}{d\mathbb P^Y}.
+$$
+
+It pays more in outcomes to which the investor assigns relatively more probability. This is a full-market benchmark; the required state claims may not trade.
+
+Other preferences can select another target. In a complete market, utility maximization chooses a payoff $G^U$, which induces $\mathbb P^U=G^U\mathbb P^Y$. That payoff is log-optimal under its own induced law. The [utility page](utility.qmd) explains CRRA, fractional Kelly, and why a constrained utility problem generally must still be solved using its original utility objective.
+
+Hedging starts from a different input: a given nonnegative claim $H$ with price $H(0)=\mathbb E^Y[H]>0$. Its normalized payoff induces
+
+$$
+\frac{d\mathbb P^H}{d\mathbb P^Y}=\frac{H}{H(0)}.
+$$
+
+The claim supplies the target rather than an investor forecast. See [pricing and hedging](pricing-hedging.qmd).
+
+## 2. Determine the attainable set
+
+Suppose $R_1,\ldots,R_K$ are nonnegative unit-cost traded returns with $\mathbb E^Y[R_j]=1$. A long-only allocation $a_j\geq0$, $\sum_j a_j=1$, produces
+
+$$
+\begin{aligned}
+G_a&=\sum_{j=1}^K a_jR_j,\\
+\mathbb P^{V_a}&=\sum_{j=1}^K a_j\mathbb P^{X_j}.
+\end{aligned}
+$$
+
+Thus long-only portfolios form a convex set of induced probability distributions. Additional position limits shrink the set. Intermediate rebalancing can enlarge the set of terminal payoffs relative to static trading; the available information and trading dates are part of the market specification.
+
+The simplest illustration needs only three outcomes. In the [incomplete football market](index.qmd#incomplete-market), cash and a Win claim can match the desired Win probability but cannot independently choose the Draw/Loss split. The [trinomial model](trinomial.qmd) shows the same geometry with a stock and cash.
+
+## 3. Measure the cost of imperfect implementation
+
+For a positive unit-cost payoff $G_a=d\mathbb P^{V_a}/d\mathbb P^Y$, the central identity is
+
+$$
+\begin{aligned}
+\mathbb E^M[\log G_a]
+&=D(\mathbb P^M\Vert\mathbb P^Y)\\
+&\quad-D(\mathbb P^M\Vert\mathbb P^{V_a}).
+\end{aligned}
+$$
+
+**Attainable log growth equals ideal information minus the KL gap.** The first term is fixed once the beliefs and pricing law are specified. Maximizing expected log growth is therefore exactly the same as minimizing the second term over the attainable set. Complete markets can remove the gap; incomplete markets need not.
+
+For finitely many states, this is a concave optimization problem in the portfolio weights:
+
+$$
+\max_{a\in\Delta_K}\sum_i\mathbb P^M(i)
+\log\!\left(\sum_j a_jR_j(i)\right).
+$$
+
+The [portfolio laboratory](portfolio-lab.qmd) lets you change the target and the asset distributions and observe the resulting projection. The finite-state examples use positive pricing probabilities. A zero payoff in a state of positive subjective probability gives expected log growth $-\infty$; the [framework page](index.qmd) states the support conditions for the general identity.
+
+::: {.callout-note collapse="true" title="Which parts depend on the pricing law?"}
+Keep beliefs, traded returns, and feasible portfolios fixed. Any equivalent pricing law $Q$ that prices those returns gives
+
+$$
+\begin{aligned}
+D(\mathbb P^M\Vert QG_a)
+&=D(\mathbb P^M\Vert Q)\\
+&\quad-\mathbb E^M[\log G_a].
+\end{aligned}
+$$
+
+Changing $Q$ shifts all exact KL gaps by the same constant. The optimal portfolio and attained expected log growth stay unchanged, while the ideal benchmark and absolute gaps can change. Quadratic approximations need not preserve this invariance. See the [comparison of hedging criteria](hedging-comparison.qmd).
+:::
+
+## 4. Choose the criterion deliberately
+
+| Question | Criterion or construction | Read next |
+|:--|:--|:--|
+| Which available portfolio has the highest expected log growth? | Exact KL projection of beliefs | [Portfolio laboratory](portfolio-lab.qmd) |
+| How do preferences alter the desired payoff? | Expected utility; CRRA; cash reserves | [Utility and fractional Kelly](utility.qmd) |
+| How does this connect to familiar quadratic methods? | Mean–variance, near-cash Taylor, and target-centered KL2 | [Mean–variance and information](mean-variance.qmd) |
+| Why do quadratic and information-based hedges differ? | Compare all criteria on the same target and asset menu | [Three hedging criteria](hedging-comparison.qmd) |
+| How can a traded stock replicate the target exactly? | State-by-state replication | [Binomial model](binomial.qmd) |
+| How should model weights change after observing data? | Bayesian wealth updates and adaptation | [Bayesian learning](bayesian-learning.qmd) |
+
+The negative-binomial example makes the distinctions quantitative. Rebalancing at every binary step can implement the ideal likelihood payoff; trading only before and after the completed shock leaves a positive gap. That gap is the value, in expected log growth, of the unavailable rebalancing.
+
+{{< include _notation.qmd >}}
+
+## Presentations and further reading
+
+The Columbia talk develops the running examples from bets to replication and incomplete-market hedging. The Oxford talk continues to computational portfolio selection, Bayesian clearing, and adaptation. Both are available on the [resources page](../resources.qmd).

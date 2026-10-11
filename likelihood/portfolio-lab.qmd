@@ -40,7 +40,9 @@ The weights are fractions of the **initial budget**, not numbers of shares. If t
 
 Each row is a distribution across the same states. For example, “state 1” must mean the same outcome in the market row, belief row and every asset row. The table accepts 2–12 states and up to eight risky asset distributions; the reference asset is always available. Apply the inputs to normalize proportional weights explicitly. The market row must remain strictly positive; beliefs and asset rows may contain zeros.
 
-Start with the book's incomplete three-state example, solve for log growth, and inspect the residual mismatch. Then try the four-state menu or the fully spanned state-claim preset. You can also change an asset density or add another asset. A larger menu can improve the best attainable growth, but it need not change the optimum if the added asset provides no useful new exposure.
+Choose **Columbia: Win claim + cash** to reproduce the introductory football example. Select exact KL and click **Find the best mixture**: the optimal Win-claim cost weight is $0.2$, the implemented law is $(0.6,0.24,0.16)$, and growth is $0.0201355$ nats. The Draw/Loss ratio remains the market's $60{:}40$.
+
+The default book example supplies a second incomplete three-state market. Solve for log growth and inspect the residual mismatch. Then try the four-state menu or the fully spanned state-claim preset. You can also change an asset density or add another asset. A larger menu can improve the best attainable growth, but it need not change the optimum if the added asset provides no useful new exposure.
 
 :::: {#fig-portfolio-laboratory}
 ::: {data-portfolio-tool="mixture"}

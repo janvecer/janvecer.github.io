@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,13 +12,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a435622ae35cc41ac2c5e25b0c4cfd6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9e4eb090ca0a53e894ba11f51061e81c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -130,7 +127,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../likelihood/index.html" aria-current="page"> 
-<span class="menu-text">Likelihood Finance</span></a>
+<span class="menu-text">Information Theory &amp; Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html"> 
+<span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../jan-vecer.html"> 
@@ -147,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Models</a></li><li class="breadcrumb-item"><a href="../likelihood/binomial.html">The binomial model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics-learning.html">Dynamics and learning</a></li><li class="breadcrumb-item"><a href="../likelihood/linear-information.html">Linear information flow</a></li><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Binomial</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -161,17 +162,17 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Start here</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Likelihood Finance</span></a>
+ <span class="menu-text">Prices as information</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -184,76 +185,23 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio choice</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">The binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The negative binomial model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Normal → geometric Brownian motion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Poisson: events become price jumps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Gamma: accumulated activity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inverse Gaussian: a random clock</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Markets and portfolios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
+  <a href="../likelihood/markets-portfolios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beliefs and attainable portfolios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/trinomial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The trinomial model</span></a>
+ <span class="menu-text">Incomplete markets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -274,6 +222,23 @@ window.Quarto = {
  <span class="menu-text">Portfolio laboratory</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pricing and hedging</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/pricing-hedging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Replication and approximation</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/options.html" class="sidebar-item-text sidebar-link">
@@ -282,8 +247,125 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../likelihood/hedging-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Three hedging criteria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../likelihood/hedging.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete hedging</span></a>
+ <span class="menu-text">Discrete hedging laboratory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flow</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model catalogue</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/binomial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/negative-binomial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Negative binomial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/normal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normal / GBM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/gamma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gamma</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/inverse-gaussian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inverse Gaussian</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian learning &amp; commitment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research and resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#books" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Books</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html#papers" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selected research</span></a>
   </div>
 </li>
       </ul>
@@ -299,8 +381,10 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#two-probabilities-two-multipliers" id="toc-two-probabilities-two-multipliers" class="nav-link active" data-scroll-target="#two-probabilities-two-multipliers">Two probabilities, two multipliers</a></li>
+  <li><a href="#replication" id="toc-replication" class="nav-link" data-scroll-target="#replication">Replication: shares and probability weights</a></li>
   <li><a href="#every-position-on-one-curve" id="toc-every-position-on-one-curve" class="nav-link" data-scroll-target="#every-position-on-one-curve">Every position on one curve</a></li>
   <li><a href="#many-periods" id="toc-many-periods" class="nav-link" data-scroll-target="#many-periods">Many periods</a></li>
+  <li><a href="#same-observations-different-trading-opportunities" id="toc-same-observations-different-trading-opportunities" class="nav-link" data-scroll-target="#same-observations-different-trading-opportunities">Same observations, different trading opportunities</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -308,7 +392,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Models</a></li><li class="breadcrumb-item"><a href="../likelihood/binomial.html">The binomial model</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../likelihood/dynamics-learning.html">Dynamics and learning</a></li><li class="breadcrumb-item"><a href="../likelihood/linear-information.html">Linear information flow</a></li><li class="breadcrumb-item"><a href="../likelihood/binomial.html">Binomial</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">The binomial model</h1>
 <p class="subtitle lead">The whole framework in two states</p>
@@ -328,11 +412,51 @@ window.Quarto = {
 </header>
 
 
-<p>Each period has two scenarios, success and failure. The market prices success at <span class="math inline">\(q=\mathbb P^Y(\text{success})\)</span>. A traded asset <span class="math inline">\(X\)</span> carries its own measure, with <span class="math inline">\(p=\mathbb P^X(\text{success})\)</span>. The investor’s model <span class="math inline">\(\mathbb P^M\)</span> is a third object: the asset <span class="math inline">\(X\)</span> is her log-optimal holding only when <span class="math inline">\(\mathbb P^M=\mathbb P^X\)</span>. Every identity on the <a href="../likelihood/index.html">framework page</a> has an explicit two-state form, and repeating the period turns them into a price process. All prices and returns below are in units of the reference asset <span class="math inline">\(Y\)</span>.</p>
+<p>Each period has two outcomes, <span class="math inline">\(H\)</span> and <span class="math inline">\(T\)</span>: an up move and a down move in our running example. Three laws have different jobs: <span class="math inline">\(\mathbb P^Y\)</span> prices payoffs, <span class="math inline">\(\mathbb P^X\)</span> is induced by the traded stock, and <span class="math inline">\(\mathbb P^M\)</span> describes investor beliefs. The stock is the investor’s log-optimal holding only when <span class="math inline">\(\mathbb P^M=\mathbb P^X\)</span>.</p>
+<p>Every identity on the <a href="../likelihood/index.html">framework page</a> has an explicit two-state form. We use the same numbers as the Columbia presentation:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Outcome</th>
+<th style="text-align: right;">Market <span class="math inline">\(\mathbb P^Y\)</span></th>
+<th style="text-align: right;">Stock <span class="math inline">\(\mathbb P^X\)</span></th>
+<th style="text-align: right;">Belief <span class="math inline">\(\mathbb P^M\)</span></th>
+<th style="text-align: right;">Stock return <span class="math inline">\(R\)</span></th>
+<th style="text-align: right;">Desired payoff <span class="math inline">\(L_M\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(H\)</span>: up</td>
+<td style="text-align: right;"><span class="math inline">\(1/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3/4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2/3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4/3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(T\)</span>: down</td>
+<td style="text-align: right;"><span class="math inline">\(1/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2/3\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here <span class="math inline">\(R=\mathbb P^X/\mathbb P^Y\)</span> and <span class="math inline">\(L_M=\mathbb P^M/\mathbb P^Y\)</span>. All prices and returns are in units of the reference asset <span class="math inline">\(Y\)</span>; interest and discounting are absorbed in that choice. When <span class="math inline">\(Y\)</span> is money delivered at the horizon, the reference security is the corresponding bond.</p>
 <p>This is the first worked example of <a href="../likelihood/dynamics.html">likelihoods and price dynamics</a>: the two approaches describe the same market, but start with different primitives.</p>
 <section id="two-probabilities-two-multipliers" class="level2">
 <h2 class="anchored" data-anchor-id="two-probabilities-two-multipliers">Two probabilities, two multipliers</h2>
-<p>Take <span class="math inline">\(p,q\in(0,1)\)</span>. Likelihood-ratio pricing, <span class="math inline">\(X(1)/X(0)=\mathbb P^X/\mathbb P^Y\)</span>, gives the success and failure multipliers directly (up and down, respectively, when <span class="math inline">\(p&gt;q\)</span>):</p>
+<p>Write <span class="math inline">\(p=\mathbb P^X(H)\)</span> and <span class="math inline">\(q=\mathbb P^Y(H)\)</span>, with <span class="math inline">\(p,q\in(0,1)\)</span>. Likelihood-ratio pricing, <span class="math inline">\(X(1)/X(0)=\mathbb P^X/\mathbb P^Y\)</span>, gives the <span class="math inline">\(H\)</span> and <span class="math inline">\(T\)</span> multipliers directly (up and down, respectively, when <span class="math inline">\(p&gt;q\)</span>):</p>
 <p><span class="math display">\[
 \begin{aligned}
 u&amp;=\frac{p}{q},\\
@@ -342,7 +466,7 @@ d&amp;=\frac{1-p}{1-q}.
 <p>The corresponding asset return is</p>
 <p><span class="math display">\[
 \frac{X(1)}{X(0)}=
-\begin{cases} u &amp; \text{success},\\ d &amp; \text{failure}.\end{cases}
+\begin{cases} u &amp; H,\\ d &amp; T.\end{cases}
 \]</span></p>
 <p>There are <strong>two martingale conditions</strong>, one for each choice of numeraire. Under the reference-asset measure <span class="math inline">\(\mathbb P^Y\)</span>, the normalized price of <span class="math inline">\(X\)</span> has expectation one:</p>
 <p><span class="math display">\[
@@ -360,7 +484,7 @@ p\,\frac1u+(1-p)\,\frac1d
 &amp;=1.
 \end{aligned}
 \]</span></p>
-<p>The first condition identifies <span class="math inline">\(q\)</span> from nonconstant price multipliers; the second identifies <span class="math inline">\(p\)</span>. Thus <span class="math inline">\(p\)</span> is the probability associated with the asset numeraire, not an independently supplied forecast of the success frequency. The investor’s forecast is <span class="math inline">\(p^M\)</span>.</p>
+<p>The first condition identifies <span class="math inline">\(q\)</span> from nonconstant price multipliers; the second identifies <span class="math inline">\(p\)</span>. Thus <span class="math inline">\(p\)</span> is the probability associated with the asset numeraire, not an independently supplied forecast. The investor’s forecast is <span class="math inline">\(m=\mathbb P^M(H)\)</span>. In the example, <span class="math inline">\(q=1/2\)</span>, <span class="math inline">\(p=3/4\)</span>, and <span class="math inline">\(m=2/3\)</span>.</p>
 <p>The classical one-period model runs the other way. It postulates <span class="math inline">\(u\)</span> and <span class="math inline">\(d\)</span> and derives the pricing probabilities from these martingale conditions. Solving them gives</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -368,7 +492,7 @@ q&amp;=\frac{1-d}{u-d},\\
 p&amp;=\frac{u(1-d)}{u-d}=u\,q.
 \end{aligned}
 \]</span></p>
-<p>The map <span class="math inline">\((p,q)\mapsto(u,d)\)</span> sends <span class="math inline">\(\{0&lt;q&lt;p&lt;1\}\)</span> one-to-one onto <span class="math inline">\(\{0&lt;d&lt;1&lt;u\}\)</span>. Read backwards, the classical no-arbitrage condition <span class="math inline">\(d&lt;1&lt;u\)</span> corresponds to two interior probabilities ordered so that success is the up move. With <span class="math inline">\(p&lt;q\)</span>, success is the down move and <span class="math inline">\(0&lt;u&lt;1&lt;d\)</span>. When <span class="math inline">\(p=q\)</span>, <span class="math inline">\(u=d=1\)</span>: the asset has the reference asset’s return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of <span class="math inline">\(Y\)</span>, under the frictionless borrowing and short-selling assumptions.</p>
+<p>The map <span class="math inline">\((p,q)\mapsto(u,d)\)</span> sends <span class="math inline">\(\{0&lt;q&lt;p&lt;1\}\)</span> one-to-one onto <span class="math inline">\(\{0&lt;d&lt;1&lt;u\}\)</span>. Read backwards, the classical no-arbitrage condition <span class="math inline">\(d&lt;1&lt;u\)</span> corresponds to two interior probabilities ordered so that <span class="math inline">\(H\)</span> is the up move. With <span class="math inline">\(p&lt;q\)</span>, the price directions reverse: <span class="math inline">\(H\)</span> is the down move and <span class="math inline">\(0&lt;u&lt;1&lt;d\)</span>. When <span class="math inline">\(p=q\)</span>, <span class="math inline">\(u=d=1\)</span>: the asset has the reference asset’s return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of <span class="math inline">\(Y\)</span>, under the frictionless borrowing and short-selling assumptions.</p>
 <p>With two states, cash and a nonconstant asset span all payoffs, which is why these conditions identify the two measures uniquely. The <a href="../likelihood/trinomial.html">trinomial model</a> shows what changes when there are three states and only two traded assets.</p>
 <div id="fig-binomial-step" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -383,6 +507,38 @@ Figure&nbsp;1: One period of the asset <span class="math inline">\(X\)</span> in
 </figure>
 </div>
 </section>
+<section id="replication" class="level2">
+<h2 class="anchored" data-anchor-id="replication">Replication: shares and probability weights</h2>
+<p>The classical delta hedge and likelihood matching are the same calculation in different coordinates. To replicate terminal wealth <span class="math inline">\(V(1)\)</span>, hold <span class="math inline">\(\Delta\)</span> shares of <span class="math inline">\(X\)</span> and the remaining budget in <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Delta&amp;=\frac{V(1,H)-V(1,T)}{X(1,H)-X(1,T)},\\
+B&amp;=V(0)-\Delta X(0).
+\end{aligned}
+\]</span></p>
+<p>The initial fraction of the budget invested in the stock is <span class="math inline">\(w=\Delta X(0)/V(0)\)</span>. Normalized terminal wealth and its induced probability law satisfy</p>
+<p><span class="math display">\[
+V_w=\frac{V(1)}{V(0)}=1+w(R-1).
+\]</span></p>
+<p><span class="math display">\[
+\mathbb P^V=w\mathbb P^X+(1-w)\mathbb P^Y.
+\]</span></p>
+<p>For the target <span class="math inline">\(\mathbb P^V=\mathbb P^M\)</span>, the <span class="math inline">\(H\)</span> equation gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+w&amp;=\frac{m-q}{p-q}\\
+&amp;=\frac{2/3-1/2}{3/4-1/2}=\frac23.
+\end{aligned}
+\]</span></p>
+<p>Thus <span class="math inline">\(\Delta=(2/3)V(0)/X(0)\)</span>, <span class="math inline">\(B=V(0)/3\)</span>, and</p>
+<p><span class="math display">\[
+\begin{aligned}
+V_{2/3}(H)&amp;=\frac43,\\
+V_{2/3}(T)&amp;=\frac23.
+\end{aligned}
+\]</span></p>
+<p>The line <span class="math inline">\(V_w=1+w(R-1)\)</span> passes through both desired payoffs. With two states and two independent securities, the target is attainable exactly. The mixture is convex for <span class="math inline">\(0\leq w\leq1\)</span>; borrowing or short selling can extend it when terminal wealth remains nonnegative.</p>
+</section>
 <section id="every-position-on-one-curve" class="level2">
 <h2 class="anchored" data-anchor-id="every-position-on-one-curve">Every position on one curve</h2>
 <p>Write <span class="math inline">\(d(a\Vert b)\)</span> for the relative entropy between Bernoulli laws with probabilities <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>:</p>
@@ -394,38 +550,46 @@ d(a\Vert b)
 \end{aligned}
 \]</span></p>
 <p>The usual conventions apply: a zero-probability term contributes zero, while positive probability divided by zero gives infinite divergence.</p>
-<p>Let the investor’s model be <span class="math inline">\(\mathbb P^M(\text{success})=p^M\)</span>. With two scenarios a nonnegative portfolio <span class="math inline">\(V\)</span> of positive price is determined, up to scale, by <span class="math inline">\(v=\mathbb P^V(\text{success})\)</span>, the fraction of wealth spent on the success claim. Its expected log return under the investor’s model is</p>
+<p>Let the investor’s model be <span class="math inline">\(\mathbb P^M(H)=m\)</span>. With two scenarios a nonnegative portfolio <span class="math inline">\(V\)</span> of positive price is determined, up to scale, by <span class="math inline">\(v=\mathbb P^V(H)\)</span>, the fraction of wealth spent on the <span class="math inline">\(H\)</span> claim. Its expected log return under the investor’s model is</p>
 <p><span class="math display">\[
 \begin{aligned}
 g(v)
-&amp;=p^M\log\frac{v}{q}\\
-&amp;\quad +(1-p^M)\log\frac{1-v}{1-q}.
+&amp;=m\log\frac{v}{q}\\
+&amp;\quad +(1-m)\log\frac{1-v}{1-q}.
 \end{aligned}
 \]</span></p>
 <p>The information decomposition becomes</p>
 <p><span class="math display">\[
-g(v)=d(p^M\Vert q)-d(p^M\Vert v).
+g(v)=d(m\Vert q)-d(m\Vert v).
 \]</span></p>
-<p>Three points on the curve have names. At <span class="math inline">\(v=q\)</span> the investor holds the reference asset and <span class="math inline">\(g=0\)</span>. At <span class="math inline">\(v=p\)</span> she holds the asset <span class="math inline">\(X\)</span>. At <span class="math inline">\(v=p^M\)</span> the curve peaks at <span class="math inline">\(d(p^M\Vert q)\)</span>, and the shortfall of any other position is exactly <span class="math inline">\(d(p^M\Vert v)\)</span>. Every portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.</p>
-<p>For <span class="math inline">\(\gamma\ge1\)</span>, risk aversion moves the position from <span class="math inline">\(p^M\)</span> back toward <span class="math inline">\(q\)</span>, in one of two ways. Fractional Kelly keeps a cash reserve:</p>
+<p>Three points on the curve have names. At <span class="math inline">\(v=q\)</span> the investor holds the reference asset and <span class="math inline">\(g=0\)</span>. At <span class="math inline">\(v=p\)</span> she holds the asset <span class="math inline">\(X\)</span>. At <span class="math inline">\(v=m\)</span> the curve peaks at <span class="math inline">\(d(m\Vert q)\)</span>, and the shortfall of any other position is exactly <span class="math inline">\(d(m\Vert v)\)</span>. Every strictly positive portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.</p>
+<p>In the running example, the replicated target earns</p>
+<p><span class="math display">\[
+\begin{aligned}
+g^*&amp;=\frac23\log\frac43+\frac13\log\frac23\\
+&amp;\approx0.0566330\ \text{nats per trial}.
+\end{aligned}
+\]</span></p>
+<p>Holding the stock alone earns <span class="math inline">\(\frac23\log(3/2)+\frac13\log(1/2)\approx0.0392610\)</span>. The investor and stock laws differ, so simply buying the stock does not maximize this investor’s expected log growth.</p>
+<p>For <span class="math inline">\(\gamma\ge1\)</span>, risk aversion moves the position from <span class="math inline">\(m\)</span> back toward <span class="math inline">\(q\)</span>, in one of two ways. Fractional Kelly keeps a cash reserve:</p>
 <p><span class="math display">\[
 \begin{aligned}
 f&amp;=1/\gamma,\\
-v_f&amp;=(1-f)\,q+f\,p^M.
+v_f&amp;=(1-f)\,q+f\,m.
 \end{aligned}
 \]</span></p>
 <p>CRRA utility instead tempers the measure. Set <span class="math inline">\(\alpha=1/\gamma\)</span> and form the weights</p>
 <p><span class="math display">\[
 \begin{aligned}
-w_s&amp;=(p^M)^\alpha q^{1-\alpha},\\
-w_f&amp;=(1-p^M)^\alpha(1-q)^{1-\alpha}.
+w_s&amp;=(m)^\alpha q^{1-\alpha},\\
+w_f&amp;=(1-m)^\alpha(1-q)^{1-\alpha}.
 \end{aligned}
 \]</span></p>
-<p>The optimal success weight is</p>
+<p>The optimal <span class="math inline">\(H\)</span> weight is</p>
 <p><span class="math display">\[
 v_\gamma=\frac{w_s}{w_s+w_f}.
 \]</span></p>
-<p>For <span class="math inline">\(0&lt;p^M&lt;1\)</span> both families sweep the same segment between <span class="math inline">\(q\)</span> and <span class="math inline">\(p^M\)</span>, including cash as a limit as <span class="math inline">\(\gamma\to\infty\)</span>. They generally traverse it at different rates: the same numerical <span class="math inline">\(\gamma\)</span> can give different positions, while a change of <span class="math inline">\(\gamma\)</span> can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set <span class="math inline">\(\mathbb P^M(\text{success})=0\)</span> in the figure. For every finite <span class="math inline">\(\gamma\)</span>, CRRA keeps that zero, while fractional Kelly with <span class="math inline">\(\gamma&gt;1\)</span> assigns positive weight through its cash reserve. The <a href="../likelihood/utility.html">utility and risk-aversion page</a> develops the general construction.</p>
+<p>For <span class="math inline">\(0&lt;m&lt;1\)</span> both families sweep the same segment between <span class="math inline">\(q\)</span> and <span class="math inline">\(m\)</span>, including cash as a limit as <span class="math inline">\(\gamma\to\infty\)</span>. They generally traverse it at different rates: the same numerical <span class="math inline">\(\gamma\)</span> can give different positions, while a change of <span class="math inline">\(\gamma\)</span> can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set <span class="math inline">\(\mathbb P^M(H)=0\)</span> in the figure. For every finite <span class="math inline">\(\gamma\)</span>, CRRA keeps that zero, while fractional Kelly with <span class="math inline">\(\gamma&gt;1\)</span> assigns positive weight through its cash reserve. The <a href="../likelihood/utility.html">utility and risk-aversion page</a> develops the general construction.</p>
 <div id="fig-binomial-growth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-binomial-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -441,7 +605,7 @@ Figure&nbsp;2: Expected log return under <span class="math inline">\(\mathbb P^M
 </section>
 <section id="many-periods" class="level2">
 <h2 class="anchored" data-anchor-id="many-periods">Many periods</h2>
-<p>Repeat the period independently and let <span class="math inline">\(S(n)\)</span> count the successes after <span class="math inline">\(n\)</span> periods. Likelihood-ratio pricing at time <span class="math inline">\(n\)</span> gives</p>
+<p>Repeat the period independently and let <span class="math inline">\(S(n)\)</span> count the <span class="math inline">\(H\)</span> outcomes after <span class="math inline">\(n\)</span> periods. Likelihood-ratio pricing at time <span class="math inline">\(n\)</span> gives</p>
 <p><span class="math display">\[
 \frac{X(n)}{X(0)}
 =\Big(\frac pq\Big)^{S(n)}
@@ -466,7 +630,8 @@ b&amp;=\log d.
 <p><span class="math display">\[
 D^{X,Y}(n)=n\,d(p\Vert q).
 \]</span></p>
-<p>This is <a href="../likelihood/linear-information.html">linear information flow</a>. The binomial tree is the first of the price models in Chapter 5, not a separate construction.</p>
+<p>The investor’s desired likelihood payoff has the same form with <span class="math inline">\(p\)</span> replaced by <span class="math inline">\(m\)</span>. It is implemented by rebalancing to <span class="math inline">\(w=2/3\)</span> after each trial in our example, and its expected log growth under <span class="math inline">\(\mathbb P^M\)</span> is <span class="math inline">\(n\,d(m\Vert q)=n\times0.0566330\)</span>.</p>
+<p>This is <a href="../likelihood/linear-information.html">linear information flow</a>: independent observations add information, while wealth compounds multiplicatively.</p>
 <p>Under <span class="math inline">\(\mathbb P^Y\)</span> the price <span class="math inline">\(X(t)/X(0)\)</span> is a nonnegative martingale with mean one. Ville’s inequality then gives, for every horizon <span class="math inline">\(n\)</span>,</p>
 <p><span class="math display">\[
 \mathbb P^Y\Big(\max_{t\le n}\frac{X(t)}{X(0)}\ge\frac1\alpha\Big)\le\alpha .
@@ -484,6 +649,11 @@ Figure&nbsp;3: Top: the laws of <span class="math inline">\(S(n)\)</span> under 
 </figcaption>
 </figure>
 </div>
+</section>
+<section id="same-observations-different-trading-opportunities" class="level2">
+<h2 class="anchored" data-anchor-id="same-observations-different-trading-opportunities">Same observations, different trading opportunities</h2>
+<p>Now group the trials into cycles: down moves followed by the first up. If trading remains possible after every binary step, the same <span class="math inline">\(w=2/3\)</span> strategy still implements the belief likelihood. If trading is permitted only between completed cycles, a single stock/cash position need not match every possible cycle outcome.</p>
+<p>The <a href="../likelihood/negative-binomial.html">negative-binomial model</a> develops this change of clock. The <a href="../likelihood/hedging-comparison.html">comparison of portfolio criteria</a> then measures the resulting information gap and compares exact KL, its quadratic approximation, and quadratic hedging.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -906,7 +1076,7 @@ Figure&nbsp;3: Top: the laws of <span class="math inline">\(S(n)\)</span> under 
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© Jan Vecer · Likelihood Finance</p>
+<p>© Jan Vecer · Prices as Information</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

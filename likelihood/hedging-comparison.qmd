@@ -1,0 +1,189 @@
+---
+title: "One mismatch, three criteria"
+subtitle: "How trading restrictions separate exact information loss from quadratic hedging"
+description: "A worked geometric-shock example comparing exact KL, its target-centered quadratic approximation, and ordinary quadratic hedging, with an interactive loss explorer."
+css: hedging-comparison.css
+resources:
+  - hedging-comparison.js
+include-after-body:
+  - text: |
+      <script src="hedging-comparison.js" defer></script>
+---
+
+**The desired payoff can be clear even when trading cannot produce it.** The investor supplies a target distribution; stock and cash span a smaller set of distributions. The choice of loss determines which attainable portfolio comes closest.
+
+This page continues the [binomial example](binomial.qmd) and the [negative-binomial trading clock](negative-binomial.qmd). All payoffs are expressed in units of the reference asset $Y$ and normalized to initial cost one.
+
+## The same binary tree, a different trading rule
+
+In the binary model, stock returns are $u=3/2$ and $d=1/2$. The up probabilities are $1/2$ under the pricing law and $2/3$ under the investor's beliefs. Rebalancing a stock fraction $w=2/3$ after every step produces the desired likelihood payoff.
+
+Now let one trading period contain $G$ down moves followed by the first up move. You may trade **before and after the completed shock**, but not during it. For $g=0,1,\ldots$,
+
+$$
+\begin{aligned}
+q_g&=\mathbb P^Y(G=g)=2^{-(g+1)},\\
+m_g&=\mathbb P^M(G=g)=\frac23\left(\frac13\right)^g.
+\end{aligned}
+$$
+
+The stock return and desired payoff are
+
+$$
+\begin{aligned}
+R_g&=\frac32\left(\frac12\right)^g,\\
+L_{M,g}&=\frac{m_g}{q_g}=\frac43\left(\frac23\right)^g.
+\end{aligned}
+$$
+
+The stock's law is $p^X_g=q_gR_g=\tfrac34(\tfrac14)^g$. Holding a stock fraction $w$ unchanged throughout the shock gives
+
+$$
+\begin{aligned}
+V_w&=1+w(R-1),\\
+v_g(w)&=q_gV_w(g).
+\end{aligned}
+$$
+
+This is an affine payoff in $R$. The desired $L_M$ is nonlinear in $R$, so no single stock-and-cash holding matches it in every state. Strictly positive wealth in every state requires $-2<w\leq1$. The explorer focuses on $0\leq w\leq1$, which contains all three optima in the examples below.
+
+At $w=2/3$, the portfolio matches the probability of $G=0$ and the total probability of $G\geq1$. It does **not** match the individual outcomes inside that tail. This is why the binary solution need not solve the completed-shock problem.
+
+## Three ways to measure the remaining mismatch
+
+Write $e_g=v_g(w)-m_g$. Exact information loss is
+
+$$
+\begin{aligned}
+D(w)&=D_{\mathrm{KL}}(m\Vert v(w))\\
+&=\sum_gm_g\log\frac{m_g}{v_g(w)}.
+\end{aligned}
+$$
+
+It is exactly equivalent to maximizing expected log growth:
+
+$$
+\mathbb E^M[\log V_w]=D_{\mathrm{KL}}(m\Vert q)-D(w).
+$$
+
+Two quadratic alternatives are
+
+$$
+\begin{aligned}
+\operatorname{KL}_2(w)
+&=\frac12\sum_g\frac{e_g^2}{m_g}\\
+&=\frac12\mathbb E^Y\left[\frac{(V_w-L_M)^2}{L_M}\right],
+\end{aligned}
+$$
+
+$$
+Q(w)=\sum_g\frac{e_g^2}{q_g}
+=\mathbb E^Y[(V_w-L_M)^2].
+$$
+
+The target-centered $\operatorname{KL}_2$ is the second-order expansion of exact KL when the **relative mismatch** $(V_w-L_M)/L_M$ is small with suitable integrability. Ordinary quadratic hedging weights payoff errors using the pricing law. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.
+
+::: {.callout-note title="A local approximation can have a different optimum"}
+The target approaches zero in the tail, while a portfolio with $w<1$ retains a positive cash intercept. Relative errors can therefore be large even when absolute errors are small. There is no guarantee that minimizing $\operatorname{KL}_2$ gives a better exact-KL fit than minimizing ordinary squared error.
+:::
+
+## The resulting portfolios
+
+The quadratic hedge has the regression coefficient
+
+$$
+\begin{aligned}
+w_Q&=\frac{\mathbb E^M[R]-1}{\operatorname{Var}^Y(R)}\\
+&=\frac{1/5}{2/7}=\frac7{10}.
+\end{aligned}
+$$
+
+For this target, the other quadratic criterion is explicitly
+
+$$
+\begin{aligned}
+\operatorname{KL}_2(w)&=\frac{24}{65}w^2-\frac35w+\frac14,\\
+w_{\mathrm{KL}_2}&=\frac{13}{16}.
+\end{aligned}
+$$
+
+Exact log growth is strictly concave. Its interior maximizer solves
+
+$$
+\mathbb E^M\left[\frac{R-1}{1+w(R-1)}\right]=0.
+$$
+
+The solution is $w_{\mathrm{KL}}\approx0.745331$.
+
+| Portfolio | Stock fraction | Expected log growth | Exact KL gap |
+|:--|--:|--:|--:|
+| Binary-model fraction, held throughout | 0.666667 | 0.0802308 | 0.0047187 |
+| Target-centered quadratic ($\operatorname{KL}_2$) | 0.812500 | 0.0804213 | 0.0045282 |
+| Ordinary quadratic hedge | 0.700000 | 0.0810414 | 0.0039081 |
+| Exact KL optimum | 0.745331 | 0.0814623 | 0.0034872 |
+
+Growth and exact KL are in nats per completed shock. In each row their sum is $D_{\mathrm{KL}}(m\Vert q)=0.0849495$. Ordinary quadratic hedging beats $\operatorname{KL}_2$ on exact growth in this example; each quadratic criterion still minimizes its own loss.
+
+## Explore the losses
+
+Move the stock fraction or select an optimizer. The graph shows exact KL, $\operatorname{KL}_2$, and **half** the ordinary squared error; the factor $1/2$ changes only the scale, not its optimizer. Only the exact-KL curve is an information loss in nats. A local view makes the distinct minima easier to see.
+
+::: {data-hedging-comparison=""}
+The interactive explorer requires JavaScript. The table above contains its default results. With the alternative pricing law below, the exact-KL optimum remains 0.745331, while the quadratic optimum becomes 0.640858 and the KL2 optimum becomes 0.827898.
+:::
+
+::: {.callout-note collapse="true" title="Numerical method"}
+The explorer evaluates the geometric sums over $g=0,\ldots,159$ and solves the exact first-order condition by bisection. This truncation is far below displayed precision on the selected range, including the slower $(3/4)^g$ tail in the target-centered quadratic. The original-law quadratic solutions above provide independent analytical checks. The slider restricts only the displayed allocation range; the stated optima are also the optima on the full positive-wealth domain.
+:::
+
+## What changes when the pricing law changes?
+
+With only terminal stock and cash traded, many probability laws price those same payoffs. Keep the original probabilities for $g\geq3$, and set
+
+$$
+q'_0=\frac{17}{32},\qquad
+q'_1=\frac5{32},\qquad
+q'_2=\frac3{16}.
+$$
+
+Both $q$ and $q'$ sum to one and satisfy $\mathbb E^Q[R]=1$. Hold beliefs $m$, stock returns $R$, and the portfolio menu $V_w$ fixed. Relative to any such law,
+
+$$
+\begin{aligned}
+&D_{\mathrm{KL}}(m\Vert QV_w)\\
+&\quad=D_{\mathrm{KL}}(m\Vert Q)-\mathbb E^M[\log V_w].
+\end{aligned}
+$$
+
+| Quantity | Original $q$ | Alternative $q'$ |
+|:--|--:|--:|
+| Exact-KL stock fraction | 0.745331 | 0.745331 |
+| Attained optimal log growth | 0.0814623 | 0.0814623 |
+| Quadratic-hedge stock fraction | 0.700000 | 0.640858 |
+| KL2 stock fraction | 0.812500 | 0.827898 |
+| Ideal information $D_{\mathrm{KL}}(m\Vert Q)$ | 0.0849495 | 0.1189439 |
+| Optimal exact KL gap | 0.0034872 | 0.0374816 |
+
+The **exact decision and attained growth are invariant**. The ideal payoff $m/Q$, the absolute information benchmark, and the two quadratic criteria change. This comparison holds beliefs fixed; it does not hold a separately specified hedge target fixed while changing its valuation.
+
+## The gap has a trading interpretation
+
+On the original binary tree, rebalancing to $w=2/3$ at every binary step produces
+
+$$
+\frac43\left(\frac23\right)^G=L_M.
+$$
+
+Its expected log gain per completed shock is $0.0849495$. The best portfolio held unchanged during the shock earns $0.0814623$. Thus
+
+$$
+0.0849495-0.0814623=0.0034872
+$$
+
+is the expected log growth lost because intermediate rebalancing is unavailable. This difference between two attainable growth values does not depend on a chosen pricing law. Its equality to the absolute KL gap above uses the original law $q$, which is fixed by pricing every step of the binary tree. The alternative $q'$ prices the terminal stock and cash, but not those intermediate trading opportunities.
+
+**Continue:** [Mean–variance and the local quadratic limits](mean-variance.qmd) · [Hedging a specified option payoff](hedging.qmd) · [Pricing-law geometry and the dual problem](trinomial.qmd)
+
+::: {.callout-note collapse="true" title="Source and scope"}
+The worked example follows Jan Vecer's Columbia presentation, *Portfolio Optimization through Information Theory: Discrete Models (Prediction Markets)*, 9 October 2026, especially slides 22–37 and 43–48. The presentation is available from [Research and resources](../resources.qmd). All portfolio comparisons here concern expected log growth under the stated beliefs. A full-market utility-selected target can also be approximated by KL, but that procedure does not generally equal constrained expected-utility maximization for the original utility.
+:::

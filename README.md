@@ -1,123 +1,111 @@
-# Jan Vecer — Likelihood Finance
+# Jan Vecer — Prices as Information
 
-A complete Quarto website for local use and later GitHub Pages publication.
-The top navigation is **Home | Likelihood Finance | Jan Vecer**.
+An information-theoretic perspective on finance.
 
-## Open it locally
+This complete package contains the editable Quarto website and a freshly rendered
+`docs/` directory. It includes both supplied Columbia and Oxford presentations.
+The top navigation is **Home | Information Theory & Finance | Resources | Jan Vecer**.
 
-1. Extract this ZIP to a new folder.
-2. In VS Code, choose **File → Open Folder** and select the extracted
-   `janvecer-site` folder. You should see `_quarto.yml` directly in that folder.
-3. Open **Terminal → New Terminal** and run:
+## Quick preview
+
+1. Extract the ZIP to a new folder.
+2. In VS Code, open the extracted `janvecer-site` folder. `_quarto.yml` should be
+   directly inside that folder.
+3. Open a terminal and run:
 
        quarto preview
 
-Keep that terminal open while viewing the site. Press **Ctrl+C** to stop the
-preview. This command does not publish anything.
+Stop the preview with Ctrl+C. Quarto serves the website locally; it does not
+publish it. Open the website through this server, rather than double-clicking
+HTML files, so navigation, search, and local resources work correctly.
 
-Only Quarto is needed to build or preview the site. All interactive figures are
-plain JavaScript. Book covers, chart assets, MathJax, and its fonts are included
-locally. The book and publication links naturally require an internet connection.
+The already rendered site is in `docs/`. If Python is installed, it can also be
+previewed without rebuilding:
 
-## Replace the existing janvecer.github.io site
+    python -m http.server 8000 --directory docs
 
-First make a backup copy of your current `janvecer.github.io` folder.
+Then open http://localhost:8000 in your browser.
 
-Copy the **contents** of the extracted `janvecer-site` folder into
-`janvecer.github.io`, accepting replacement of matching files and folders.
-In particular, `_quarto.yml` must be directly inside `janvecer.github.io`,
-not inside an extra nested folder.
+## Update your existing GitHub Pages repository
 
-Keep the repository's `.git` folder and any existing GitHub configuration.
-The download contains neither credentials nor a replacement Git history.
+Make a backup of your current publishing folder first. Use the repository you
+normally push, for example `janvecer-publish`.
 
-The configuration lists the new pages explicitly, so unrelated old tutorial
-source files are not rendered. The former `about.qmd` now provides a short link
-to the Jan Vecer profile, keeping the old About address useful.
+1. Copy the **contents** of the extracted `janvecer-site` folder into the root of
+   the existing repository, replacing matching files and folders. Do not place
+   `janvecer-site` inside it as an extra nested directory.
+2. Keep the repository's `.git` folder and its GitHub configuration. This package
+   contains no Git history or credentials. Do not empty the repository first.
+3. The included `docs/` is ready to publish. If you edit any source files, rebuild:
 
-This package keeps rendered HTML inside `docs/`. If an earlier package left
-`index.html`, `about.html`, or `jan-vecer.html` beside the root `.qmd` files,
-remove those three old HTML copies. Also remove old `.html` files directly
-inside the source `likelihood/` folder. Keep its `.qmd`, `.js`, and `.css`
-files, and keep the rendered files inside `docs/`.
+       quarto render
 
-From the `janvecer.github.io` terminal, run:
+4. Review `git status` and the website. Then use your usual workflow:
 
-    quarto preview
+       git add .
+       git commit -m "Present finance through information theory and add lecture resources"
+       git push
 
-The archive also includes a rendered `docs/` directory for reference. Preview
-through Quarto; opening an HTML file directly in the browser is not the same
-as serving a website and may prevent resources or search from loading.
+Stage only the changes you intend to publish if the repository also contains
+unrelated work. The custom domain remains `janvecer.com`. This package keeps the
+existing GitHub Pages convention of serving `docs/` from the publishing branch.
+
+If an earlier package left HTML files beside the root `.qmd` source files or
+inside the source `likelihood/` folder, remove those stale HTML copies only.
+Keep the rendered HTML inside `docs/`. If an older Quarto version leaves these
+intermediates after rendering, run `quarto run scripts/finalize-html.ts` once.
+The configuration renders the current
+page list explicitly. Existing tutorial URL paths are retained.
+
+## What changed
+
+- New homepage: **Prices as Information**, with an information-theory subtitle.
+- Navigation organized by Start here, Portfolio choice, Pricing and hedging,
+  Dynamics and learning, and Research and resources.
+- Linear information flow and its model families nested within Dynamics and
+  learning, with fewer model cards on the introductory page.
+- A common Columbia binary/geometric-shock example, replication weights,
+  incomplete-market information gaps, and a new three-criteria comparison.
+- Exact KL, target-centered KL2, and market-weighted quadratic error distinguished;
+  pricing-law invariance explained with its appropriate scope.
+- Utility-selected laws explained after log optimality, with a clear distinction
+  between full-market utility and constrained utility optimization.
+- An incomplete football-market preset in the portfolio laboratory.
+- A Bayesian-learning page covering clearing, partial commitment, capital lock-in,
+  and prefunded restart accounts.
+- A resources page with both original presentation PDFs and suggested reading routes.
+
+See `CHANGES.md` for the content changes and `VALIDATION.md` for checks and limits.
 
 ## Main files
 
-- `_quarto.yml` — title, navigation, sidebar, search, output directory, resources.
-- `index.qmd` — Home: project introduction, two books, four selected papers.
-- `jan-vecer.qmd` — academic profile and contact.
-- `styles.css` — the shared design.
-- `offline-theme.scss` — disables external theme-font downloads.
-- `scripts/finalize-html.ts` — a Quarto post-render step that removes an obsolete
-  external browser polyfill and matching intermediate HTML copies beside the
-  sources. Quarto runs it with its included runtime.
-- `likelihood/` — all explanations, interactive figures, scripts, and local styles.
-- `assets/` — book covers, original SVG artwork, favicon, bundled math renderer.
-- `SOURCE-NOTES.md` — sources for public biographical and publication details.
-- `CNAME` — the existing domain, `janvecer.com`.
-- `docs/` — the rendered website.
+- `_quarto.yml`: navigation, render list, local resources, and output configuration.
+- `index.qmd`: homepage, books, selected papers, and presentation links.
+- `resources.qmd`: Columbia and Oxford slides and reading routes.
+- `jan-vecer.qmd`: academic profile and contact.
+- `likelihood/`: tutorials, laboratories, and their JavaScript/CSS.
+- `assets/slides/`: original presentation PDFs and title-slide thumbnails.
+- `assets/`: local artwork, book covers, MathJax, and math fonts.
+- `styles.css`: shared editorial styling and responsive layouts.
+- `offline-theme.scss`: avoids remote theme-font downloads.
+- `scripts/finalize-html.ts`: removes an obsolete remote polyfill after rendering
+  and safely removes matching intermediate HTML beside source files.
+- `docs/`: complete rendered website, including slides and search data.
+- `qa/`: optional development checks; not required to edit the website.
 
-## The guide
+All interactive figures run locally in plain JavaScript. Quarto is the only
+requirement for normal rendering and preview. External book/publication links
+require internet access; mathematical rendering and the laboratories do not.
 
-Start with `likelihood/index.qmd`, the framework. The guide includes:
+## Models and conventions
 
-- A guided introduction to reference units, stakes, payoffs, and log performance.
-- Relative entropy: a worked example and an interactive two-outcome calculation.
-- Likelihood versus dynamics; finite fundamental theorem of asset pricing.
-- Binomial: both numeraire martingales and inversion between probabilities and moves.
-- Trinomial: pricing families, incompleteness, attainable payoff measures.
-- Linear information flow: additive drivers and expected information rates.
-- Negative binomial: failure-count time, likelihood principle, Wald factorization.
-- Normal: the likelihood ratio of two normals and the exact GBM solution.
-- Poisson, gamma, and inverse Gaussian models with generated paths.
-- Utility maximization and static fractional Kelly with a three-state laboratory.
-- Mean–variance, ordinary log Taylor approximation, and the Pearson quadratic.
-- An editable finite-state portfolio lab with up to eight asset densities plus cash
-  and two to twelve states; exact KL, Pearson, and classical mean–variance solvers.
-- Options as payoff-induced distributions, including a cash reserve.
-- Black–Scholes from two normal tail probabilities, with continuous market,
-  stock, option, and reserve-portfolio density plots.
-- Discrete normal-model hedging as a local KL projection onto stock and cash
-  densities; compare interval lengths and the Black–Scholes delta limit.
+Prices and payoffs are expressed in reference-asset units. The associated pricing
+law is kept distinct from investor beliefs. Expected growth is model-dependent,
+measured in natural-log units over the stated horizon, and is not a promised
+return. Model controls are educational examples rather than fitted market inputs.
 
-Continuous-model path tools use bounded forward KL information rates and bounded
-event/shape parameters. They report the derived parameters, reverse KL, and exact
-expected log-price lines. Gamma and inverse Gaussian paths show exact sampled
-increments on a grid; they do not resolve all infinitely many jumps.
-
-The portfolio lab uses nonnegative cost weights summing to one. Its solver reports
-a first-order objective-gap bound. Bayesian portfolios are intentionally deferred.
-
-The discrete hedge also keeps stock/cash cost weights between zero and one, so
-the portfolio value is nonnegative for every possible next stock price. It solves
-one conditional trading interval. A protected-stock target (call plus its strike
-in reserve) illustrates the short-interval delta limit; the call-only target shows
-when the constraint binds. This distinction is explained beside the tool.
-
-## Publishing later
-
-The site is still local until you commit and push it.
-
-The configuration renders to `docs/`, matching the GitHub Pages convention used
-by your existing repository. Before a future publication, run:
-
-    quarto render
-
-Then review the result and commit/push the source changes and the regenerated
-`docs/` directory using your usual Git workflow. If GitHub Pages currently serves
-the repository's `docs` folder on its main branch, that setting can stay as it is.
-
-This package does not change GitHub settings, push a commit, or publish the site.
-
-## Checks
-
-See `VALIDATION.md` for the checks performed on this version.
-The optional developer scripts under `qa/` are not needed for normal editing.
+The portfolio laboratory uses nonnegative cost weights summing to one. The
+normal-model hedging laboratory solves one conditional trading interval under
+its displayed constraints. The new geometric-shock comparison holds the payoff
+and beliefs fixed when changing the pricing law. Bayesian learning and restart
+results are presented under their stated market and statistical assumptions.

@@ -1,7 +1,7 @@
 ---
 title: "Mean–variance & information"
-subtitle: "Three quadratic objectives, and the exact problem behind them"
-description: "Compare classical mean–variance, a Taylor approximation to log growth, and the book's Pearson quadratic objective."
+subtitle: "Where quadratic methods meet exact information loss"
+description: "Compare classical mean–variance, near-cash log growth, target-centered KL2, and pricing-measure quadratic hedging."
 css: portfolio-tools.css
 resources:
   - portfolio-tools.js
@@ -10,7 +10,7 @@ include-after-body:
       <script src="portfolio-tools.js"></script>
 ---
 
-Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. Likelihood finance describes its whole payoff through an implied distribution. The connection becomes precise once we specify **which measure supplies the quadratic penalty**.
+Mean–variance analysis describes a portfolio through its expected return and a quadratic measure of risk. The information-theoretic perspective describes its whole payoff through an induced distribution. The connection becomes precise once we specify **which measure supplies the quadratic penalty**, and **where the approximation is taken**.
 
 Use $G=V(T)/V(0)$ for a gross payoff and $Z=G-1$ for its excess return, all in units of $Y$. Fair pricing means $\mathbb E^Y[G]=1$, hence $\mathbb E^Y[Z]=0$.
 
@@ -76,33 +76,77 @@ Beliefs determine the expected reward; prices determine the quadratic geometry. 
 This objective has an exact information interpretation. Set
 
 $$
-R=\frac{\mathbb P^M}{\mathbb P^Y},
+L_M=\frac{d\mathbb P^M}{d\mathbb P^Y},
 \qquad
-\chi^2=\mathbb E^Y[(R-1)^2].
+\chi^2=\mathbb E^Y[(L_M-1)^2].
 $$
 
 Completing the square gives
 
 $$
 J(Z)=\frac12\chi^2
--\frac12\mathbb E^Y[(G-R)^2].
+-\frac12\mathbb E^Y[(G-L_M)^2].
 $$
 
-The first term is fixed. Maximizing $J$ chooses the attainable payoff closest to the likelihood ratio $R$ in squared error under the pricing measure. In a complete market, $G=R$ is attainable and achieves the maximum $\chi^2/2$ exactly.
+The first term is fixed. Maximizing $J$ chooses the attainable payoff closest to the likelihood ratio $L_M$ in squared error under the pricing measure. In a complete market, $G=L_M$ is attainable and achieves the maximum $\chi^2/2$ exactly. We reserve $R$ for a traded asset's gross return, as on the [comparison page](hedging-comparison.qmd).
 
 ::: {.callout-note title="Exact optimizer does not mean exact growth value"}
-In a complete market, both log growth and this mixed quadratic select $G=R$. Their objective values are different: the log optimum is $D(\mathbb P^M\Vert\mathbb P^Y)$, whereas the quadratic optimum is $\chi^2/2$. In a restricted asset menu, their best attainable portfolios can also differ.
+In a complete market, both log growth and this mixed quadratic select $G=L_M$. Their objective values are different: the log optimum is $D(\mathbb P^M\Vert\mathbb P^Y)$, whereas the quadratic optimum is $\chi^2/2$. In a restricted asset menu, their best attainable portfolios can also differ.
 :::
 
 ::: {.callout-note collapse="true" title="The square-completion argument"}
 Since $\mathbb E^Y[Z]=0$,
 
 $$
-\mathbb E^M[Z]=\mathbb E^Y[(R-1)Z].
+\mathbb E^M[Z]=\mathbb E^Y[(L_M-1)Z].
 $$
 
-For real numbers $a,z$, the identity $az-z^2/2=a^2/2-(z-a)^2/2$ applies state by state with $a=R-1$. Taking $\mathbb E^Y$ proves the formula. The continuous-state version requires $R-1$ and $Z$ to be square integrable.
+For real numbers $a,z$, the identity $az-z^2/2=a^2/2-(z-a)^2/2$ applies state by state with $a=L_M-1$. Taking $\mathbb E^Y$ proves the formula. The continuous-state version requires $L_M-1$ and $Z$ to be square integrable.
 :::
+
+## A different expansion: close to the desired payoff
+
+The near-cash Taylor expansion uses $G\approx1$. A target-centered expansion instead uses $G\approx L_M$. For a strictly positive target $L_M$ and an equal-cost positive approximation $G$, define
+
+$$
+\delta=\frac{G-L_M}{L_M}.
+$$
+
+Because both payoffs cost one, $\mathbb E^M[\delta]=\mathbb E^Y[G-L_M]=0$. Expanding $-\log(1+\delta)$ gives
+
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(\mathbb P^M\Vert\mathbb P^G)
+&=-\mathbb E^M[\log(1+\delta)]\\
+&\approx\frac12\mathbb E^M[\delta^2]\\
+&=\frac12\mathbb E^Y\left[\frac{(G-L_M)^2}{L_M}\right].
+\end{aligned}
+$$
+
+This criterion is $\operatorname{KL}_2=\tfrac12\chi^2(\mathbb P^G\Vert\mathbb P^M)$. Its weight $1/L_M$ emphasizes errors relative to the target size. It differs from ordinary quadratic hedging, which minimizes $\mathbb E^Y[(G-L_M)^2]$.
+
+For $G=1+w(R-1)$, its unconstrained regression coefficient is
+
+$$
+w_{\mathrm{KL}_2}
+=\frac{\mathbb E^Y[(R-1)(L_M-1)/L_M]}
+{\mathbb E^Y[(R-1)^2/L_M]},
+$$
+
+provided these moments are finite and the denominator is positive. Feasibility still needs to be checked.
+
+::: {.callout-note title="Two different notions of 'small'"}
+Small absolute payoff error is not enough for the target-centered expansion when $L_M$ can approach zero. A sufficient condition is uniformly small relative error, with integrability controlling the Taylor remainder. In the [geometric-shock example](hedging-comparison.qmd), KL2 selects $w=0.8125$, ordinary quadratic hedging selects $0.7$, and exact KL selects approximately $0.745331$. The local approximation does not rank those portfolios by exact growth.
+:::
+
+Ordinary quadratic hedging emerges in an **additional near-cash limit**. If $L_M=1+\varepsilon h$ and $G=1+\varepsilon a$, with bounded $h,a$ of zero $\mathbb P^Y$ mean, then
+
+$$
+D_{\mathrm{KL}}(\mathbb P^M\Vert\mathbb P^G)
+=\frac{\varepsilon^2}{2}\mathbb E^Y[(h-a)^2]+O(\varepsilon^3).
+$$
+
+Here both beliefs relative to prices and the chosen payoff approach the reference asset. A target far from cash need not have this unweighted local geometry.
 
 ## Experiment with the approximation
 
@@ -125,10 +169,10 @@ Their difference is
 
 $$
 T_M(Z)-J(Z)
-=-\frac12\mathbb E^Y[(R-1)Z^2].
+=-\frac12\mathbb E^Y[(L_M-1)Z^2].
 $$
 
-If both $R-1$ and $Z$ are uniformly of order $\varepsilon$, this difference is of order $\varepsilon^3$. In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.
+If both $L_M-1$ and $Z$ are uniformly of order $\varepsilon$, this difference is of order $\varepsilon^3$. In the same regime, both approximate expected log growth to second order. Small returns alone justify the ordinary Taylor expansion; using the pricing measure in the quadratic penalty also needs control of the difference between beliefs and prices, or the separate Pearson projection interpretation.
 :::
 
 ## From payoffs to a portfolio calculation
@@ -153,18 +197,19 @@ $$
 
 The matrix resembles the classical covariance formula, but its entries come from $\mathbb P^Y$. A singular matrix can reflect redundant assets; removing redundancy or solving the constrained program avoids treating its inverse as defined. Even when the matrix is invertible, an unrestricted projection can produce negative wealth. The [portfolio laboratory](portfolio-lab.qmd) keeps long-only cost weights and nonnegative payoffs.
 
-## Two geometries for a restricted menu
+## Three geometries for a restricted menu
 
-In finite states, write $p_i=\mathbb P^M(i)$, $q_i=\mathbb P^Y(i)$ and $v_i=\mathbb P^V(i)$. Then $G(i)=v_i/q_i$, and the two projection problems are:
+In finite states, write $p_i=\mathbb P^M(i)$, $q_i=\mathbb P^Y(i)$ and $v_i=\mathbb P^V(i)$. Then $G(i)=v_i/q_i$, and the projection problems are:
 
 | Objective | Mismatch minimized |
 |:--|:--|
 | Exact expected log growth | $D(p\Vert v)$ |
+| Target-centered KL2 | $\tfrac12\sum_i(v_i-p_i)^2/p_i$ |
 | Mixed quadratic | $\tfrac12\sum_i(v_i-p_i)^2/q_i$ |
 
-The second expression is a squared distance weighted by the fixed market distribution. It is generally **not** $D_{\chi^2}(p\Vert v)$, whose denominator would be $v_i$.
+KL2 is half the Pearson divergence $\chi^2(v\Vert p)$. The mixed quadratic instead uses the fixed market distribution in its denominator. Neither expression is $\chi^2(p\Vert v)$, whose denominator would be $v_i$.
 
-If the investor's distribution is attainable, both mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest in market-weighted squared distance.
+If the investor's distribution is attainable, all three mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest under either squared distance. The [worked comparison](hedging-comparison.qmd) calculates all three and lets you vary the pricing law.
 
 **Continue:** enter several asset densities and compare the resulting allocations in the [portfolio laboratory](portfolio-lab.qmd).
 

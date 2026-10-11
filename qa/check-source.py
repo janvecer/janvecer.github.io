@@ -16,7 +16,7 @@ checks.append('No stale HTML in project root or likelihood source folder')
 qmds=[p for p in ROOT.rglob('*.qmd') if not any(x in ('docs','_site','.quarto') for x in p.relative_to(ROOT).parts)]
 for p in qmds:
  text=p.read_text(); rel=str(p.relative_to(ROOT))
- if not text.startswith('---\n'):errors.append(f'{rel}: missing YAML front matter')
+ if not p.name.startswith('_') and not text.startswith('---\n'):errors.append(f'{rel}: missing YAML front matter')
  ids=re.findall(r'\{#([\w-]+)',text)
  if len(ids)!=len(set(ids)):errors.append(f'{rel}: duplicate explicit identifiers')
  for match in re.finditer(r'\]\(([^\s)]+)(?:\s+"[^"]*")?\)',text):
@@ -39,6 +39,7 @@ try:
  import yaml
  for p in [ROOT/'_quarto.yml']+qmds:
   if not p.exists():errors.append(f'{p.name}: missing');continue
+  if p.name.startswith('_') and p.suffix=='.qmd':continue
   data=p.read_text() if p.suffix=='.yml' else p.read_text().split('---',2)[1]
   try:yaml.safe_load(data)
   except yaml.YAMLError as e:errors.append(f'{p.relative_to(ROOT)}: invalid YAML: {e}')

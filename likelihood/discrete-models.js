@@ -48,10 +48,10 @@
   function geometric(u, p) { return Math.floor(Math.log1p(-u) / Math.log(p)); }
   function logPath(draws, p, q, samplingProbability, n) {
     var a = Math.log(p / q), b = Math.log((1 - p) / (1 - q));
-    var logs = [0], successes = 0;
+    var logs = [0], count = 0;
     for (var t = 1; t <= n; t++) {
-      successes += geometric(draws[t - 1], samplingProbability);
-      logs.push(a * successes + b * t);
+      count += geometric(draws[t - 1], samplingProbability);
+      logs.push(a * count + b * t);
     }
     return logs;
   }
@@ -255,7 +255,7 @@
 
   function negativeBinomial(root) {
     clear(root); root.classList.add('dm-widget');
-    var p = .6, q = .4, n = 10, seed = 20261003;
+    var p = .25, q = .5, m = 1 / 3, n = 1, seed = 20261003;
     var N = 30, NSHOW = 6, uniform = null;
     function generate() {
       var random = rng(seed); uniform = { X: [], Y: [] };
@@ -268,40 +268,42 @@
       });
     }
     generate();
-    var cp = control('Asset probability p', 'p', p, .05, .90, .01, 'asset', function (v) { p = v; render(); }, function (v) { return fmt(v, 2); });
-    var cq = control('Pricing probability q', 'q', q, .05, .90, .01, 'market', function (v) { q = v; render(); }, function (v) { return fmt(v, 2); });
-    var cn = control('Completed failure blocks n', 'n', n, 1, N, 1, 'asset', function (v) { n = Math.round(v); render(); }, String);
-    var laws = plot('Success counts after n blocks'), likelihood = plot('Count → price');
+    var cp = control('Stock counted-trial probability aˣ', 'p', p, .05, .90, .01, 'asset', function (v) { p = v; render(); }, function (v) { return fmt(v, 2); });
+    var cq = control('Market counted-trial probability aʸ', 'q', q, .05, .90, .01, 'market', function (v) { q = v; render(); }, function (v) { return fmt(v, 2); });
+    var cm = control('Belief counted-trial probability aᴹ', 'm', m, .05, .90, 'any', 'payoff', function (v) { m = v; render(); }, function (v) { return fmt(v, 4); });
+    var cn = control('Completed shocks n', 'n', n, 1, N, 1, 'asset', function (v) { n = Math.round(v); render(); }, String);
+    var laws = plot('Three laws after n shocks'), likelihood = plot('Count → price');
     var countMode = el('select', { 'data-control': 'count-scale', 'aria-label': 'Count-to-price display' }, [el('option', { value: 'price', text: 'Price X(n)/X(0)' }), el('option', { value: 'log', text: 'Log price' })]);
     countMode.addEventListener('change', render);
     likelihood.node.insertBefore(el('label', { class: 'dm-mode' }, [document.createTextNode('Show '), countMode]), likelihood.chart);
     var countNote = el('p', { class: 'dm-small' }); likelihood.node.appendChild(countNote);
     var pricePaths = plot('Price paths, starting from one'); pricePaths.node.classList.add('dm-full-plot');
     var paths = plot('The same paths on a log scale'); paths.node.classList.add('dm-full-plot');
-    laws.node.appendChild(legend([['asset', 'Under Pˣ'], ['market', 'Under Pʸ']]));
+    laws.node.appendChild(legend([['asset', 'Stock Pˣ'], ['market', 'Market Pʸ'], ['belief', 'Belief Pᴹ']]));
     var tail = el('p', { class: 'dm-small' }); laws.node.appendChild(tail);
     var pathNote = el('p', { class: 'dm-small', text: 'Six paths under each measure. Dashed lines: expected log price. Parameters reuse the same random draws; “Draw new paths” changes them.' });
     paths.node.appendChild(legend([['asset', 'Under Pˣ'], ['market', 'Under Pʸ']])); paths.node.appendChild(pathNote);
     var priceNote = el('p', { class: 'dm-small' });
     pricePaths.node.appendChild(legend([['asset', 'Under Pˣ'], ['market', 'Under Pʸ']])); pricePaths.node.appendChild(priceNote);
     var metrics = el('div', { class: 'dm-metrics' }), readout = el('div', { class: 'dm-readout', 'aria-live': 'polite' });
-    root.appendChild(el('div', { class: 'dm-controls' }, [cp.node, cq.node, cn.node]));
+    root.appendChild(el('div', { class: 'dm-controls' }, [cp.node, cq.node, cm.node, cn.node]));
     root.appendChild(metrics);
     root.appendChild(el('div', { class: 'dm-plots' }, [laws.node, likelihood.node]));
-    root.appendChild(el('div', { class: 'dm-actions' }, [button('Draw new paths', function () { seed = (seed + 104729) >>> 0; generate(); render(); }), button('Make the measures agree', function () { p = q; cp.set(p); render(); })]));
+    root.appendChild(el('div', { class: 'dm-actions' }, [button('Draw new paths', function () { seed = (seed + 104729) >>> 0; generate(); render(); }), button('Match stock and market', function () { p = q; cp.set(p); render(); }), button('Restore Columbia example', function () { p = .25; q = .5; m = 1 / 3; n = 1; cp.set(p); cq.set(q); cm.set(m); cn.set(n); render(); })]));
     root.appendChild(pricePaths.node); root.appendChild(paths.node); root.appendChild(readout);
 
     function render() {
-      var px = nb(n, p, 1e-4), py = nb(n, q, 1e-4), kMax = Math.max(px.values.length, py.values.length) - 1;
+      var px = nb(n, p, 1e-4), py = nb(n, q, 1e-4), pm = nb(n, m, 1e-4);
+      var kMax = Math.max(px.values.length, py.values.length, pm.values.length) - 1;
       var a = Math.log(p / q), b = Math.log((1 - p) / (1 - q));
-      var ix = rate(p, q), iy = rate(q, p);
-      metrics.replaceChildren(metric(fmt(ix, 4), 'Information per block, I(p,q)', 'asset'), metric(fmt(n * ix, 3), 'Expected log growth, nI(p,q)', 'asset'), metric(fmt(n / (1 - p), 1), 'Expected total trials under Pˣ', 'market'));
-      var maxProb = Math.max.apply(null, px.values.concat(py.values));
-      var lawPlot = axes(laws.chart, 265, 'Negative-binomial success-count probabilities under the asset and pricing measures', kMax, 0, maxProb * 1.1, 'Successes Z(n)', 'Probability', true);
+      var ix = rate(p, q), iy = rate(q, p), im = rate(m, q);
+      metrics.replaceChildren(metric(fmt(im, 7), 'Ideal information per shock, I(aᴹ,aʸ)', 'payoff'), metric(fmt(n * im, 5), 'Ideal information after n shocks', 'payoff'), metric(fmt(n / (1 - m), 3), 'Expected total trials under Pᴹ', 'market'));
+      var maxProb = Math.max.apply(null, px.values.concat(py.values, pm.values));
+      var lawPlot = axes(laws.chart, 265, 'Negative-binomial count probabilities under the stock, market, and belief laws', kMax, 0, maxProb * 1.1, 'Counted trials Z(n)', 'Probability', true);
       var f = lawPlot.f;
       // Show the actual point masses with stems at short horizons; a connected
       // probability-mass profile avoids subpixel bars at long horizons.
-      [[py.values, 'var(--lrw-market)'], [px.values, 'var(--lrw-asset)']].forEach(function (spec) {
+      [[py.values, 'var(--lrw-market)'], [px.values, 'var(--lrw-asset)'], [pm.values, 'var(--lrw-belief)']].forEach(function (spec) {
         var points = spec[0].map(function (v, k) { return [f.X(k), f.Y(v)]; });
         if (kMax <= 50) points.forEach(function (v) { sv('line', { x1: v[0], x2: v[0], y1: f.Y(0), y2: v[1], stroke: spec[1], 'stroke-width': 2.5, opacity: .7 }, lawPlot.svg); });
         else {
@@ -316,16 +318,16 @@
       if (countMode.value === 'log') {
         likelihood.node.querySelector('h3').textContent = 'Count → log price';
         var low = Math.min(0, start, end), high = Math.max(0, start, end), padding = .07 * (high - low || 1);
-        var lr = axes(likelihood.chart, 265, 'The affine log-likelihood ratio as a function of success count', kMax, low - padding, high + padding, 'Successes Z(n)', 'log X(n)/X(0)', true);
+        var lr = axes(likelihood.chart, 265, 'The affine log-likelihood ratio as a function of counted trials', kMax, low - padding, high + padding, 'Counted trials Z(n)', 'log X(n)/X(0)', true);
         line(lr.svg, [[lr.f.X(0), lr.f.Y(start)], [lr.f.X(kMax), lr.f.Y(end)]], 'var(--lrw-asset)', 2.5);
         if (low < 0 && high > 0) line(lr.svg, [[lr.f.X(0), lr.f.Y(0)], [lr.f.X(kMax), lr.f.Y(0)]], 'var(--lrw-muted)', 1, '4 4');
-        countNote.textContent = 'The log price is affine in the success count. Switch to price to see the corresponding payoff.';
+        countNote.textContent = 'The log price is affine in the counted trials. Switch to price to see the corresponding payoff.';
       } else {
         likelihood.node.querySelector('h3').textContent = 'Count → price';
         var countLogs = [], countXs = [];
         for (var k = 0; k <= kMax; k++) { countLogs.push(a * k + n * b); countXs.push(k); }
         var countScale = priceScale(countLogs);
-        var cpPlot = axes(likelihood.chart, 265, 'Asset price as a function of success count, in reference-asset units', kMax, 0, countScale.max, 'Successes Z(n)', 'X(n)/X(0)', true);
+        var cpPlot = axes(likelihood.chart, 265, 'Asset price as a function of counted trials, in reference-asset units', kMax, 0, countScale.max, 'Counted trials Z(n)', 'X(n)/X(0)', true);
         drawPrices(cpPlot, countLogs, 'var(--lrw-asset)', 1, priceClip(cpPlot), countXs);
         countNote.textContent = 'Prices at integer counts; the line connects those values.' + (countScale.clipped ? ' Prices above 10¹² are off scale. Switch to log price to see the full range.' : ' The vertical axis is an ordinary price scale.');
       }
@@ -341,7 +343,7 @@
       });
       var everyLog = all.X.concat(all.Y).reduce(function (values, logs) { return values.concat(logs); }, []);
       var priceRange = priceScale(everyLog);
-      var priceView = axes(pricePaths.chart, 310, 'Simulated asset price paths over successive completed failure blocks', n, 0, priceRange.max, 'Completed failure blocks', 'X(t)/X(0)', true);
+      var priceView = axes(pricePaths.chart, 310, 'Simulated asset price paths over successive completed shocks', n, 0, priceRange.max, 'Completed shocks', 'X(t)/X(0)', true);
       var priceGroup = priceClip(priceView), offScalePaths = 0;
       ['Y', 'X'].forEach(function (key) {
         var color = key === 'X' ? 'var(--lrw-asset)' : 'var(--lrw-market)';
@@ -351,21 +353,23 @@
         });
       });
       line(priceView.svg, [[priceView.f.X(0), priceView.f.Y(1)], [priceView.f.X(n), priceView.f.Y(1)]], 'var(--lrw-market)', 2, '7 5');
-      priceNote.textContent = 'Ordinary price scale. Dashed blue: expected price under Pʸ is one at every block; this is not a sample average. ' +
+      priceNote.textContent = 'Ordinary price scale. Dashed blue: expected price under Pʸ is one at every shock; this is not a sample average. ' +
         (priceRange.clipped ? offScalePaths + ' of the 12 paths exceed 10¹². Upward marks indicate exits above the chart; no flat cap is substituted. The log chart below shows the full paths.' : 'The log chart below uses exactly these same paths. Rare high prices can make the mean very different from the paths in a small sample.');
       if (Math.abs(maxLog - minLog) < 1e-10) { minLog = -1; maxLog = 1; }
       var pad = .06 * (maxLog - minLog);
-      var pp = axes(paths.chart, 310, 'Simulated log-price paths over successive completed failure blocks', n, minLog - pad, maxLog + pad, 'Completed failure blocks', 'log X(t)/X(0)', true);
+      var pp = axes(paths.chart, 310, 'Simulated log-price paths over successive completed shocks', n, minLog - pad, maxLog + pad, 'Completed shocks', 'log X(t)/X(0)', true);
       ['Y', 'X'].forEach(function (key) {
         var color = key === 'X' ? 'var(--lrw-asset)' : 'var(--lrw-market)';
         all[key].forEach(function (logs) { line(pp.svg, logs.map(function (v, i) { return [pp.f.X(i), pp.f.Y(v)]; }), color, 1.35, '', .58); });
         line(pp.svg, [[pp.f.X(0), pp.f.Y(0)], [pp.f.X(n), pp.f.Y(key === 'X' ? n * ix : -n * iy)]], color, 2.6, '7 5');
       });
-      var bern = kl([p, 1 - p], [q, 1 - q]);
+      var bern = kl([m, 1 - m], [q, 1 - q]);
+      var investorStockGrowth = n * (im - rate(m, p));
       readout.innerHTML = '<p><strong>log X(n)/X(0) = ' + fmt(a, 4) + ' × Z(n) ' + (b < 0 ? '− ' : '+ ') + fmt(Math.abs(b), 4) + ' × n.</strong></p>' +
-        '<p>Wald’s factorization: ' + fmt(n / (1 - p), 3) + ' expected trials × ' + fmt(bern, 5) + ' nats per trial = ' + fmt(n * ix, 4) + ' nats in total. Under Pʸ, expected log price is ' + fmt(-n * iy, 4) + '.</p>' +
-        (logMeanPriceX(n, p, q) === Infinity ? '<p>At these settings p² ≥ q: the mean price under Pˣ is infinite, although the expected log price is finite. Under Pʸ the mean price remains exactly one. Twelve simulated paths cannot reveal an infinite mean.</p>' : '') +
-        (p === q ? '<p>The measures agree: the likelihood ratio equals one for every count and every path. All log-price paths coincide at zero.</p>' : '<p>The straight information line uses the number of completed failure blocks. Total Bernoulli trial time is random.</p>');
+        '<p>Belief information: ' + fmt(n / (1 - m), 3) + ' expected binary trials × ' + fmt(bern, 7) + ' nats per trial = ' + fmt(n * im, 7) + ' nats over ' + n + ' completed shock(s). This is the ideal likelihood payoff, not necessarily attainable with shock-level stock/cash trading.</p>' +
+        '<p>The stock itself has expected log return ' + fmt(n * ix, 5) + ' under Pˣ, ' + fmt(-n * iy, 5) + ' under Pʸ, and ' + fmt(investorStockGrowth, 5) + ' under investor beliefs Pᴹ.</p>' +
+        (logMeanPriceX(n, p, q) === Infinity ? '<p>At these settings (aˣ)² ≥ aʸ: the mean price under Pˣ is infinite, although the expected log price is finite. Under Pʸ the mean price remains exactly one. Twelve simulated paths cannot reveal an infinite mean.</p>' : '') +
+        (p === q ? '<p>The stock and market laws agree: the likelihood ratio equals one for every count and every path. All log-price paths coincide at zero.</p>' : '<p>' + (p < q ? 'The counted trials are down moves; each shock ends at the first up move.' : 'At aˣ > aʸ the counted trials raise price and the terminating trial lowers it. The geometric formulas still hold.') + ' Total binary trial time is random.</p>');
     }
     render(); watch(root, render);
   }

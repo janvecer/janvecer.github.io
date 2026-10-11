@@ -4,7 +4,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),http=require('http'),{createRequire}=require('module');
 const root=path.resolve(__dirname,'..'),out=path.resolve(root,process.argv[2]||'docs');
-const widgetSelector='[data-lrw], [data-discrete-model], [data-continuous-model], [data-portfolio-tool], [data-entropy-lab], [data-normal-options], [data-hedging-lab]';
+const widgetSelector='[data-lrw], [data-discrete-model], [data-continuous-model], [data-portfolio-tool], [data-entropy-lab], [data-normal-options], [data-hedging-lab], [data-hedging-comparison]';
 const controlSelector=control=>widgetSelector.split(', ').map(selector=>`${selector} ${control}`).join(', ');
 const widgetScreenshotStyle='#quarto-header, .quarto-secondary-nav { opacity: 0 !important; }';
 function playwright(){try{return require('playwright');}catch(e){if(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES)return createRequire(path.join(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES,'playwright','package.json'))('playwright');throw Error('Playwright is missing. Run npm install --no-save playwright, then npx playwright install chromium.');}}
@@ -27,7 +27,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg'
    await page.goto(`${origin}/${pageName}`,{waitUntil:'networkidle'});
    await page.evaluate(async()=>{await Promise.all([...document.images].map(el=>{el.loading='eager';return el.decode().catch(()=>{});}));if(window.MathJax?.startup?.promise)await window.MathJax.startup.promise;if(document.fonts?.ready)await document.fonts.ready;});
    const initial=await inspect(page);
-   const requiredMounts={'likelihood/options.html':'[data-normal-options]','likelihood/hedging.html':'[data-hedging-lab]','likelihood/relative-entropy.html':'[data-entropy-lab]'};
+   const requiredMounts={'likelihood/hedging-comparison.html':'[data-hedging-comparison]','likelihood/options.html':'[data-normal-options]','likelihood/hedging.html':'[data-hedging-lab]','likelihood/relative-entropy.html':'[data-entropy-lab]'};
    if(requiredMounts[pageName]&&await page.locator(requiredMounts[pageName]).count()!==1)errors.push(`Missing expected interactive mount ${requiredMounts[pageName]}`);
    const interactions=[];
    for(const slider of await page.locator(controlSelector('input[type=range]')).all()){
@@ -54,7 +54,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg'
    if(initial.documentOverflow||final.documentOverflow)errors.push('Document has horizontal overflow');
    for(const inspection of [initial,final]){if(inspection.unmounted.length)errors.push(`Unmounted widgets: ${inspection.unmounted.join(', ')}`);if(inspection.equationOverflow.length)errors.push(`Equations exceed content width: ${inspection.equationOverflow.join(', ')}`);if(inspection.tableOverflow.length)errors.push(`Tables exceed viewport: ${inspection.tableOverflow.join(', ')}`);if(inspection.nonfiniteSVG.length)errors.push(`Nonfinite SVG: ${inspection.nonfiniteSVG.join(', ')}`);if(inspection.unrenderedMath)errors.push(`${inspection.unrenderedMath} math elements are not typeset`);if(inspection.mathErrors.length)errors.push(`Mathematical typesetting errors: ${inspection.mathErrors.join(', ')}`);if(inspection.brokenImages.length)errors.push(`Broken images: ${inspection.brokenImages.join(', ')}`);}
    await page.evaluate(()=>window.scrollTo(0,0));
-   if(['index.html','likelihood/binomial.html','likelihood/index.html','likelihood/relative-entropy.html','likelihood/options.html','likelihood/hedging.html','likelihood/negative-binomial.html'].includes(pageName))await page.screenshot({path:path.join(screenshots,`${pageName.replace(/\//g,'-')}-${width}.png`),fullPage:true});
+   if(['index.html','likelihood/binomial.html','likelihood/index.html','likelihood/relative-entropy.html','likelihood/options.html','likelihood/hedging.html','likelihood/negative-binomial.html','likelihood/hedging-comparison.html','likelihood/bayesian-learning.html','resources.html'].includes(pageName))await page.screenshot({path:path.join(screenshots,`${pageName.replace(/\//g,'-')}-${width}.png`),fullPage:true});
    const result={page:pageName,width,widgets:initial.widgets,sliderCount:interactions.length,selectCount:selects.length,readingColumn:initial.readingColumn,errors:[...new Set(errors)],requests:[...new Set(requests)],overflow:initial.overflow};results.push(result);if(result.errors.length||result.requests.length)failures.push(result);
    console.log(`${result.errors.length||result.requests.length?'FAIL':'PASS'} ${width} ${pageName} (${initial.widgets} widgets, ${interactions.length} sliders)`);if(result.errors.length||result.requests.length)console.log(JSON.stringify({errors:result.errors,requests:result.requests}));await page.close();
   }
@@ -82,7 +82,9 @@ async function testChapterMenu(page,errors){
  try{
   const toggle=page.getByRole('button',{name:'Toggle sidebar navigation',exact:true});await toggle.click();
   await page.waitForFunction(()=>document.querySelector('#quarto-sidebar')?.classList.contains('show'));
-  if(!await page.locator('#quarto-sidebar a[href$="options.html"]').isVisible())errors.push('Mobile chapter menu did not reveal the options page');
+  const option=page.locator('#quarto-sidebar a[href$="options.html"]');
+  await option.evaluate(el=>{for(let p=el.parentElement;p&&p.id!=='quarto-sidebar';p=p.parentElement){if(p.classList.contains('collapse'))p.classList.add('show');}});
+  if(!await option.isVisible())errors.push('Mobile chapter menu did not reveal the options page after opening its section');
   await toggle.click();await page.waitForFunction(()=>!document.querySelector('#quarto-sidebar')?.classList.contains('show'));
  }catch(e){errors.push(`Mobile chapter menu: ${e.message.split('\n')[0]}`);}
 }

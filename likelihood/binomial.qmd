@@ -9,13 +9,22 @@ include-after-body:
       <script src="lr-widgets.js"></script>
 ---
 
-Each period has two scenarios, success and failure. The market prices success at $q=\mathbb P^Y(\text{success})$. A traded asset $X$ carries its own measure, with $p=\mathbb P^X(\text{success})$. The investor's model $\mathbb P^M$ is a third object: the asset $X$ is her log-optimal holding only when $\mathbb P^M=\mathbb P^X$. Every identity on the [framework page](index.qmd) has an explicit two-state form, and repeating the period turns them into a price process. All prices and returns below are in units of the reference asset $Y$.
+Each period has two outcomes, $H$ and $T$: an up move and a down move in our running example. Three laws have different jobs: $\mathbb P^Y$ prices payoffs, $\mathbb P^X$ is induced by the traded stock, and $\mathbb P^M$ describes investor beliefs. The stock is the investor's log-optimal holding only when $\mathbb P^M=\mathbb P^X$.
+
+Every identity on the [framework page](index.qmd) has an explicit two-state form. We use the same numbers as the Columbia presentation:
+
+| Outcome | Market $\mathbb P^Y$ | Stock $\mathbb P^X$ | Belief $\mathbb P^M$ | Stock return $R$ | Desired payoff $L_M$ |
+|:--|--:|--:|--:|--:|--:|
+| $H$: up | $1/2$ | $3/4$ | $2/3$ | $3/2$ | $4/3$ |
+| $T$: down | $1/2$ | $1/4$ | $1/3$ | $1/2$ | $2/3$ |
+
+Here $R=\mathbb P^X/\mathbb P^Y$ and $L_M=\mathbb P^M/\mathbb P^Y$. All prices and returns are in units of the reference asset $Y$; interest and discounting are absorbed in that choice. When $Y$ is money delivered at the horizon, the reference security is the corresponding bond.
 
 This is the first worked example of [likelihoods and price dynamics](dynamics.qmd): the two approaches describe the same market, but start with different primitives.
 
 ## Two probabilities, two multipliers
 
-Take $p,q\in(0,1)$. Likelihood-ratio pricing, $X(1)/X(0)=\mathbb P^X/\mathbb P^Y$, gives the success and failure multipliers directly (up and down, respectively, when $p>q$):
+Write $p=\mathbb P^X(H)$ and $q=\mathbb P^Y(H)$, with $p,q\in(0,1)$. Likelihood-ratio pricing, $X(1)/X(0)=\mathbb P^X/\mathbb P^Y$, gives the $H$ and $T$ multipliers directly (up and down, respectively, when $p>q$):
 
 $$
 \begin{aligned}
@@ -28,7 +37,7 @@ The corresponding asset return is
 
 $$
 \frac{X(1)}{X(0)}=
-\begin{cases} u & \text{success},\\ d & \text{failure}.\end{cases}
+\begin{cases} u & H,\\ d & T.\end{cases}
 $$
 
 There are **two martingale conditions**, one for each choice of numeraire. Under the reference-asset measure $\mathbb P^Y$, the normalized price of $X$ has expectation one:
@@ -51,7 +60,7 @@ p\,\frac1u+(1-p)\,\frac1d
 \end{aligned}
 $$
 
-The first condition identifies $q$ from nonconstant price multipliers; the second identifies $p$. Thus $p$ is the probability associated with the asset numeraire, not an independently supplied forecast of the success frequency. The investor's forecast is $p^M$.
+The first condition identifies $q$ from nonconstant price multipliers; the second identifies $p$. Thus $p$ is the probability associated with the asset numeraire, not an independently supplied forecast. The investor's forecast is $m=\mathbb P^M(H)$. In the example, $q=1/2$, $p=3/4$, and $m=2/3$.
 
 The classical one-period model runs the other way. It postulates $u$ and $d$ and derives the pricing probabilities from these martingale conditions. Solving them gives
 
@@ -62,7 +71,7 @@ p&=\frac{u(1-d)}{u-d}=u\,q.
 \end{aligned}
 $$
 
-The map $(p,q)\mapsto(u,d)$ sends $\{0<q<p<1\}$ one-to-one onto $\{0<d<1<u\}$. Read backwards, the classical no-arbitrage condition $d<1<u$ corresponds to two interior probabilities ordered so that success is the up move. With $p<q$, success is the down move and $0<u<1<d$. When $p=q$, $u=d=1$: the asset has the reference asset's return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of $Y$, under the frictionless borrowing and short-selling assumptions.
+The map $(p,q)\mapsto(u,d)$ sends $\{0<q<p<1\}$ one-to-one onto $\{0<d<1<u\}$. Read backwards, the classical no-arbitrage condition $d<1<u$ corresponds to two interior probabilities ordered so that $H$ is the up move. With $p<q$, the price directions reverse: $H$ is the down move and $0<u<1<d$. When $p=q$, $u=d=1$: the asset has the reference asset's return. In that degenerate case the return identifies neither probability, and the inverse formulas are undefined. Equal multipliers different from one imply deterministic arbitrage in units of $Y$, under the frictionless borrowing and short-selling assumptions.
 
 With two states, cash and a nonconstant asset span all payoffs, which is why these conditions identify the two measures uniquely. The [trinomial model](trinomial.qmd) shows what changes when there are three states and only two traded assets.
 
@@ -73,6 +82,47 @@ Interactive figure. It needs JavaScript.
 
 One period of the asset $X$ in units of $Y$. Start from the probabilities or from the multipliers; the other pair follows in the nondegenerate no-arbitrage region. Both numeraire martingale conditions appear below the diagram. Multipliers on the same side of 1, or one equal to 1 and the other different, imply arbitrage when both scenarios are possible. The figure distinguishes these cases from the fair constant return $u=d=1$. Editing a probability in a later figure switches this figure to probability mode and explains the change.
 ::::
+
+## Replication: shares and probability weights {#replication}
+
+The classical delta hedge and likelihood matching are the same calculation in different coordinates. To replicate terminal wealth $V(1)$, hold $\Delta$ shares of $X$ and the remaining budget in $Y$:
+
+$$
+\begin{aligned}
+\Delta&=\frac{V(1,H)-V(1,T)}{X(1,H)-X(1,T)},\\
+B&=V(0)-\Delta X(0).
+\end{aligned}
+$$
+
+The initial fraction of the budget invested in the stock is $w=\Delta X(0)/V(0)$. Normalized terminal wealth and its induced probability law satisfy
+
+$$
+V_w=\frac{V(1)}{V(0)}=1+w(R-1).
+$$
+
+$$
+\mathbb P^V=w\mathbb P^X+(1-w)\mathbb P^Y.
+$$
+
+For the target $\mathbb P^V=\mathbb P^M$, the $H$ equation gives
+
+$$
+\begin{aligned}
+w&=\frac{m-q}{p-q}\\
+&=\frac{2/3-1/2}{3/4-1/2}=\frac23.
+\end{aligned}
+$$
+
+Thus $\Delta=(2/3)V(0)/X(0)$, $B=V(0)/3$, and
+
+$$
+\begin{aligned}
+V_{2/3}(H)&=\frac43,\\
+V_{2/3}(T)&=\frac23.
+\end{aligned}
+$$
+
+The line $V_w=1+w(R-1)$ passes through both desired payoffs. With two states and two independent securities, the target is attainable exactly. The mixture is convex for $0\leq w\leq1$; borrowing or short selling can extend it when terminal wealth remains nonnegative.
 
 ## Every position on one curve
 
@@ -88,30 +138,41 @@ $$
 
 The usual conventions apply: a zero-probability term contributes zero, while positive probability divided by zero gives infinite divergence.
 
-Let the investor's model be $\mathbb P^M(\text{success})=p^M$. With two scenarios a nonnegative portfolio $V$ of positive price is determined, up to scale, by $v=\mathbb P^V(\text{success})$, the fraction of wealth spent on the success claim. Its expected log return under the investor's model is
+Let the investor's model be $\mathbb P^M(H)=m$. With two scenarios a nonnegative portfolio $V$ of positive price is determined, up to scale, by $v=\mathbb P^V(H)$, the fraction of wealth spent on the $H$ claim. Its expected log return under the investor's model is
 
 $$
 \begin{aligned}
 g(v)
-&=p^M\log\frac{v}{q}\\
-&\quad +(1-p^M)\log\frac{1-v}{1-q}.
+&=m\log\frac{v}{q}\\
+&\quad +(1-m)\log\frac{1-v}{1-q}.
 \end{aligned}
 $$
 
 The information decomposition becomes
 
 $$
-g(v)=d(p^M\Vert q)-d(p^M\Vert v).
+g(v)=d(m\Vert q)-d(m\Vert v).
 $$
 
-Three points on the curve have names. At $v=q$ the investor holds the reference asset and $g=0$. At $v=p$ she holds the asset $X$. At $v=p^M$ the curve peaks at $d(p^M\Vert q)$, and the shortfall of any other position is exactly $d(p^M\Vert v)$. Every portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.
+Three points on the curve have names. At $v=q$ the investor holds the reference asset and $g=0$. At $v=p$ she holds the asset $X$. At $v=m$ the curve peaks at $d(m\Vert q)$, and the shortfall of any other position is exactly $d(m\Vert v)$. Every strictly positive portfolio is log-optimal for the model it implies, and for no other in this unconstrained two-state market.
 
-For $\gamma\ge1$, risk aversion moves the position from $p^M$ back toward $q$, in one of two ways. Fractional Kelly keeps a cash reserve:
+In the running example, the replicated target earns
+
+$$
+\begin{aligned}
+g^*&=\frac23\log\frac43+\frac13\log\frac23\\
+&\approx0.0566330\ \text{nats per trial}.
+\end{aligned}
+$$
+
+Holding the stock alone earns $\frac23\log(3/2)+\frac13\log(1/2)\approx0.0392610$. The investor and stock laws differ, so simply buying the stock does not maximize this investor's expected log growth.
+
+For $\gamma\ge1$, risk aversion moves the position from $m$ back toward $q$, in one of two ways. Fractional Kelly keeps a cash reserve:
 
 $$
 \begin{aligned}
 f&=1/\gamma,\\
-v_f&=(1-f)\,q+f\,p^M.
+v_f&=(1-f)\,q+f\,m.
 \end{aligned}
 $$
 
@@ -119,18 +180,18 @@ CRRA utility instead tempers the measure. Set $\alpha=1/\gamma$ and form the wei
 
 $$
 \begin{aligned}
-w_s&=(p^M)^\alpha q^{1-\alpha},\\
-w_f&=(1-p^M)^\alpha(1-q)^{1-\alpha}.
+w_s&=(m)^\alpha q^{1-\alpha},\\
+w_f&=(1-m)^\alpha(1-q)^{1-\alpha}.
 \end{aligned}
 $$
 
-The optimal success weight is
+The optimal $H$ weight is
 
 $$
 v_\gamma=\frac{w_s}{w_s+w_f}.
 $$
 
-For $0<p^M<1$ both families sweep the same segment between $q$ and $p^M$, including cash as a limit as $\gamma\to\infty$. They generally traverse it at different rates: the same numerical $\gamma$ can give different positions, while a change of $\gamma$ can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set $\mathbb P^M(\text{success})=0$ in the figure. For every finite $\gamma$, CRRA keeps that zero, while fractional Kelly with $\gamma>1$ assigns positive weight through its cash reserve. The [utility and risk-aversion page](utility.qmd) develops the general construction.
+For $0<m<1$ both families sweep the same segment between $q$ and $m$, including cash as a limit as $\gamma\to\infty$. They generally traverse it at different rates: the same numerical $\gamma$ can give different positions, while a change of $\gamma$ can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set $\mathbb P^M(H)=0$ in the figure. For every finite $\gamma$, CRRA keeps that zero, while fractional Kelly with $\gamma>1$ assigns positive weight through its cash reserve. The [utility and risk-aversion page](utility.qmd) develops the general construction.
 
 :::: {#fig-binomial-growth}
 ::: {data-lrw="binomial-growth"}
@@ -142,7 +203,7 @@ Expected log return under $\mathbb P^M$ of every two-state position. The red seg
 
 ## Many periods
 
-Repeat the period independently and let $S(n)$ count the successes after $n$ periods. Likelihood-ratio pricing at time $n$ gives
+Repeat the period independently and let $S(n)$ count the $H$ outcomes after $n$ periods. Likelihood-ratio pricing at time $n$ gives
 
 $$
 \frac{X(n)}{X(0)}
@@ -177,7 +238,9 @@ $$
 D^{X,Y}(n)=n\,d(p\Vert q).
 $$
 
-This is [linear information flow](linear-information.qmd). The binomial tree is the first of the price models in Chapter 5, not a separate construction.
+The investor's desired likelihood payoff has the same form with $p$ replaced by $m$. It is implemented by rebalancing to $w=2/3$ after each trial in our example, and its expected log growth under $\mathbb P^M$ is $n\,d(m\Vert q)=n\times0.0566330$.
+
+This is [linear information flow](linear-information.qmd): independent observations add information, while wealth compounds multiplicatively.
 
 Under $\mathbb P^Y$ the price $X(t)/X(0)$ is a nonnegative martingale with mean one. Ville's inequality then gives, for every horizon $n$,
 
@@ -194,6 +257,12 @@ Interactive figure. It needs JavaScript.
 
 Top: the laws of $S(n)$ under the two measures, shown as filled green bars for $\mathbb P^X$ and blue outlines for $\mathbb P^Y$, followed by the log price as a function of $S(n)$. The outlines remain visible when the laws coincide. Bottom: eight simulated paths under each measure, with the expected log price as dashed lines and the rejection threshold $\log(1/\alpha)$. Changing $p$ or $q$ reuses the same random numbers, so the paths deform rather than redraw. Ville's bound concerns the true crossing probability; the reported Monte Carlo fraction is an estimate and can fluctuate above the bound.
 ::::
+
+## Same observations, different trading opportunities
+
+Now group the trials into cycles: down moves followed by the first up. If trading remains possible after every binary step, the same $w=2/3$ strategy still implements the belief likelihood. If trading is permitted only between completed cycles, a single stock/cash position need not match every possible cycle outcome.
+
+The [negative-binomial model](negative-binomial.qmd) develops this change of clock. The [comparison of portfolio criteria](hedging-comparison.qmd) then measures the resulting information gap and compares exact KL, its quadratic approximation, and quadratic hedging.
 
 ## References
 

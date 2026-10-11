@@ -1,5 +1,5 @@
 ---
-title: "Jan Vecer · Likelihood Finance"
+title: "Jan Vecer · Prices as Information"
 title-block-style: none
 page-layout: full
 toc: false
@@ -11,12 +11,14 @@ body-classes: home-page
 ::: {.home-hero-copy}
 [Jan Vecer / Research & ideas]{.eyebrow}
 
-# Finance, read as **likelihood.** {.home-title .unlisted .unnumbered}
+# Prices as **information.** {.home-title .unlisted .unnumbered}
 
-Prices, portfolio choice, and information share a mathematical language. Start with two probability measures. See how the rest follows.
+[An information-theoretic perspective on finance.]{.hero-subtitle}
+
+Beliefs specify a desired distribution. Trading determines which distributions can be implemented. Explore how this connection explains prices, portfolio choice, hedging, and learning.
 
 ::: {.hero-actions}
-[Explore Likelihood Finance](likelihood/index.qmd){.action-link .action-primary}
+[Explore the framework](likelihood/index.qmd){.action-link .action-primary}
 [Start with one bet →](likelihood/index.qmd#one-claim){.action-link .action-quiet}
 :::
 :::
@@ -53,9 +55,9 @@ Weight market state prices by a normalized nonnegative payoff. The resulting dis
 ::: {.home-principle}
 [02 / Choice]{.eyebrow}
 
-### A belief determines a portfolio.
+### Trading implements a belief.
 
-The likelihood ratio of an investor's belief to the pricing measure gives the log-optimal payoff when the required claims are attainable.
+With all outcome claims available, beliefs determine the log-optimal payoff. A restricted menu leaves a measurable information gap.
 :::
 ::: {.home-principle}
 [03 / Information]{.eyebrow}
@@ -87,7 +89,9 @@ $$
 \end{aligned}
 $$
 
-**Two outcomes.** Probabilities $(0.6,0.4)$ versus $(0.5,0.5)$ give price multipliers $1.2$ and $0.8$. Their expected log performance is $0.0201$ nats.
+**One running example.** Beliefs $(2/3,1/3)$ versus pricing probabilities $(1/2,1/2)$ give the ideal payoff $(4/3,2/3)$. Its expected log growth under those beliefs is $0.056633$ nats per trial.
+
+[What changes when the desired payoff cannot be traded? →](likelihood/index.qmd#incomplete-market){.text-link}
 :::
 :::
 
@@ -97,7 +101,7 @@ $$
 
 ## One framework. Different points of entry. {.unlisted}
 
-Read the essentials, move the probabilities, or follow a model from its distribution to its price process.
+Start with one bet, see how trading restrictions change portfolio choice, then follow the accumulation of information through time.
 :::
 
 ::: {.entry-grid}
@@ -113,20 +117,20 @@ State prices, likelihood ratios, log growth, and the distinction between a belie
 ::: {.entry-item}
 [02]{.entry-number}
 
-### [The models](likelihood/binomial.qmd)
+### [Portfolio choice](likelihood/markets-portfolios.qmd)
 
-Begin with two states. Continue through count distributions and continuous-time families with linear information flow.
+Match beliefs to attainable payoffs. Compare exact log growth, utility, and quadratic approximations on the same market.
 
-[Open the binomial laboratory →](likelihood/binomial.qmd){.text-link}
+[From beliefs to portfolios →](likelihood/markets-portfolios.qmd){.text-link}
 :::
 ::: {.entry-item}
 [03]{.entry-number}
 
-### [Portfolio choice](likelihood/portfolio-lab.qmd)
+### [Dynamics and learning](likelihood/dynamics-learning.qmd)
 
-Explore how preferences, attainable payoffs, and approximations change the distribution implemented by a portfolio.
+Follow evidence through time: price processes, Bayesian wealth updates, and the distinction between learning and committing capital.
 
-[Experiment with portfolio choice →](likelihood/portfolio-lab.qmd){.text-link}
+[Follow information through time →](likelihood/dynamics-learning.qmd){.text-link}
 :::
 :::
 :::
@@ -217,6 +221,23 @@ Jan Vecer, Mark Richard, and Stephen Taylor
 
 Robert Navratil, Stephen Taylor, and Jan Vecer
 :::
+:::
+:::
+
+::: {.home-section .home-talks}
+::: {.section-intro}
+[Talks and resources]{.eyebrow}
+
+## Two routes into the ideas. {.unlisted}
+
+The Columbia lecture starts with one bet and develops portfolio choice and hedging. The Oxford lecture connects relative entropy to Bayesian clearing, learning, and adaptation.
+
+[Read the presentations and follow the tutorials →](resources.qmd){.text-link}
+:::
+
+::: {.talk-links}
+[Columbia · 9 October 2026](assets/slides/columbia-information-theory-2026.pdf){.profile-link}
+[Oxford · 3 September 2026](assets/slides/oxford-bayesian-portfolios-2026.pdf){.profile-link}
 :::
 :::
 

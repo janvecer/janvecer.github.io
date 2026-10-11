@@ -1,0 +1,62 @@
+---
+title: "Talks and resources"
+subtitle: "Read the presentations, then explore the ideas at your own pace"
+description: "Jan Vecer's Columbia and Oxford presentations on information theory, portfolio choice, hedging, and Bayesian learning."
+sidebar: likelihood
+---
+
+The presentations provide two complementary routes into **finance through information theory**. Each PDF includes its original lecture material; the linked website pages develop the examples with interactive figures and additional explanations.
+
+::: {.resource-talk #columbia}
+<a href="assets/slides/columbia-information-theory-2026.pdf"><img src="assets/slides/columbia-information-theory-2026.png" alt="Title slide: Portfolio Optimization through Information Theory, Columbia University, 9 October 2026" class="talk-cover" width="640" loading="lazy"></a>
+
+::: {.resource-copy}
+[Columbia University · 9 October 2026 · 52 pages]{.eyebrow}
+
+## Portfolio Optimization through Information Theory
+
+**Discrete Models (Prediction Markets)**
+
+Start with the price of a bet. Turn positive payoffs into probability distributions, derive log optimality, and see how replication and restricted trading determine attainable growth. A shared binomial and negative-binomial example compares exact KL, its local quadratic approximation, and quadratic hedging.
+
+[Read the Columbia slides (PDF) →](assets/slides/columbia-information-theory-2026.pdf){.action-link .action-primary}
+
+**Continue on the website:** [the framework](likelihood/index.qmd), [the binary example](likelihood/binomial.qmd), [the completed shock](likelihood/negative-binomial.qmd), and [three hedging criteria](likelihood/hedging-comparison.qmd).
+:::
+:::
+
+::: {.resource-talk #oxford}
+<a href="assets/slides/oxford-bayesian-portfolios-2026.pdf"><img src="assets/slides/oxford-bayesian-portfolios-2026.png" alt="Title slide: Computational Bayesian Portfolio Selection via Relative Entropy, ICCF 2026 Oxford, 3 September 2026" class="talk-cover" width="640" loading="lazy"></a>
+
+::: {.resource-copy}
+[ICCF 2026, Oxford · 3 September 2026 · 22 pages]{.eyebrow}
+
+## Computational Bayesian Portfolio Selection via Relative Entropy
+
+**Projection, Bayesian clearing, and adaptation**
+
+Connect portfolio selection and hedging to statistical optimization. Follow the relationship between relative wealth and Bayesian updating, then examine what changes when only part of wealth is committed and when capital is locked in.
+
+[Read the Oxford slides (PDF) →](assets/slides/oxford-bayesian-portfolios-2026.pdf){.action-link .action-primary}
+
+**Continue on the website:** [portfolio choice](likelihood/markets-portfolios.qmd), [the portfolio laboratory](likelihood/portfolio-lab.qmd), and [Bayesian learning and commitment](likelihood/bayesian-learning.qmd).
+:::
+:::
+
+## Choose a reading route
+
+| Your question | Start here | Then explore |
+|:--|:--|:--|
+| How can a price represent information? | [One bet](likelihood/index.qmd#one-claim) | [Relative entropy](likelihood/relative-entropy.qmd) |
+| Which portfolio implements my beliefs? | [Beliefs and attainable portfolios](likelihood/markets-portfolios.qmd) | [Incomplete markets](likelihood/trinomial.qmd) |
+| How do information and variance criteria differ? | [Three hedging criteria](likelihood/hedging-comparison.qmd) | [Mean–variance and information](likelihood/mean-variance.qmd) |
+| How does information accumulate through time? | [Dynamics and learning](likelihood/dynamics-learning.qmd) | [Linear information flow](likelihood/linear-information.qmd) |
+| How are wealth and Bayesian learning connected? | [Bayesian learning and commitment](likelihood/bayesian-learning.qmd) | Oxford presentation above |
+
+## Books and research
+
+The systematic development appears in *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*. The earlier *Stochastic Finance: A Numeraire Approach* develops the relative-price and numeraire foundations.
+
+[Books](index.qmd#books) · [Selected papers](index.qmd#papers) · [About Jan Vecer and contact](jan-vecer.qmd)
+
+The slide decks are archived presentations. Dates, affiliations, and announcements inside them reflect the original talks.

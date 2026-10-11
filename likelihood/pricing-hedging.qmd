@@ -1,0 +1,38 @@
+---
+title: "Pricing and hedging"
+subtitle: "Represent the claim, identify what trades, then choose the approximation"
+description: "An information-theoretic view of replication, option distributions, and hedging in incomplete markets."
+---
+
+A hedge starts with a target claim and the assets available to reproduce it. Information theory supplies a probability representation of both the target and the implemented position.
+
+Fix a pricing law $\mathbb P^Y$ and a nonnegative claim $H$ with finite, positive price $H(0)=\mathbb E^Y[H]$. Its induced law is
+
+$$
+\mathbb P^H(\omega)
+=\mathbb P^Y(\omega)\frac{H(\omega)}{H(0)}.
+$$
+
+The formula is written for finite or countable outcomes; densities give the corresponding continuous-state construction. A claim that vanishes on some outcomes induces a law with zero mass there. All payoffs and prices here use the reference asset as numeraire.
+
+## Exact replication matches the distribution
+
+In two states, cash and a nonconstant stock span every payoff. The usual delta hedge and the mixture of induced probability laws express the same replication. The [binomial tutorial](binomial.qmd) connects shares, cost weights, and probability matching in one numerical example.
+
+## Incomplete trading leaves a choice of criterion
+
+With more outcomes than independent traded payoffs, exact replication may fail. Squared payoff error, target-relative quadratic error, and exact relative entropy can then choose different hedges.
+
+The [three-criteria comparison](hedging-comparison.qmd) uses a single negative-binomial market throughout. It explains the weighting and loss function of each criterion, compares the optimal portfolios, and identifies which conclusions survive a change of pricing law.
+
+The information interpretation must retain the target measure. Minimizing $D_{\mathrm{KL}}(\mathbb P^H\Vert\mathbb P^V)$ maximizes expected log payoff under the **claim-induced** law $\mathbb P^H$ for equal-cost positive candidates. This criterion is distinct from minimizing payoff error under a pricing or physical law.
+
+## Options are distributions too
+
+The [options page](options.qmd) displays the probability law induced by a call, put, digital, or straddle. It connects familiar option-price formulas with weighted tail probabilities and shows how a cash reserve changes the induced distribution.
+
+## Rebalance over a finite interval
+
+The [discrete hedging laboratory](hedging.qmd) projects a target onto stock and cash over one conditional trading interval in a normal model. It separates approximation error from positivity constraints and explains when the short-interval hedge approaches the classical delta.
+
+For the portfolio-selection interpretation of the same geometry, continue with [beliefs and attainable portfolios](markets-portfolios.qmd).

@@ -9,7 +9,7 @@ body-classes: profile-page
 I teach and conduct research in quantitative finance and statistics at **Charles University in Prague**. I am also a **Visiting Professor at the Frankfurt School of Finance & Management**.
 :::
 
-My work connects financial prices, probability models, and portfolio choice. The [Likelihood Finance](likelihood/index.qmd) project develops this connection through concise explanations, interactive models, and links to the research behind them.
+My work connects financial prices, probability models, and portfolio choice. The [Prices as Information](likelihood/index.qmd) project develops this connection through concise explanations, interactive models, and links to the research behind them.
 
 ## Research
 

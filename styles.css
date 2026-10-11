@@ -1,4 +1,4 @@
-/* Jan Vecer / Likelihood Finance — local editorial design system. */
+/* Jan Vecer / Prices as Information — local editorial design system. */
 .home-information { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
 .information-copy { min-width: 0; }
 .information-copy p { max-width: 38rem; }
@@ -86,6 +86,8 @@ body.nav-sidebar.floating #quarto-margin-sidebar { padding-left: .5rem; }
 .nav-footer a { color: var(--lf-muted); }
 .nav-footer .nav-link { padding-top: 0; padding-bottom: 0; }
 main { padding-bottom: 2rem; }
+main, main.content, .home-hero-copy, .home-hero-visual { min-width: 0; }
+main table { display: block; max-width: 100%; overflow-x: auto; scrollbar-width: thin; }
 main.content > p, main.content > ul, main.content > ol { max-width: 100%; }
 figcaption,.figure-caption { color: var(--lf-muted); font-size: .86rem; line-height: 1.6; margin-top: .8rem; text-align: left; }
 .quarto-figure { margin-top: 1.9rem; margin-bottom: 1.9rem; }
@@ -116,6 +118,7 @@ mjx-container { max-width: 100%; }
 .home-hero { display: grid; grid-template-columns: 1.07fr 1fr; align-items: center; gap: 4.5rem; padding: 5.2rem 0 4.4rem; }
 .home-hero-copy h1.home-title { font-family: var(--lf-serif); font-size: clamp(3.7rem,6.6vw,5.8rem); line-height: 1.03; font-weight: 400; letter-spacing: -.055em; margin: 1.3rem 0 1.65rem; max-width: 620px; }
 .home-title strong { font-style: italic; font-weight: 400; }
+.hero-subtitle { display: block; color: var(--lf-ink); font-size: 1.18rem; margin-bottom: .85rem; }
 .home-hero-copy > p, .home-hero-copy > section > p { color: var(--lf-muted); font-size: 1.12rem; line-height: 1.7; max-width: 31rem; margin-bottom: 0; }
 .hero-actions { display: flex; gap: 1rem 1.8rem; flex-wrap: wrap; align-items: center; margin-top: 2.25rem; }
 .hero-actions p { display: contents; }
@@ -266,3 +269,20 @@ mjx-container { max-width: 100%; }
 .lf-model-card p { font-size:.87rem; line-height:1.6; color:var(--lf-muted); margin-bottom:.5rem; }
 .lf-model-card p:last-child { margin-bottom:0; }
 @media (max-width:600px) { .lf-model-grid { grid-template-columns:1fr; gap:1rem; } }
+
+/* Talk resources use the same quiet editorial style as the main guide. */
+.home-talks { display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; align-items: center; }
+.talk-links { display: flex; flex-direction: column; gap: .8rem; }
+.talk-links p { display: contents; }
+.resource-talk { display: grid; grid-template-columns: minmax(160px, .8fr) minmax(0, 1.5fr); gap: 1.8rem; border-top: 1px solid var(--lf-rule); padding: 2rem 0; margin-top: 1.4rem; align-items: start; }
+.talk-cover { display: block; width: 100%; height: auto; border: 1px solid var(--lf-rule); box-shadow: 3px 5px 10px #19323712; }
+.resource-copy { min-width: 0; }
+.resource-copy .eyebrow { margin-bottom: .6rem; font-size: .6rem; }
+.resource-copy h2 { margin-top: 0; border: 0; padding: 0; font-size: 1.65rem; }
+.resource-copy p { font-size: .93rem; }
+.sidebar-item-section .sidebar-item-section > .sidebar-item-container > .sidebar-item-text { text-transform: none; letter-spacing: 0; font-size: .8rem; }
+@media (max-width: 650px) {
+  .home-talks, .resource-talk { grid-template-columns: minmax(0, 1fr); gap: 1.3rem; }
+  .talk-cover { max-width: 420px; }
+  .resource-copy h2 { font-size: 1.6rem; }
+}

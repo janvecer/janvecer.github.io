@@ -2,23 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Jan Vecer · Likelihood Finance – Jan Vecer</title>
+<title>Jan Vecer · Prices as Information – Jan Vecer</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-196634fa35e13bf4580a29998dc99e11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-609da10934e60a4a8a2df917697312f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,7 +126,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./likelihood/index.html"> 
-<span class="menu-text">Likelihood Finance</span></a>
+<span class="menu-text">Information Theory &amp; Finance</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./jan-vecer.html"> 
@@ -148,7 +149,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Jan Vecer · Likelihood Finance</h1></header>
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Jan Vecer · Prices as Information</h1></header>
 
 <header id="title-block-header">
 
@@ -159,11 +160,12 @@ window.Quarto = {
 <div class="home-hero">
 <div class="home-hero-copy">
 <p><span class="eyebrow">Jan Vecer / Research &amp; ideas</span></p>
-<section id="finance-read-as-likelihood." class="level1 home-title unlisted unnumbered">
-<h1 class="home-title unlisted unnumbered">Finance, read as <strong>likelihood.</strong></h1>
-<p>Prices, portfolio choice, and information share a mathematical language. Start with two probability measures. See how the rest follows.</p>
+<section id="prices-as-information." class="level1 home-title unlisted unnumbered">
+<h1 class="home-title unlisted unnumbered">Prices as <strong>information.</strong></h1>
+<p><span class="hero-subtitle">An information-theoretic perspective on finance.</span></p>
+<p>Beliefs specify a desired distribution. Trading determines which distributions can be implemented. Explore how this connection explains prices, portfolio choice, hedging, and learning.</p>
 <div class="hero-actions">
-<p><a href="./likelihood/index.html" class="action-link action-primary">Explore Likelihood Finance</a> <a href="./likelihood/index.html#one-claim" class="action-link action-quiet">Start with one bet →</a></p>
+<p><a href="./likelihood/index.html" class="action-link action-primary">Explore the framework</a> <a href="./likelihood/index.html#one-claim" class="action-link action-quiet">Start with one bet →</a></p>
 </div>
 </section>
 </div>
@@ -192,9 +194,9 @@ window.Quarto = {
 </div>
 <div class="home-principle">
 <p><span class="eyebrow">02 / Choice</span></p>
-<section id="a-belief-determines-a-portfolio." class="level3">
-<h3 class="anchored" data-anchor-id="a-belief-determines-a-portfolio.">A belief determines a portfolio.</h3>
-<p>The likelihood ratio of an investor’s belief to the pricing measure gives the log-optimal payoff when the required claims are attainable.</p>
+<section id="trading-implements-a-belief." class="level3">
+<h3 class="anchored" data-anchor-id="trading-implements-a-belief.">Trading implements a belief.</h3>
+<p>With all outcome claims available, beliefs determine the log-optimal payoff. A restricted menu leaves a measurable information gap.</p>
 </section>
 </div>
 <div class="home-principle">
@@ -223,7 +225,8 @@ window.Quarto = {
 &amp;\quad=D_{\mathrm{KL}}(\mathbb P^X\Vert\mathbb P^Y).
 \end{aligned}
 \]</span></p>
-<p><strong>Two outcomes.</strong> Probabilities <span class="math inline">\((0.6,0.4)\)</span> versus <span class="math inline">\((0.5,0.5)\)</span> give price multipliers <span class="math inline">\(1.2\)</span> and <span class="math inline">\(0.8\)</span>. Their expected log performance is <span class="math inline">\(0.0201\)</span> nats.</p>
+<p><strong>One running example.</strong> Beliefs <span class="math inline">\((2/3,1/3)\)</span> versus pricing probabilities <span class="math inline">\((1/2,1/2)\)</span> give the ideal payoff <span class="math inline">\((4/3,2/3)\)</span>. Its expected log growth under those beliefs is <span class="math inline">\(0.056633\)</span> nats per trial.</p>
+<p><a href="./likelihood/index.html#incomplete-market" class="text-link">What changes when the desired payoff cannot be traded? →</a></p>
 </div>
 </div>
 <div class="home-section explore-section">
@@ -231,7 +234,7 @@ window.Quarto = {
 <p><span class="eyebrow">The interactive guide</span></p>
 <section id="one-framework.-different-points-of-entry." class="level2 unlisted">
 <h2 class="unlisted anchored" data-anchor-id="one-framework.-different-points-of-entry.">One framework. Different points of entry.</h2>
-<p>Read the essentials, move the probabilities, or follow a model from its distribution to its price process.</p>
+<p>Start with one bet, see how trading restrictions change portfolio choice, then follow the accumulation of information through time.</p>
 </section>
 </div>
 <div class="entry-grid">
@@ -245,18 +248,18 @@ window.Quarto = {
 </div>
 <div class="entry-item">
 <p><span class="entry-number">02</span></p>
-<section id="the-models" class="level3">
-<h3 class="anchored" data-anchor-id="the-models"><a href="./likelihood/binomial.html">The models</a></h3>
-<p>Begin with two states. Continue through count distributions and continuous-time families with linear information flow.</p>
-<p><a href="./likelihood/binomial.html" class="text-link">Open the binomial laboratory →</a></p>
+<section id="portfolio-choice" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-choice"><a href="./likelihood/markets-portfolios.html">Portfolio choice</a></h3>
+<p>Match beliefs to attainable payoffs. Compare exact log growth, utility, and quadratic approximations on the same market.</p>
+<p><a href="./likelihood/markets-portfolios.html" class="text-link">From beliefs to portfolios →</a></p>
 </section>
 </div>
 <div class="entry-item">
 <p><span class="entry-number">03</span></p>
-<section id="portfolio-choice" class="level3">
-<h3 class="anchored" data-anchor-id="portfolio-choice"><a href="./likelihood/portfolio-lab.html">Portfolio choice</a></h3>
-<p>Explore how preferences, attainable payoffs, and approximations change the distribution implemented by a portfolio.</p>
-<p><a href="./likelihood/portfolio-lab.html" class="text-link">Experiment with portfolio choice →</a></p>
+<section id="dynamics-and-learning" class="level3">
+<h3 class="anchored" data-anchor-id="dynamics-and-learning"><a href="./likelihood/dynamics-learning.html">Dynamics and learning</a></h3>
+<p>Follow evidence through time: price processes, Bayesian wealth updates, and the distinction between learning and committing capital.</p>
+<p><a href="./likelihood/dynamics-learning.html" class="text-link">Follow information through time →</a></p>
 </section>
 </div>
 </div>
@@ -335,6 +338,19 @@ window.Quarto = {
 <p>Robert Navratil, Stephen Taylor, and Jan Vecer</p>
 </section>
 </div>
+</div>
+</div>
+<div class="home-section home-talks">
+<div class="section-intro">
+<p><span class="eyebrow">Talks and resources</span></p>
+<section id="two-routes-into-the-ideas." class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="two-routes-into-the-ideas.">Two routes into the ideas.</h2>
+<p>The Columbia lecture starts with one bet and develops portfolio choice and hedging. The Oxford lecture connects relative entropy to Bayesian clearing, learning, and adaptation.</p>
+<p><a href="./resources.html" class="text-link">Read the presentations and follow the tutorials →</a></p>
+</section>
+</div>
+<div class="talk-links">
+<p><a href="assets/slides/columbia-information-theory-2026.pdf" class="profile-link">Columbia · 9 October 2026</a> <a href="assets/slides/oxford-bayesian-portfolios-2026.pdf" class="profile-link">Oxford · 3 September 2026</a></p>
 </div>
 </div>
 <div class="home-closing">
@@ -759,7 +775,7 @@ window.Quarto = {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© Jan Vecer · Likelihood Finance</p>
+<p>© Jan Vecer · Prices as Information</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

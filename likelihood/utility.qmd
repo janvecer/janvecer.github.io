@@ -10,7 +10,7 @@ include-after-body:
       <script src="portfolio-tools.js"></script>
 ---
 
-The [framework](index.qmd) gives a direct payoff for a belief: invest in the likelihood ratio $R=\mathbb P^M/\mathbb P^Y$. That position maximizes expected log growth under the stated belief. It does not answer how much wealth an investor wants to expose to that belief, or which other preferences she might have.
+The [framework](index.qmd) gives a direct payoff for a belief: invest in the likelihood ratio $L_M=\mathbb P^M/\mathbb P^Y$. That position maximizes expected log growth under the stated belief. It does not answer how much wealth an investor wants to expose to that belief, or which other preferences she might have.
 
 Two familiar responses fit into the same language. Expected utility chooses a transformed payoff. Fractional Kelly allocates part of the budget to the original likelihood-ratio payoff and keeps the rest in the reference asset.
 
@@ -45,14 +45,33 @@ $$
 The budget fixes $\lambda$. The resulting portfolio still induces a probability distribution,
 
 $$
-v_i^*=q_i\frac{V^*(T,i)}{W}.
+\mathbb P^U(i)=q_i\frac{V^*(T,i)}{W}.
 $$
 
-Utility therefore supplies a rule for turning the investor's belief $p$ and the market's prices $q$ into the implemented measure $v^*$.
+Utility therefore supplies a rule for turning the investor's belief $p$ and the market's prices $q$ into the implemented measure $\mathbb P^U$.
 
 ::: {.callout-note collapse="true" title="Conditions behind the formula"}
 The inverse-marginal-utility formula applies when $U$ is continuously differentiable and strictly concave, with $U'(0+)=\infty$ and $U'(\infty)=0$. In the finite-state setting, a positive budget determines the multiplier uniquely. A state with $p_i=0$ contributes nothing to the objective; paying it a positive amount would consume budget, so the optimizer assigns it zero. Utility at zero is interpreted through the boundary limit, and states of zero subjective probability do not enter the expectation.
 :::
+
+## Log optimality under the selected law
+
+Let $G^U=V^*(T)/W$ and suppose it is positive. The payoff selected by utility can be written
+
+$$
+G^U=\frac{d\mathbb P^U}{d\mathbb P^Y}.
+$$
+
+For any other positive unit-cost payoff $G^V=d\mathbb P^V/d\mathbb P^Y$, the same identity used in the introduction gives
+
+$$
+\begin{aligned}
+&\mathbb E^U[\log G^U]-\mathbb E^U[\log G^V]\\
+&\qquad=D(\mathbb P^U\Vert\mathbb P^V)\geq0.
+\end{aligned}
+$$
+
+Thus $G^U$ is log-optimal under its **own induced law**. Utility has selected that law from the original beliefs, prices, and risk preferences. For log utility, $\mathbb P^U=\mathbb P^M$; other utilities generally select a different law. This observation does not require the investor to replace their forecast with $\mathbb P^U$.
 
 ## CRRA: a power of the likelihood ratio
 
@@ -62,28 +81,37 @@ $$
 U_\gamma(x)=\frac{x^{1-\gamma}-1}{1-\gamma},
 $$
 
-with $U_1(x)=\log x$. Set $\alpha=1/\gamma$ and $R(i)=p_i/q_i$. The optimal gross payoff is
+with $U_1(x)=\log x$. Set $\alpha=1/\gamma$ and $L_M(i)=p_i/q_i$. The optimal gross payoff is
 
 $$
-G^U(i)=\frac{R(i)^\alpha}{\sum_jq_jR(j)^\alpha}.
+G^U(i)=\frac{L_M(i)^\alpha}{\sum_jq_jL_M(j)^\alpha}.
 $$
 
 Its implied probabilities are
 
 $$
-v^U(i)=q_iG^U(i).
+\mathbb P^U(i)=q_iG^U(i).
 $$
 
-At $\gamma=1$, $G^U=R$ and $v^U=p$: utility reproduces the full Kelly position. For $\gamma>1$, the power moderates the likelihood ratios. The denominator is essential: it makes the payoff cost exactly one unit of initial wealth.
+At $\gamma=1$, $G^U=L_M$ and $\mathbb P^U=p$: utility reproduces the full Kelly position. For $\gamma>1$, the power moderates the likelihood ratios. The denominator is essential: it makes the payoff cost exactly one unit of initial wealth.
 
 For positive $p_i$ in every state, increasing $\gamma$ eventually brings the implemented measure back to $q$. This is normalized geometric interpolation between the two distributions.
+
+For the binary example $q=(1/2,1/2)$, $p=(2/3,1/3)$, and $\gamma=2$,
+
+$$
+\mathbb P^U(\text{Win})=\frac{\sqrt2}{1+\sqrt2}
+\approx0.5858.
+$$
+
+The induced Win probability lies between the market's $0.5$ and the investor's $2/3$. The construction is normalized geometric interpolation; the cash reserve below instead gives an arithmetic mixture.
 
 ## Fractional Kelly: keep a reserve
 
 Invest a fraction $f\in[0,1]$ of wealth in the full Kelly payoff and leave $1-f$ in $Y$. The gross terminal payoff is
 
 $$
-G^F(i)=(1-f)+fR(i).
+G^F(i)=(1-f)+fL_M(i).
 $$
 
 Multiplication by $q_i$ gives
@@ -115,7 +143,7 @@ The same market prices and subjective belief generate two moderated portfolios. 
 The choice $f=1/\gamma$ is a useful comparison, not a general equivalence. For beliefs close to prices, both gross payoffs have the same first-order expansion:
 
 $$
-G\approx1+\frac{R-1}{\gamma}.
+G\approx1+\frac{L_M-1}{\gamma}.
 $$
 
 Further from the market distribution, their shapes and downside protection can differ substantially.
@@ -130,7 +158,7 @@ For every finite $\gamma$, CRRA retains the zero wherever $p_i=0$. Fractional Ke
 Let $B=\{i:p_i>0\}$. As $\gamma\to\infty$, the CRRA probabilities converge to
 
 $$
-v^U(i)\longrightarrow
+\mathbb P^U(i)\longrightarrow
 \frac{q_i\mathbf1_B(i)}{\sum_{j\in B}q_j}.
 $$
 
@@ -149,6 +177,19 @@ $$
 $$
 
 The difference from full Kelly is exactly the mismatch $D(p\Vert v)$. That loss of expected log growth can be an intentional choice made for another objective or a wealth floor. It is measured under the stated belief; changing the belief can change the ranking.
+
+## When the asset menu is restricted
+
+The formulas above solve the **full-menu** problem: each state's payoff can be selected separately. With only a few traded assets, the chosen utility payoff may be unattainable.
+
+Two distinct questions can then arise:
+
+- To maximize the original expected utility, solve $\max_{G\in\mathcal A}\mathbb E^M[U(WG)]$ over the attainable, unit-cost payoffs $\mathcal A$.
+- To approximate the full-menu target law, minimize $D(\mathbb P^U\Vert\mathbb P^V)$ over the laws induced by $G\in\mathcal A$. This maximizes $\mathbb E^U[\log G]$.
+
+These objectives need not select the same portfolio. They coincide for log utility under the original belief, and in special cases, but there is no general equivalence for other utilities. An already-selected positive constrained utility optimum is still log-optimal under its own induced law; that is a representation of the optimum, not a shortcut for finding it.
+
+The [portfolio-choice overview](markets-portfolios.qmd) keeps the target, the available assets, and the optimization criterion separate.
 
 **Continue:** explore [mean–variance approximations](mean-variance.qmd), or choose among available assets in the [portfolio laboratory](portfolio-lab.qmd).
 

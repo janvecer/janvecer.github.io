@@ -2,78 +2,102 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://janvecer.com/likelihood/hedging.html</loc>
-    <lastmod>2026-10-03T16:24:46.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:09.847Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/portfolio-lab.html</loc>
-    <lastmod>2026-10-03T16:08:32.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:11.107Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/utility.html</loc>
-    <lastmod>2026-10-03T16:08:32.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:11.692Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/gamma.html</loc>
-    <lastmod>2026-10-03T16:09:46.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:09.234Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/normal.html</loc>
-    <lastmod>2026-10-03T16:09:44.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.837Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/trinomial.html</loc>
-    <lastmod>2026-10-03T10:26:26.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:11.602Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/linear-information.html</loc>
-    <lastmod>2026-10-03T16:09:46.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.117Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/relative-entropy.html</loc>
-    <lastmod>2026-10-03T16:07:10.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:11.512Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/likelihood/bayesian-learning.html</loc>
+    <lastmod>2026-10-11T20:46:08.281Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/likelihood/dynamics-learning.html</loc>
+    <lastmod>2026-10-11T20:46:08.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/likelihood/markets-portfolios.html</loc>
+    <lastmod>2026-10-11T20:46:10.414Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/about.html</loc>
-    <lastmod>2026-10-03T10:17:08.000Z</lastmod>
+    <lastmod>2026-10-11T20:45:25.829Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/index.html</loc>
-    <lastmod>2026-10-03T16:07:18.000Z</lastmod>
+    <lastmod>2026-10-11T20:45:25.964Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/jan-vecer.html</loc>
-    <lastmod>2026-10-03T14:58:44.000Z</lastmod>
+    <lastmod>2026-10-11T20:45:26.156Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/resources.html</loc>
+    <lastmod>2026-10-11T20:45:26.432Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/likelihood/pricing-hedging.html</loc>
+    <lastmod>2026-10-11T20:46:11.422Z</lastmod>
+  </url>
+  <url>
+    <loc>https://janvecer.com/likelihood/hedging-comparison.html</loc>
+    <lastmod>2026-10-11T20:46:09.514Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/index.html</loc>
-    <lastmod>2026-10-03T16:05:58.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:09.937Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/dynamics.html</loc>
-    <lastmod>2026-10-03T10:27:02.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:08.964Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/binomial.html</loc>
-    <lastmod>2026-10-03T16:07:48.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:08.370Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/negative-binomial.html</loc>
-    <lastmod>2026-10-03T16:07:48.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.567Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/poisson.html</loc>
-    <lastmod>2026-10-03T10:15:50.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:11.026Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/inverse-gaussian.html</loc>
-    <lastmod>2026-10-03T10:31:38.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.027Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/mean-variance.html</loc>
-    <lastmod>2026-10-03T16:08:32.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.495Z</lastmod>
   </url>
   <url>
     <loc>https://janvecer.com/likelihood/options.html</loc>
-    <lastmod>2026-10-03T16:16:18.000Z</lastmod>
+    <lastmod>2026-10-11T20:46:10.927Z</lastmod>
   </url>
 </urlset>

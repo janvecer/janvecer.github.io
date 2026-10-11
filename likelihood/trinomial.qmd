@@ -119,6 +119,77 @@ Here the maximizing weight is $w=2/5$, under either of the displayed constraints
 At $t=5/12$, this particular belief lies on the attainable line and the mismatch vanishes at $w=2/5$. The market remains incomplete: implementing one selected belief does not mean that every payoff is spanned.
 :::
 
+## The exact decision is pricing-law invariant
+
+For any strictly positive pricing law $q(t)$ consistent with the stock and cash, and any positive unit-cost portfolio $V_w$,
+
+$$
+\begin{aligned}
+&D_{\mathrm{KL}}(\mathbb P^M\Vert q(t)V_w)\\
+&\quad=D_{\mathrm{KL}}(\mathbb P^M\Vert q(t))
+-\mathbb E^M[\log V_w].
+\end{aligned}
+$$
+
+Hold beliefs, traded returns, and the feasible portfolio set fixed. The first term depends on the pricing-law choice, but not on $w$. Thus exact KL selects the same portfolio under every $t$. Quadratic hedging of the corresponding ideal target $L_M=\mathbb P^M/q(t)$ instead gives
+
+$$
+\begin{aligned}
+w_Q(t)&=\frac{\mathbb E^M[R^X]-1}{\operatorname{Var}^{q(t)}(R^X)}\\
+&=\frac{1/12}{t/2}=\frac1{6t}.
+\end{aligned}
+$$
+
+| Pricing parameter $t$ | Exact-KL fraction | Quadratic fraction |
+|:--|--:|--:|
+| $1/4$ | 0.400000 | 0.666667 |
+| $1/3$ | 0.400000 | 0.500000 |
+| $5/12$ | 0.400000 | 0.400000 |
+
+These positions satisfy the displayed long-only bounds. Exact attained growth and portfolio rankings stay the same. Absolute KL gaps, ideal likelihood payoffs, and quadratic criteria can change. The [geometric-shock comparison](hedging-comparison.qmd) repeats this contrast in a countably infinite state space, with an interactive pricing-law control.
+
+## The closest pricing law describes attainable growth
+
+There is also a dual question: among all laws that price the traded assets, which is closest to the investor's beliefs? In this finite-state example, the exact optimum is interior, all belief probabilities are positive, and wealth is strictly positive. Write
+
+$$
+\begin{aligned}
+V^*&=(6/5,1,4/5),\\
+Q^*_i&=\frac{\mathbb P^M_i}{V^*_i}
+=\left(\frac5{12},\frac16,\frac5{12}\right)_i.
+\end{aligned}
+$$
+
+This is precisely the pricing law $t=5/12$ identified above. The first-order condition gives
+
+$$
+\mathbb E^M\left[\frac{R^X-1}{V^*}\right]=0.
+$$
+
+Using $V^*=1+w^*(R^X-1)$ then gives $\mathbb E^M[1/V^*]=1$. Therefore $Q^*$ sums to one and $\mathbb E^{Q^*}[R^X]=1$: it really is a pricing law.
+
+For every other positive pricing law $Q$ and every positive attainable unit-cost portfolio $V$,
+
+$$
+\begin{aligned}
+&D_{\mathrm{KL}}(\mathbb P^M\Vert Q)\\
+&\quad=\mathbb E^M[\log V]
++D_{\mathrm{KL}}(\mathbb P^M\Vert QV)\\
+&\quad\geq\mathbb E^M[\log V].
+\end{aligned}
+$$
+
+At $Q^*,V^*$, the last divergence vanishes. Hence
+
+$$
+\max_V\mathbb E^M[\log V]
+=\min_{Q\text{ pricing law}}D_{\mathrm{KL}}(\mathbb P^M\Vert Q).
+$$
+
+::: {.callout-note title="Scope of the reciprocal construction"}
+The proof uses an interior optimum with all traded risky directions locally available in both signs. A binding portfolio constraint generally replaces the first-order equality by inequalities. In that case $\mathbb P^M/V^*$ should not automatically be called a probability or an equivalent pricing law; the appropriate dual object must respect the constraints. Infinite-state extensions additionally need integrability and existence conditions. The finite example above meets the stated requirements.
+:::
+
 ## Incompleteness also leaves a price range
 
 A claim paying one in the middle state and zero otherwise would have price
@@ -135,4 +206,4 @@ This is the distinction behind the [fundamental theorem of asset pricing](dynami
 Jan Vecer, *Principles of Portfolio Choice: An Information-Theoretic, Likelihood-Based Perspective*, Chapter 1, “Trinomial model” and “Numerical trinomial mixture: rigid asset densities”; Chapter 3, incomplete markets and relative-entropy projection.
 :::
 
-[Back to the framework](index.qmd) · [Next: negative binomial](negative-binomial.qmd)
+[Back to the framework](index.qmd) · [Next: one mismatch, three criteria](hedging-comparison.qmd) · [The negative-binomial trading clock](negative-binomial.qmd)

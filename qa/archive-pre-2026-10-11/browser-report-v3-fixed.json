@@ -1,0 +1,38 @@
+{
+  "created": "2026-10-03T15:09:53.545Z",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390
+  ],
+  "pages": 2,
+  "results": [
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.lrw-table",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    }
+  ],
+  "failures": []
+}

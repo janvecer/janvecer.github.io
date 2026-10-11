@@ -32,6 +32,14 @@ python qa/check-source.py docs
 
 The source checker validates local source links, explicit identifiers and JavaScript syntax. It also rejects stale rendered HTML beside the source files. If PyYAML is installed, it parses the YAML configuration. After a render it verifies local HTML links, anchors, scripts, styles and images in `docs/`. Reports are written to `qa/source-report.json`; set `QA_SOURCE_REPORT` to preserve a separate named report.
 
+## New information-theory examples
+
+```sh
+node qa/information-revision.test.cjs
+```
+
+This checks the Columbia clock identities, analytical quadratic optima, pricing-law invariance, growth decomposition, and the Win-only football preset.
+
 ## Browser checks
 
 The new relative-entropy laboratory also has a dependency-free numerical check:
@@ -61,3 +69,7 @@ This starts a temporary local web server and visits every page at 390, 1024 and 
 The browser uses Playwright's bundled Chromium by default. To use another installed compatible browser, set the `CHROMIUM_PATH` environment variable to its executable. The script also understands the `CODEX_PRIMARY_RUNTIME_NODE_MODULES` environment variable when run in ChatGPT's development environment.
 
 MathJax and its fonts are bundled in `assets/vendor/mathjax/`, so mathematical rendering works offline. Any failed resource request is reported rather than silently treated as a successful visual check. Set `QA_PAGES` to comma-separated relative HTML paths or `QA_WIDTHS` to comma-separated pixel widths for a focused rerun; the defaults check all pages at all three widths. Set `QA_REPORT` to choose a report filename within `qa/`, so a focused rerun can be kept separately from an earlier full-site baseline. A focused report counts only the pages and widths actually tested.
+
+## Reports for this revision
+
+`source-report-v5.json` covers the rendered 11 October 2026 build. Older JSON reports are retained in `archive-pre-2026-10-11/`; they do not certify the revised layout. The browser runner is included for a future local preview, but browser launch was blocked by this environment for the current revision. See `../VALIDATION.md`.

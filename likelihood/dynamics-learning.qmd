@@ -1,0 +1,35 @@
+---
+title: "Information through time"
+subtitle: "Price dynamics, accumulating evidence, and learning from returns"
+description: "Explore how likelihood evidence accumulates in price processes and how portfolio wealth relates to Bayesian learning."
+---
+
+The static framework connects a payoff to a probability distribution. Time introduces two further questions: **how does new information change the price**, and **how does an investor adapt as outcomes arrive**?
+
+These questions share a likelihood language, but concern different objects. A price process compares two consistent probability laws through time. An adaptive allocation also specifies a learning rule, a trading rule, and the capital available for future decisions.
+
+## From one payoff to a price process
+
+Start with two equivalent probability laws on the same evolving observations. Their likelihood-ratio process is a positive martingale under the reference law. Expressing prices in units of the reference asset incorporates the numeraire convention from the outset.
+
+The [two ways to build a market](dynamics.qmd) page explains the connection with the classical route: begin with price dynamics, then recover compatible pricing probabilities. The [binomial model](binomial.qmd) makes both directions explicit.
+
+## Linear information flow: a family of examples
+
+Independent increments in suitable exponential families give particularly transparent models. The log price is affine in an accumulating statistic, and expected information grows linearly in the stated clock. This is a useful **subclass** of price models; the general payoff–probability correspondence does not require linear information flow.
+
+The [model catalogue](linear-information.qmd) contains six examples: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. It specifies what accumulates and which parameters stay common. The normal example recovers geometric Brownian motion; the jump examples illustrate different patterns of information arrival.
+
+**Suggested route:** [binomial](binomial.qmd) → [negative binomial](negative-binomial.qmd) → [linear information flow](linear-information.qmd). For continuous-time examples, start with [normal / GBM](normal.qmd), then explore the remaining families in the catalogue.
+
+## The trading clock changes what can be implemented
+
+Observing every binary move and trading after every move is a different opportunity set from trading only before and after a completed shock. The negative-binomial example holds the underlying sequence of trials fixed and makes this distinction visible.
+
+In the Columbia example, the resulting growth gap measures the value of the unavailable intermediate rebalancing. The [comparison of three hedging criteria](hedging-comparison.qmd) shows the portfolios and the numerical decomposition.
+
+## Learning and capital commitment
+
+Under full commitment in the specified prediction-market setting, relative wealth evolves like Bayesian model weights. Partial commitment changes that recursion. Keeping capital in reserve and preserving accumulated evidence are distinct decisions.
+
+The [Bayesian learning and commitment](bayesian-learning.qmd) page develops this connection, including the role of prefunded restarts. The [Oxford presentation](../resources.qmd#oxford) provides the broader computational context.

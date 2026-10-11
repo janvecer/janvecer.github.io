@@ -1,0 +1,164 @@
+{
+  "created": "2026-10-03T15:09:53.545Z",
+  "outputDirectory": "/workspace/scratch/50c0f9544c59/janvecer-site/docs",
+  "viewports": [
+    390,
+    1024,
+    1440
+  ],
+  "pages": 5,
+  "results": [
+    {
+      "page": "index.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 390,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 390,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 390,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": [
+        "TABLE.lrw-table",
+        "THEAD.",
+        "TR.",
+        "TH.",
+        "TBODY.",
+        "TR.",
+        "TD.",
+        "TR."
+      ]
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 390,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1024,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1024,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1024,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1024,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "index.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "jan-vecer.html",
+      "width": 1440,
+      "widgets": 0,
+      "sliderCount": 0,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/binomial.html",
+      "width": 1440,
+      "widgets": 3,
+      "sliderCount": 12,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/index.html",
+      "width": 1440,
+      "widgets": 2,
+      "sliderCount": 9,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    },
+    {
+      "page": "likelihood/relative-entropy.html",
+      "width": 1440,
+      "widgets": 1,
+      "sliderCount": 2,
+      "errors": [],
+      "requests": [],
+      "overflow": []
+    }
+  ],
+  "failures": [],
+  "provenance": {
+    "scope": "Five changed pages at 390, 1024, and 1440 pixels; 15 targeted cases, not a new full-site browser sweep.",
+    "initial_report": "qa/browser-report-v3-initial.json",
+    "fix_report": "qa/browser-report-v3-fixed.json",
+    "updates": "Two 390px table-overflow cases replaced after scoped table fixes. All other cases retained from the initial v3 run.",
+    "entropy_interactions": "p=0 and p=1 with q=.01 and q=.99; disabled swap at boundaries; same, strong, swap, and small presets; finite SVG geometry; negative weighted contribution and positive KL display."
+  }
+}

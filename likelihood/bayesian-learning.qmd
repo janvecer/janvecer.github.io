@@ -1,0 +1,212 @@
+---
+title: "Bayesian learning and adaptation"
+subtitle: "How evidence changes wealth, prices, and the influence of a model"
+description: "Connect model funds with Bayesian updating, partial commitment, capital lock-in after a regime change, and prefunded restart accounts for anytime-valid evidence."
+---
+
+A probability forecast can define an investment payoff. If several forecasting models each retain their own bankroll, good relative predictions increase their wealth and their influence on the next price. Under full commitment, the wealth update is exactly Bayes' rule.
+
+The next question is different: **what happens when a model that fitted the past stops fitting the present?** Reducing the next stake limits exposure, but accumulated wealth still carries the history. Adaptation requires a mechanism for evaluating recent evidence separately.
+
+This page develops the ideas in the [Oxford presentation](../resources.qmd#oxford), using normalized probabilities and returns in reference-asset units.
+
+## Forecasts become separate model funds
+
+Before observation $X_{t+1}$, model $i$ supplies a predictive distribution $p_{i,t}$ and has bankroll $B_{i,t}>0$. Let $m_t$ be a common positive pricing distribution. Investing the whole bankroll according to the forecast gives
+
+$$
+\frac{B_{i,t+1}}{B_{i,t}}
+=\frac{p_{i,t}(X_{t+1})}{m_t(X_{t+1})}.
+$$
+
+The gross return is a likelihood ratio. The log return is the model's log score minus the market's log score. A portfolio of these funds, held with value weights $\pi_{i,t}$, induces the mixture forecast $\sum_i\pi_{i,t}p_{i,t}$.
+
+Forecasts, weights, and commitments must be fixed before the next observation. Selecting the winning forecast afterwards would instead require a best-of claim with its own price.
+
+## Clearing uses committed capital
+
+Suppose each model commits a fraction $\lambda_{i,t}\in[0,1]$ and leaves the rest in the reference asset. Write
+
+$$
+\begin{aligned}
+\pi_{i,t}&=\frac{B_{i,t}}{\sum_jB_{j,t}},\\
+\bar\lambda_t&=\sum_i\pi_{i,t}\lambda_{i,t}>0.
+\end{aligned}
+$$
+
+In a common Arrow-ticket mechanism, statewise budget balance determines the quote
+
+$$
+m_t^\lambda(x)
+=\sum_i\frac{\pi_{i,t}\lambda_{i,t}}{\bar\lambda_t}p_{i,t}(x).
+$$
+
+The coefficients are shares of **committed capital**, which need not be shares of total wealth. Settlement gives
+
+$$
+\begin{aligned}
+\frac{B_{i,t+1}}{B_{i,t}}
+&=1-\lambda_{i,t}\\
+&\quad+\lambda_{i,t}\frac{p_{i,t}(X_{t+1})}{m_t^\lambda(X_{t+1})}.
+\end{aligned}
+$$
+
+Total bankroll is unchanged by settlement within the pool, for every outcome. Individual accounts gain or lose. The quoted mixture is unique within this specified common-ticket, statewise balanced mechanism; this is not a uniqueness claim about every possible market design.
+
+## Full commitment gives Bayes' rule
+
+When every $\lambda_{i,t}=1$, the quote is the wealth-weighted predictive mixture,
+
+$$
+m_t(x)=\sum_i\pi_{i,t}p_{i,t}(x).
+$$
+
+Since total bankroll is conserved, the updated wealth share is
+
+$$
+\pi_{i,t+1}
+=\frac{\pi_{i,t}p_{i,t}(X_{t+1})}
+{\sum_j\pi_{j,t}p_{j,t}(X_{t+1})}.
+$$
+
+This is the Bayesian posterior update for model weights. The equivalence is algebraic: it follows from likelihood-ratio returns and retaining gains within each model account.
+
+::: {.callout-note title="A two-model update"}
+Two models start with equal wealth and predict Win probabilities $0.7$ and $0.4$. The clearing Win price is $0.55$. After a Win, their wealth shares become
+
+$$
+\begin{gathered}
+\left(\frac{0.5(0.7)}{0.55},\frac{0.5(0.4)}{0.55}\right)\\
+=\left(\frac7{11},\frac4{11}\right).
+\end{gathered}
+$$
+
+After a Loss they would instead become $(1/3,2/3)$. A model gains relative influence when the observation was more likely under its forecast.
+:::
+
+::: {.callout-note collapse="true" title="The information in a mixture"}
+If a latent model index $\Theta$ has conditional distribution $\pi_t$, and the next observation has conditional law $p_{i,t}$ given $\Theta=i$, then
+
+$$
+\sum_i\pi_{i,t}D(p_{i,t}\Vert m_t)
+=I(\Theta;X_{t+1}\mid\mathcal F_t).
+$$
+
+The average divergence from each model to the predictive mixture is the mutual information between the model identity and the next observation. This interpretation uses the specified joint probabilistic model; it does not establish that any candidate is the true data-generating mechanism.
+:::
+
+## Partial commitment limits exposure
+
+If all accounts use the same fraction $\lambda_t$, the quote remains $m_t=\sum_i\pi_{i,t}p_{i,t}$. Each account's one-period return satisfies
+
+$$
+\begin{aligned}
+\frac{B_{i,t+1}}{B_{i,t}}
+&=(1-\lambda_t)\\
+&\quad+\lambda_t\frac{p_{i,t}(X_{t+1})}{m_t(X_{t+1})}\\
+&\geq1-\lambda_t.
+\end{aligned}
+$$
+
+Let $\pi^B_{i,t+1}$ be the full Bayesian update from the current weights. The actual update is
+
+$$
+\begin{aligned}
+\pi_{i,t+1}
+&=(1-\lambda_t)\pi_{i,t}\\
+&\quad+\lambda_t\pi^B_{i,t+1}.
+\end{aligned}
+$$
+
+This is the **Soft-Bayes** update. In the example above, $\lambda_t=1/2$ changes the weights after a Win to $(25/44,19/44)$, a smaller move than full commitment.
+
+The floor $1-\lambda_t$ applies to one step. Repeated commitment does not preserve the same fraction of the original bankroll forever. Nor does it erase past evidence: there is no transfer, discount, or reset of the wealth already accumulated.
+
+## Capital can remain attached to an obsolete model
+
+Suppose two fixed, strictly positive distributions $p\ne q$ on a finite outcome space are available. Observations are independent, first i.i.d. from $p$ for $\tau$ periods, then i.i.d. from $q$ permanently. Both accounts start with positive wealth and use a fixed common commitment fraction $\lambda\in(0,1]$.
+
+The old model can enter the new regime with a large wealth advantage. Even though the new observations now favor $q$, the clearing price can remain close to $p$ while that advantage is worked off. Under this switch model, the catch-up time $H_\tau$ satisfies
+
+$$
+\frac{H_\tau}{\tau}\xrightarrow{\mathbb P}\kappa_\lambda(p,q).
+$$
+
+For full commitment,
+
+$$
+\kappa_1(p,q)=\frac{D(p\Vert q)}{D(q\Vert p)}.
+$$
+
+The numerator measures the earlier evidence accumulated in favor of $p$; the denominator measures how quickly new observations favor $q$. Fixed partial commitment changes the coefficient but leaves recovery proportional to the length of the old regime in this setting.
+
+::: {.callout-note collapse="true" title="The coefficient under partial commitment"}
+Put $r_\lambda=(1-\lambda)p+\lambda q$. Under the finite-state, independent permanent-switch assumptions above,
+
+$$
+\kappa_\lambda(p,q)
+=\frac{D(p\Vert r_\lambda)}
+{D(q\Vert p)-D(q\Vert r_\lambda)}.
+$$
+
+For fixed distinct positive $p,q$, $\kappa_\lambda=\lambda/2+O(\lambda^2)$ as $\lambda\downarrow0$. This is a statement about the asymptotic lock-in coefficient, not a general guarantee that taking arbitrarily small stakes gives fast or useful learning. A smaller commitment also slows the recovery of a given wealth deficit.
+:::
+
+## Restart accounts isolate recent evidence
+
+A restart account asks a local question: did a candidate forecast predict a specified recent window better than the incumbent benchmark?
+
+Let $p_{0,t}$ be the strictly positive benchmark forecast and $p_{1,t},\ldots,p_{K,t}$ the candidates. A pooling vector $a\in\Delta_K$ gives the forecast $q_{a,t}=\sum_i a_i p_{i,t}$. An account starting at observation $s$ and active for $d$ observations has benchmark-relative wealth
+
+$$
+L_t^{s,d,a}
+=\prod_{u=s}^{\min\{t,s+d-1\}}
+\frac{q_{a,u-1}(X_u)}{p_{0,u-1}(X_u)}.
+$$
+
+The empty product is one before the account starts. During the window, it accumulates relative evidence. After expiry, its wealth stays in the benchmark and its relative value is frozen.
+
+| Stage | What the account measures |
+|:--|:--|
+| Before $s$ | No evidence yet; capital remains in the benchmark |
+| From $s$ through $s+d-1$ | Likelihood evidence on the selected window |
+| After the window | The completed window's evidence, with no further factors |
+
+## Pay for the search before seeing its outcomes
+
+Choosing the best start time or model after observing the data would overstate the evidence. Instead, assign initial capital fractions $\gamma_{s,d}\geq0$ to windows in advance, with $\sum_{s,d}\gamma_{s,d}\leq1$, and a probability prior $\nu_{s,d}$ over pooling weights. The combined process is
+
+$$
+\begin{aligned}
+U_t^{s,d}&=\int_{\Delta_K}L_t^{s,d,a}\,\nu_{s,d}(da),\\
+E_t&=c+\sum_{s,d}\gamma_{s,d}U_t^{s,d},\\
+c&=1-\sum_{s,d}\gamma_{s,d}.
+\end{aligned}
+$$
+
+If the benchmark kernels $p_{0,t}$ are the true conditional law under the null, and the candidate forecasts are normalized and determined before each observation, $(E_t)$ is a nonnegative martingale starting at one. Ville's inequality gives
+
+$$
+\mathbb P_0\!\left(\sup_tE_t\geq\frac1\delta\right)\leq\delta.
+$$
+
+This is an anytime false-alarm bound under that specified null. An alarm is evidence that the monitored forecasts outperform the benchmark. By itself, it does not identify an abrupt structural change; benchmark misspecification can also produce sustained relative evidence.
+
+::: {.callout-note collapse="true" title="Implementation and recovery guarantees"}
+The statistical search can contain many windows and pooling weights without requiring one distinct traded security for each. When the candidate likelihood-return funds and benchmark are available, their time-dependent holdings can be consolidated using posterior mean weights into the $K$ candidate funds plus the benchmark.
+
+The associated research obtains a logarithmic recovery scale for an appropriately prefunded restart design under its stated switch model, conditional on no prior alarm. This requires the candidate family and priors to support the new regime, suitable window funding, and a positive relative growth advantage. It is not a uniform recovery guarantee for arbitrary data, forecasts, or funding rules.
+:::
+
+## How the pieces fit
+
+**Portfolio choice** selects a distribution that available trading can implement. **Bayesian aggregation** changes model weights as evidence arrives. **Adaptation** gives recent evidence its own funded accounts so that it need not first overcome an arbitrarily long history inside one bankroll.
+
+Return to [portfolio choice](markets-portfolios.qmd), explore [dynamics and learning](dynamics-learning.qmd), or read the [Oxford slides and research links](../resources.qmd#oxford).
+
+## Reading
+
+- Jan Vecer (2026), *Computational Bayesian Portfolio Selection via Relative Entropy*, ICCF, Oxford, 3 September. [Presentation](../resources.qmd#oxford).
+- Jan Vecer, [*Likelihood-Ratio Pricing, Capital Lock-In, and Prefunded Restarts in Parimutuel Prediction Markets*](https://rdcu.be/KDQhKRqs8mxa). Research on clearing, the lock-in coefficient, and prefunded restart implementation; see the [research resources](../resources.qmd).
+- L. Orseau, T. Lattimore, and S. Legg (2017), [*Soft-Bayes: Prod for Mixtures of Experts with Log-Loss*](https://proceedings.mlr.press/v76/orseau17a.html), Proceedings of the 28th International Conference on Algorithmic Learning Theory, 372–399.
+- J. Shin, A. Ramdas, and A. Rinaldo (2024), [*E-detectors: A Nonparametric Framework for Sequential Change Detection*](https://doi.org/10.51387/23-NEJSDS51), The New England Journal of Statistics in Data Science 2(2), 229–260.

@@ -10,7 +10,7 @@ include-after-body:
       <script src="entropy.js" defer></script>
 ---
 
-Relative entropy answers a specific question: **how much log evidence does one probability model expect to accumulate against another?** In likelihood finance, exactly the same quantity measures an asset's expected log return under its own implied measure.
+Relative entropy answers a specific question: **how much log evidence does one probability model expect to accumulate against another?** In this information-theoretic view of finance, the same quantity measures an asset's expected log return under its own implied measure.
 
 The [framework](index.qmd) constructs an investment from probabilities. Here we slow down at the information-theoretic step: ratios, logarithms, and the probabilities used to average them.
 
