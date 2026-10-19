@@ -88,7 +88,9 @@ J(Z)=\frac12\chi^2
 -\frac12\mathbb E^Y[(G-L_M)^2].
 $$
 
-The first term is fixed. Maximizing $J$ chooses the attainable payoff closest to the likelihood ratio $L_M$ in squared error under the pricing measure. In a complete market, $G=L_M$ is attainable and achieves the maximum $\chi^2/2$ exactly. We reserve $R$ for a traded asset's gross return, as on the [comparison page](hedging-comparison.qmd).
+Write $Q(G)=\mathbb E^Y[(G-L_M)^2]$ for the ordinary squared-error loss, without a factor of $1/2$. Then $J=\chi^2/2-Q(G)/2$: maximizing $J$ is exactly equivalent to minimizing $Q$. The factor of $1/2$ belongs to the reward objective $J$, while the loss $Q$ uses the same convention as the [comparison page](hedging-comparison.qmd).
+
+The first term is fixed. Maximizing $J$ chooses the attainable payoff closest to the likelihood ratio $L_M$ in squared error under the pricing measure. In a complete market, $G=L_M$ is attainable and achieves the maximum $\chi^2/2$ exactly. We reserve $R$ for a traded asset's gross return.
 
 ::: {.callout-note title="Exact optimizer does not mean exact growth value"}
 In a complete market, both log growth and this mixed quadratic select $G=L_M$. Their objective values are different: the log optimum is $D(\mathbb P^M\Vert\mathbb P^Y)$, whereas the quadratic optimum is $\chi^2/2$. In a restricted asset menu, their best attainable portfolios can also differ.
@@ -205,9 +207,9 @@ In finite states, write $p_i=\mathbb P^M(i)$, $q_i=\mathbb P^Y(i)$ and $v_i=\mat
 |:--|:--|
 | Exact expected log growth | $D(p\Vert v)$ |
 | Target-centered KL2 | $\tfrac12\sum_i(v_i-p_i)^2/p_i$ |
-| Mixed quadratic | $\tfrac12\sum_i(v_i-p_i)^2/q_i$ |
+| Mixed quadratic / ordinary quadratic hedge | $Q(G)=\sum_i(v_i-p_i)^2/q_i$ |
 
-KL2 is half the Pearson divergence $\chi^2(v\Vert p)$. The mixed quadratic instead uses the fixed market distribution in its denominator. Neither expression is $\chi^2(p\Vert v)$, whose denominator would be $v_i$.
+KL2 is half the Pearson divergence $\chi^2(v\Vert p)$; its factor of $1/2$ comes from the Taylor expansion of KL. The ordinary quadratic loss $Q$ uses the fixed market distribution in its denominator and has no factor of $1/2$. Multiplying either loss by a positive constant leaves its minimizing portfolio unchanged. Neither expression is $\chi^2(p\Vert v)$, whose denominator would be $v_i$.
 
 If the investor's distribution is attainable, all three mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest under either squared distance. The [worked comparison](hedging-comparison.qmd) calculates all three and lets you vary the pricing law.
 

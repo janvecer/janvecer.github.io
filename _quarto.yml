@@ -9,31 +9,10 @@ project:
     - likelihood/*.js
     - likelihood/*.css
   render:
-    - index.qmd
-    - jan-vecer.qmd
-    - about.qmd
-    - resources.qmd
-    - likelihood/markets-portfolios.qmd
-    - likelihood/pricing-hedging.qmd
-    - likelihood/dynamics-learning.qmd
-    - likelihood/hedging-comparison.qmd
-    - likelihood/bayesian-learning.qmd
-    - likelihood/index.qmd
-    - likelihood/relative-entropy.qmd
-    - likelihood/dynamics.qmd
-    - likelihood/linear-information.qmd
-    - likelihood/binomial.qmd
-    - likelihood/trinomial.qmd
-    - likelihood/negative-binomial.qmd
-    - likelihood/normal.qmd
-    - likelihood/poisson.qmd
-    - likelihood/gamma.qmd
-    - likelihood/inverse-gaussian.qmd
-    - likelihood/utility.qmd
-    - likelihood/mean-variance.qmd
-    - likelihood/portfolio-lab.qmd
-    - likelihood/options.qmd
-    - likelihood/hedging.qmd
+    - "*.qmd"
+    - "likelihood/*.qmd"
+    - "research/*.qmd"
+    - "!likelihood/_*.qmd"
 
 website:
   title: Jan Vecer
@@ -66,7 +45,7 @@ website:
           href: likelihood/index.qmd
           contents:
             - href: likelihood/index.qmd
-              text: Prices as information
+              text: The framework
             - href: likelihood/relative-entropy.qmd
               text: Relative entropy
         - section: Portfolio choice
@@ -93,6 +72,23 @@ website:
               text: Three hedging criteria
             - href: likelihood/hedging.qmd
               text: Discrete hedging laboratory
+        - section: Linear information flows
+          href: likelihood/linear-information.qmd
+          contents:
+            - href: likelihood/linear-information.qmd
+              text: Overview and model catalogue
+            - href: likelihood/binomial.qmd
+              text: Binomial
+            - href: likelihood/negative-binomial.qmd
+              text: Negative binomial
+            - href: likelihood/normal.qmd
+              text: Normal / GBM
+            - href: likelihood/poisson.qmd
+              text: Poisson
+            - href: likelihood/gamma.qmd
+              text: Gamma
+            - href: likelihood/inverse-gaussian.qmd
+              text: Inverse Gaussian
         - section: Dynamics and learning
           href: likelihood/dynamics-learning.qmd
           contents:
@@ -100,23 +96,6 @@ website:
               text: Information through time
             - href: likelihood/dynamics.qmd
               text: Two ways to build a market
-            - section: Linear information flow
-              href: likelihood/linear-information.qmd
-              contents:
-                - href: likelihood/linear-information.qmd
-                  text: Model catalogue
-                - href: likelihood/binomial.qmd
-                  text: Binomial
-                - href: likelihood/negative-binomial.qmd
-                  text: Negative binomial
-                - href: likelihood/normal.qmd
-                  text: Normal / GBM
-                - href: likelihood/poisson.qmd
-                  text: Poisson
-                - href: likelihood/gamma.qmd
-                  text: Gamma
-                - href: likelihood/inverse-gaussian.qmd
-                  text: Inverse Gaussian
             - href: likelihood/bayesian-learning.qmd
               text: Bayesian learning & commitment
         - section: Research and resources
@@ -124,6 +103,8 @@ website:
           contents:
             - href: resources.qmd
               text: Talks and reading routes
+            - href: research/relative-entropy-tests.qmd
+              text: Market-efficiency tests · QF
             - href: index.qmd#books
               text: Books
             - href: index.qmd#papers

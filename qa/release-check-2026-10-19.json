@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-19",
+  "checks": [
+    "Top-level linear information flows chapter and six direct model sections",
+    "Rendered model sidebars expand the chapter at depth 1",
+    "Shared notation include excluded from rendered page targets",
+    "Custom domain unchanged",
+    "All 6 PDF assets byte-identical in source and rendered output",
+    "Research page and new talks present in search index",
+    "Research page present in sitemap",
+    "DOI present on homepage, resources and research landing page",
+    "All 26 rendered pages have distinct browser titles"
+  ],
+  "errors": [],
+  "pdf_assets": 6,
+  "rendered_pages": 26,
+  "browser_qa": false
+}

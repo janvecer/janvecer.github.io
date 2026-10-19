@@ -153,6 +153,7 @@ mjx-container { max-width: 100%; }
 .section-intro p { font-size: .97rem; color: var(--lf-muted); max-width: 470px; }
 .section-heading { margin-bottom: 2.25rem; }
 .entry-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 3rem; margin-top: 2.5rem; }
+.entry-grid-four { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .entry-item { border-top: 2px solid #bbc9c0; padding-top: 1.3rem; }
 .entry-number { font-family: var(--lf-serif); font-size: 1.3rem; color: #6d8179; }
 .entry-item h3 { margin-top: .3rem; font-size: 1.65rem; }

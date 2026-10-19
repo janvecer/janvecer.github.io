@@ -1,5 +1,5 @@
 ---
-title: "Prices as Information"
+title: "Prices as information: the framework"
 subtitle: "An information-theoretic perspective on finance, starting with one bet"
 description: "Discover how prices encode probability distributions, portfolio choice expresses beliefs, and trading restrictions create a measurable information gap."
 css: lr-widgets.css

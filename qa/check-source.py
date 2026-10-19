@@ -9,10 +9,10 @@ from urllib.parse import urlsplit,unquote
 ROOT=Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/(sys.argv[1] if len(sys.argv)>1 else 'docs')
 errors=[];checks=[]
-for directory in (ROOT,ROOT/'likelihood'):
+for directory in (ROOT,ROOT/'likelihood',ROOT/'research'):
  for p in directory.glob('*.html'):
   errors.append(f'{p.relative_to(ROOT)}: stale rendered HTML beside source; render only into docs/')
-checks.append('No stale HTML in project root or likelihood source folder')
+checks.append('No stale HTML in project root, likelihood or research source folders')
 qmds=[p for p in ROOT.rglob('*.qmd') if not any(x in ('docs','_site','.quarto') for x in p.relative_to(ROOT).parts)]
 for p in qmds:
  text=p.read_text(); rel=str(p.relative_to(ROOT))

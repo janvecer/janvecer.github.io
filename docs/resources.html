@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Jan Vecer’s Columbia and Oxford presentations on information theory, portfolio choice, hedging, and Bayesian learning.">
+<meta name="description" content="Jan Vecer’s Columbia, Cornell, Bloomberg and Oxford presentations, plus a forthcoming Quantitative Finance paper on relative-entropy tests of market efficiency.">
 
 <title>Talks and resources – Jan Vecer</title>
 <style>
@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prices as information</span></a>
+ <span class="menu-text">The framework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -234,8 +234,8 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dynamics and learning</span></a>
+            <a href="./likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flows</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -243,29 +243,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Information through time</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model catalogue</span></a>
+ <span class="menu-text">Overview and model catalogue</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -306,6 +285,27 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
@@ -327,6 +327,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./resources.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./research/relative-entropy-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Market-efficiency tests · QF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -354,6 +360,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#choose-a-reading-route" id="toc-choose-a-reading-route" class="nav-link active" data-scroll-target="#choose-a-reading-route">Choose a reading route</a></li>
+  <li><a href="#forthcoming-paper" id="toc-forthcoming-paper" class="nav-link" data-scroll-target="#forthcoming-paper">Forthcoming in Quantitative Finance</a></li>
   <li><a href="#books-and-research" id="toc-books-and-research" class="nav-link" data-scroll-target="#books-and-research">Books and research</a></li>
   </ul>
 </nav>
@@ -369,7 +376,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Jan Vecer’s Columbia and Oxford presentations on information theory, portfolio choice, hedging, and Bayesian learning.
+    Jan Vecer’s Columbia, Cornell, Bloomberg and Oxford presentations, plus a forthcoming Quantitative Finance paper on relative-entropy tests of market efficiency.
   </div>
 </div>
 
@@ -386,7 +393,47 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The presentations provide two complementary routes into <strong>finance through information theory</strong>. Each PDF includes its original lecture material; the linked website pages develop the examples with interactive figures and additional explanations.</p>
+<p>Explore <strong>finance through information theory</strong> through lectures, a research seminar, a lightning presentation, and the papers behind the ideas. The PDFs preserve the supplied originals; linked website pages develop the examples with interactive figures and additional explanations.</p>
+<p><a href="#bloomberg">Bloomberg</a> · <a href="#columbia-continuous">Columbia: continuous models</a> · <a href="#cornell">Cornell</a> · <a href="#columbia">Columbia: discrete models</a> · <a href="#oxford">Oxford</a> · <a href="#forthcoming-paper">Forthcoming paper</a></p>
+<div id="bloomberg" class="resource-talk">
+<p><a href="assets/slides/bloomberg-bbq-information-theory-2026.pdf"><img src="assets/slides/bloomberg-bbq-information-theory-2026.png" alt="Title slide: Portfolio Optimization through Information Theory, Bloomberg BBQ lightning seminar" class="talk-cover" width="640" loading="lazy"></a></p>
+<div class="resource-copy">
+<p><span class="eyebrow">Bloomberg BBQ · 19 October 2026 · 9 pages</span></p>
+<section id="bloomberg-title" class="level2">
+<h2 class="anchored" data-anchor-id="bloomberg-title">Portfolio Optimization through Information Theory</h2>
+<p><strong>Lightning seminar: information channels and option replication</strong></p>
+<p>A short introduction to prices as information, from four analytical information flows to an S&amp;P 500 channel decomposition. A worked example selects the observable normal-channel view and approximates the resulting target payoff by matching densities with cash, stock and options.</p>
+<p><a href="assets/slides/bloomberg-bbq-information-theory-2026.pdf" class="action-link action-primary">Read the Bloomberg slides (PDF) →</a></p>
+<p><strong>Continue on the website:</strong> <a href="./likelihood/linear-information.html">linear information flows</a>, <a href="./likelihood/options.html">options as distributions</a>, and <a href="./likelihood/pricing-hedging.html">replication and approximation</a>.</p>
+</section>
+</div>
+</div>
+<div id="columbia-continuous" class="resource-talk">
+<p><a href="assets/slides/columbia-continuous-information-theory-2026.pdf"><img src="assets/slides/columbia-continuous-information-theory-2026.png" alt="Title slide: Portfolio Optimization through Information Theory, Continuous Models (Stock Markets), Columbia University, 16 October 2026" class="talk-cover" width="640" loading="lazy"></a></p>
+<div class="resource-copy">
+<p><span class="eyebrow">Columbia University · 16 October 2026 · 54 pages</span></p>
+<section id="columbia-continuous-title" class="level2">
+<h2 class="anchored" data-anchor-id="columbia-continuous-title">Portfolio Optimization through Information Theory</h2>
+<p><strong>Continuous Models (Stock Markets)</strong></p>
+<p>Connect likelihood ratios and portfolio choice to Merton’s problem, quadratic hedging as regression, and four continuous-time linear information-flow models. Then use option-implied information channels to construct a target density and approximate its payoff with options.</p>
+<p><a href="assets/slides/columbia-continuous-information-theory-2026.pdf" class="action-link action-primary">Read the Columbia continuous-model slides (PDF) →</a></p>
+<p><strong>Continue on the website:</strong> <a href="./likelihood/linear-information.html">the model catalogue</a>, <a href="./likelihood/normal.html">normal / GBM</a>, <a href="./likelihood/mean-variance.html">mean–variance and information</a>, and <a href="./likelihood/options.html">options as distributions</a>.</p>
+</section>
+</div>
+</div>
+<div id="cornell" class="resource-talk">
+<p><a href="assets/slides/cornell-capital-lock-in-recovery-2026.pdf"><img src="assets/slides/cornell-capital-lock-in-recovery-2026.png" alt="Title slide: The Price of Having Been Right, Capital Lock-In and Recovery in Costly Markets, Cornell CFEM seminar, 15 October 2026" class="talk-cover" width="640" loading="lazy"></a></p>
+<div class="resource-copy">
+<p><span class="eyebrow">Cornell Financial Engineering Manhattan · 15 October 2026 · 66 pages</span></p>
+<section id="the-price-of-having-been-right" class="level2">
+<h2 class="anchored" data-anchor-id="the-price-of-having-been-right">The Price of Having Been Right</h2>
+<p><strong>Capital Lock-In and Recovery in Costly Markets</strong></p>
+<p>How successful forecasts can concentrate wealth and slow a prediction market’s response to change. The talk studies the recovery limits created by trading fees and shows how shrinking baseline exposure combined with evidence-triggered increases can restore faster adaptation without new capital.</p>
+<p><a href="assets/slides/cornell-capital-lock-in-recovery-2026.pdf" class="action-link action-primary">Read the Cornell slides (PDF) →</a></p>
+<p><strong>Continue on the website:</strong> <a href="./likelihood/bayesian-learning.html">Bayesian learning and commitment</a> and <a href="./likelihood/markets-portfolios.html">beliefs and attainable portfolios</a>.</p>
+</section>
+</div>
+</div>
 <div id="columbia" class="resource-talk">
 <p><a href="assets/slides/columbia-information-theory-2026.pdf"><img src="assets/slides/columbia-information-theory-2026.png" alt="Title slide: Portfolio Optimization through Information Theory, Columbia University, 9 October 2026" class="talk-cover" width="640" loading="lazy"></a></p>
 <div class="resource-copy">
@@ -441,16 +488,34 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">How does information accumulate through time?</td>
-<td style="text-align: left;"><a href="./likelihood/dynamics-learning.html">Dynamics and learning</a></td>
-<td style="text-align: left;"><a href="./likelihood/linear-information.html">Linear information flow</a></td>
+<td style="text-align: left;"><a href="./likelihood/linear-information.html">Linear information flows</a></td>
+<td style="text-align: left;"><a href="#columbia-continuous">Columbia continuous-model lecture</a></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">How are wealth and Bayesian learning connected?</td>
+<td style="text-align: left;">How do information channels lead to option positions?</td>
+<td style="text-align: left;"><a href="./likelihood/options.html">Options as distributions</a></td>
+<td style="text-align: left;"><a href="#bloomberg">Bloomberg presentation</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">How are wealth, learning and recovery connected?</td>
 <td style="text-align: left;"><a href="./likelihood/bayesian-learning.html">Bayesian learning and commitment</a></td>
-<td style="text-align: left;">Oxford presentation above</td>
+<td style="text-align: left;"><a href="#cornell">Cornell</a> and <a href="#oxford">Oxford</a> presentations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What can an efficiency test measure?</td>
+<td style="text-align: left;"><a href="./research/relative-entropy-tests.html">Forthcoming Quantitative Finance paper</a></td>
+<td style="text-align: left;"><a href="./likelihood/relative-entropy.html">Relative entropy</a></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="forthcoming-paper" class="level2">
+<h2 class="anchored" data-anchor-id="forthcoming-paper">Forthcoming in Quantitative Finance</h2>
+<p><strong>Jan Vecer. Relative-entropy tests of market efficiency: symbolic benchmarks, finite alphabets, and attainable log-growth.</strong> <em>Quantitative Finance</em>, forthcoming.</p>
+<p>The paper connects symbolic efficiency tests with conditional relative entropy and likelihood-ratio inference. It distinguishes population information from statistical power under coarsening, relates information to attainable log growth, and includes a daily S&amp;P 500 illustration.</p>
+<p><a href="./research/relative-entropy-tests.html" class="action-link action-primary">Paper overview →</a></p>
+<p><a href="assets/papers/relative-entropy-tests-market-efficiency-author-manuscript.pdf">Author manuscript (PDF)</a> · <a href="https://doi.org/10.1080/14697688.2026.2749693">Publisher DOI: 10.1080/14697688.2026.2749693</a> · <a href="assets/papers/relative-entropy-tests.bib">BibTeX</a></p>
+<p>The downloadable PDF is the author manuscript supplied here. The DOI identifies the forthcoming journal article.</p>
 </section>
 <section id="books-and-research" class="level2">
 <h2 class="anchored" data-anchor-id="books-and-research">Books and research</h2>

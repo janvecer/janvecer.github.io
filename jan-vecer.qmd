@@ -17,7 +17,11 @@ My research interests include portfolio theory, derivative pricing and hedging, 
 
 The interactive guide begins with the [binomial model](likelihood/binomial.qmd). It then follows the same structure through richer distributions, [utility and risk aversion](likelihood/utility.qmd), [mean–variance approximation](likelihood/mean-variance.qmd), and [option-implied measures](likelihood/options.qmd).
 
-[Selected articles on this site](index.qmd#papers) provide entry points into the published work. Further research and professional profiles:
+[Selected articles on this site](index.qmd#papers) provide entry points into the published and forthcoming work. The forthcoming *Quantitative Finance* article, [Relative-entropy tests of market efficiency](research/relative-entropy-tests.qmd), connects efficiency tests to conditional information and attainable log growth. Its [author manuscript](assets/papers/relative-entropy-tests-market-efficiency-author-manuscript.pdf) is available here, with [DOI 10.1080/14697688.2026.2749693](https://doi.org/10.1080/14697688.2026.2749693).
+
+[Recent talks](resources.qmd) include the October 2026 Columbia lectures, Cornell CFEM seminar, and Bloomberg BBQ presentation.
+
+Further research and professional profiles:
 
 ::: {.profile-links}
 [Google Scholar](https://scholar.google.com/scholar?btnG=&hl=en&q=jan+vecer){.profile-link}

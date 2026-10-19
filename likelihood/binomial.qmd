@@ -138,7 +138,13 @@ $$
 
 The usual conventions apply: a zero-probability term contributes zero, while positive probability divided by zero gives infinite divergence.
 
-Let the investor's model be $\mathbb P^M(H)=m$. With two scenarios a nonnegative portfolio $V$ of positive price is determined, up to scale, by $v=\mathbb P^V(H)$, the fraction of wealth spent on the $H$ claim. Its expected log return under the investor's model is
+Let the investor's model be $\mathbb P^M(H)=m$. With two scenarios a nonnegative portfolio $V$ of positive price is determined, up to scale, by $v=\mathbb P^V(H)$, the fraction of wealth spent on the $H$ claim. The stock fraction $w$ in the replication section gives
+
+$$
+v=wp+(1-w)q.
+$$
+
+Thus the $v$-curve below and the payoff line $V_w=1+w(R-1)$ describe the same positions in different coordinates. The portfolio's expected log return under the investor's model is
 
 $$
 \begin{aligned}
@@ -180,15 +186,15 @@ CRRA utility instead tempers the measure. Set $\alpha=1/\gamma$ and form the wei
 
 $$
 \begin{aligned}
-w_s&=(m)^\alpha q^{1-\alpha},\\
-w_f&=(1-m)^\alpha(1-q)^{1-\alpha}.
+a_H&=m^\alpha q^{1-\alpha},\\
+a_T&=(1-m)^\alpha(1-q)^{1-\alpha}.
 \end{aligned}
 $$
 
 The optimal $H$ weight is
 
 $$
-v_\gamma=\frac{w_s}{w_s+w_f}.
+v_\gamma=\frac{a_H}{a_H+a_T}.
 $$
 
 For $0<m<1$ both families sweep the same segment between $q$ and $m$, including cash as a limit as $\gamma\to\infty$. They generally traverse it at different rates: the same numerical $\gamma$ can give different positions, while a change of $\gamma$ can match them. With three or more states they generally trace different curves in the simplex, arithmetic against normalized geometric interpolation. Boundary beliefs give another distinction: set $\mathbb P^M(H)=0$ in the figure. For every finite $\gamma$, CRRA keeps that zero, while fractional Kelly with $\gamma>1$ assigns positive weight through its cash reserve. The [utility and risk-aversion page](utility.qmd) develops the general construction.

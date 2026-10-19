@@ -72,4 +72,13 @@ MathJax and its fonts are bundled in `assets/vendor/mathjax/`, so mathematical r
 
 ## Reports for this revision
 
-`source-report-v5.json` covers the rendered 11 October 2026 build. Older JSON reports are retained in `archive-pre-2026-10-11/`; they do not certify the revised layout. The browser runner is included for a future local preview, but browser launch was blocked by this environment for the current revision. See `../VALIDATION.md`.
+The optional static MathJax validator checks TeX parsing and SVG typesetting
+without a browser. Installation and invocation are documented at the top of
+`check-math.cjs`. The latest result is `math-typesetting-2026-10-19.json`.
+
+`source-report-2026-10-19.json` covers the rendered 19 October 2026 build.
+`source-report-v5.json` and `math-typesetting-summary.json` describe the earlier
+11 October build. Older JSON reports are retained for reference; they do not
+certify the current layout. The browser runner is included for a future local
+preview. Browser QA was not available for the 19 October build; see
+`../VALIDATION.md` for the completed checks and limits.

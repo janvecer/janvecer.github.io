@@ -1,6 +1,6 @@
 # Public source notes
 
-Verified 3 October 2026. This file documents provenance for the website's biographical details, bibliography, and cover images. It is not included in the website navigation.
+Original public-source verification: 3 October 2026. Resource additions: 19 October 2026. This file documents provenance for the website's biographical details, bibliography, and cover images. It is not included in the website navigation.
 
 ## Books
 
@@ -26,7 +26,9 @@ The covers are authentic published promotional images, not generated or reconstr
 
 ## Selected research
 
-Only published article links are used in the current selection. No private manuscript, reproduction archive, draft version, or review status is exposed. At the author's request, the SSRN Merton working paper and the older Risks and Entropy selections were removed.
+The selection includes published articles and, at the author's explicit request on 19 October 2026, one forthcoming Quantitative Finance paper with its supplied author manuscript. At the author's earlier request, the SSRN Merton working paper and the older Risks and Entropy selections remain omitted.
+
+New forthcoming item: Jan Vecer, *Relative-entropy tests of market efficiency: symbolic benchmarks, finite alphabets, and attainable log-growth*. Title, author, abstract and contents follow the attached `Efficiency_Test_Final-1.pdf` (22 pages), whose first page says “To appear in Quantitative Finance.” Forthcoming status and DOI `10.1080/14697688.2026.2749693` were supplied by the author. The automated DOI lookup was unavailable and Crossref returned no deposited record during this build; no issue, volume, page range or final publication date is invented. The download is labeled **author manuscript**, retains its original title and is byte-for-byte unchanged. The landing page and BibTeX point readers to the DOI for final journal metadata.
 
 1. Jan Vecer. *Likelihood-Ratio Pricing, Capital Lock-In, and Prefunded Restarts in Parimutuel Prediction Markets*. **Methodology and Computing in Applied Probability** 28, article 98, 2026. Published online 17 September 2026. Official Springer record: https://link.springer.com/article/10.1007/s11009-026-10329-z . DOI: https://doi.org/10.1007/s11009-026-10329-z . Title, single author, ORCID, journal and year were verified both against the Springer page and its publisher-deposited Crossref metadata. The earlier manuscript title, *Sequential Bayesian Equilibrium in Market-Maker-Free Prediction Markets*, is not used as the published title. The website preserves the exact author-supplied Springer sharing link: https://rdcu.be/KDQhKRqs8mxa . This sharing URL returned HTTP 202 with an empty body to the automated client; its target was not independently resolved, and the bibliographic facts were verified from the separate official record.
 2. Jan Vecer. *Analytical solution for Kelly's criterion for multiple outcomes*. **Quantitative Finance** 26(5), 671–684, 2026. Official publisher DOI record: https://doi.org/10.1080/14697688.2026.2629952 .
@@ -47,3 +49,12 @@ Verified against public records on 3 October 2026.
 ## Maintenance
 
 The book release state should be reviewed when the book is released. Metadata is factual and restrained; source wording has been summarized rather than copied. Research links point to durable publisher, DOI, or author repositories. The home-page SVG is an illustrative normal-family example, not empirical data. All pedagogical mathematical claims are separately checked in the authored likelihood pages.
+
+## Presentation resources added on 19 October 2026
+
+- `columbia_continuous_2026_v8.pdf`: *Portfolio Optimization through Information Theory — Continuous Models (Stock Markets)*, Columbia University, 16 October 2026, 54 pages. Title, venue and date printed in the supplied deck.
+- `cornell_capital_lock_in_slides_v11-1.pdf`: *The Price of Having Been Right — Capital Lock-In and Recovery in Costly Markets*, Cornell Financial Engineering Manhattan / CFEM seminar, 15 October 2026, 66 pages. Title, venue and date printed in the supplied deck.
+- `bloomberg_bbq_final.pdf`: *Portfolio Optimization through Information Theory*, Bloomberg BBQ / Lightning seminar, 9 pages. The 19 October 2026 talk date comes from the author's stated schedule; the deck does not print a date.
+- The existing Columbia discrete-model deck (9 October 2026, 52 pages) and Oxford deck (3 September 2026, 22 pages) are retained at their existing URLs.
+
+The originals are archived without PDF edits. New preview images are rasterizations of their title slides. The accompanying descriptions summarize the supplied decks rather than asserting new results independently of them.

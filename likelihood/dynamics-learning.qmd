@@ -14,11 +14,11 @@ Start with two equivalent probability laws on the same evolving observations. Th
 
 The [two ways to build a market](dynamics.qmd) page explains the connection with the classical route: begin with price dynamics, then recover compatible pricing probabilities. The [binomial model](binomial.qmd) makes both directions explicit.
 
-## Linear information flow: a family of examples
+## A companion chapter: linear information flows
 
 Independent increments in suitable exponential families give particularly transparent models. The log price is affine in an accumulating statistic, and expected information grows linearly in the stated clock. This is a useful **subclass** of price models; the general payoff–probability correspondence does not require linear information flow.
 
-The [model catalogue](linear-information.qmd) contains six examples: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. It specifies what accumulates and which parameters stay common. The normal example recovers geometric Brownian motion; the jump examples illustrate different patterns of information arrival.
+The separate [Linear information flows](linear-information.qmd) chapter contains six model sections: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. Its overview specifies what accumulates and which parameters stay common. The normal example recovers geometric Brownian motion; the jump examples illustrate different patterns of information arrival.
 
 **Suggested route:** [binomial](binomial.qmd) → [negative binomial](negative-binomial.qmd) → [linear information flow](linear-information.qmd). For continuous-time examples, start with [normal / GBM](normal.qmd), then explore the remaining families in the catalogue.
 

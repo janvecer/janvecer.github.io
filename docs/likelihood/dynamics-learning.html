@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prices as information</span></a>
+ <span class="menu-text">The framework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -234,38 +234,17 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Dynamics and learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Information through time</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+ <span class="menu-text">Linear information flows</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model catalogue</span></a>
+ <span class="menu-text">Overview and model catalogue</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -306,6 +285,27 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
@@ -327,6 +327,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../research/relative-entropy-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Market-efficiency tests · QF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -354,7 +360,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#from-one-payoff-to-a-price-process" id="toc-from-one-payoff-to-a-price-process" class="nav-link active" data-scroll-target="#from-one-payoff-to-a-price-process">From one payoff to a price process</a></li>
-  <li><a href="#linear-information-flow-a-family-of-examples" id="toc-linear-information-flow-a-family-of-examples" class="nav-link" data-scroll-target="#linear-information-flow-a-family-of-examples">Linear information flow: a family of examples</a></li>
+  <li><a href="#a-companion-chapter-linear-information-flows" id="toc-a-companion-chapter-linear-information-flows" class="nav-link" data-scroll-target="#a-companion-chapter-linear-information-flows">A companion chapter: linear information flows</a></li>
   <li><a href="#the-trading-clock-changes-what-can-be-implemented" id="toc-the-trading-clock-changes-what-can-be-implemented" class="nav-link" data-scroll-target="#the-trading-clock-changes-what-can-be-implemented">The trading clock changes what can be implemented</a></li>
   <li><a href="#learning-and-capital-commitment" id="toc-learning-and-capital-commitment" class="nav-link" data-scroll-target="#learning-and-capital-commitment">Learning and capital commitment</a></li>
   </ul>
@@ -395,10 +401,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Start with two equivalent probability laws on the same evolving observations. Their likelihood-ratio process is a positive martingale under the reference law. Expressing prices in units of the reference asset incorporates the numeraire convention from the outset.</p>
 <p>The <a href="../likelihood/dynamics.html">two ways to build a market</a> page explains the connection with the classical route: begin with price dynamics, then recover compatible pricing probabilities. The <a href="../likelihood/binomial.html">binomial model</a> makes both directions explicit.</p>
 </section>
-<section id="linear-information-flow-a-family-of-examples" class="level2">
-<h2 class="anchored" data-anchor-id="linear-information-flow-a-family-of-examples">Linear information flow: a family of examples</h2>
+<section id="a-companion-chapter-linear-information-flows" class="level2">
+<h2 class="anchored" data-anchor-id="a-companion-chapter-linear-information-flows">A companion chapter: linear information flows</h2>
 <p>Independent increments in suitable exponential families give particularly transparent models. The log price is affine in an accumulating statistic, and expected information grows linearly in the stated clock. This is a useful <strong>subclass</strong> of price models; the general payoff–probability correspondence does not require linear information flow.</p>
-<p>The <a href="../likelihood/linear-information.html">model catalogue</a> contains six examples: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. It specifies what accumulates and which parameters stay common. The normal example recovers geometric Brownian motion; the jump examples illustrate different patterns of information arrival.</p>
+<p>The separate <a href="../likelihood/linear-information.html">Linear information flows</a> chapter contains six model sections: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. Its overview specifies what accumulates and which parameters stay common. The normal example recovers geometric Brownian motion; the jump examples illustrate different patterns of information arrival.</p>
 <p><strong>Suggested route:</strong> <a href="../likelihood/binomial.html">binomial</a> → <a href="../likelihood/negative-binomial.html">negative binomial</a> → <a href="../likelihood/linear-information.html">linear information flow</a>. For continuous-time examples, start with <a href="../likelihood/normal.html">normal / GBM</a>, then explore the remaining families in the catalogue.</p>
 </section>
 <section id="the-trading-clock-changes-what-can-be-implemented" class="level2">

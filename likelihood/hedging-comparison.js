@@ -18,7 +18,7 @@
       growth += state.m * Math.log(wealth);
       kl += state.m * (Math.log(state.m) - Math.log(q) - Math.log(wealth));
       kl2 += 0.5 * error * error / state.m;
-      quadratic += 0.5 * error * error / q;
+      quadratic += error * error / q;
     }
     return { growth, kl, kl2, quadratic };
   }
@@ -45,7 +45,7 @@
   if (typeof document === 'undefined') return;
 
   const colors = { kl: '#176074', kl2: '#95570c', quadratic: '#77589e' };
-  const names = { kl: 'Exact KL', kl2: 'KL2', quadratic: 'Half squared error' };
+  const names = { kl: 'Exact KL', kl2: 'KL2', quadratic: 'Squared error Q' };
   const decimals = x => Number(x).toFixed(7);
   let serial = 0;
 
@@ -126,7 +126,7 @@
       host.querySelector('output').textContent = weight.toFixed(6);
       host.querySelector('.hc-readouts').innerHTML = [
         ['Log growth (nats)', values.growth], ['Exact KL gap (nats)', values.kl],
-        ['KL2', values.kl2], ['Half squared error', values.quadratic]
+        ['KL2', values.kl2], ['Squared error Q', values.quadratic]
       ].map(([label, value]) => `<div><span>${label}</span><strong>${decimals(value)}</strong></div>`).join('');
       host.querySelector('.hc-explanation').textContent = `Optimal fractions: exact KL ${optima.kl.toFixed(6)}; quadratic ${optima.quadratic.toFixed(6)}; KL2 ${optima.kl2.toFixed(6)}. ${alternate ? 'Changing the pricing law leaves log growth and its maximizing fraction unchanged; the benchmark and loss values change.' : 'Growth plus exact KL gap equals 0.0849495 nats for every selected portfolio.'}`;
       chart(alternate, optima, values);

@@ -173,7 +173,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prices as information</span></a>
+ <span class="menu-text">The framework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -262,8 +262,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dynamics and learning</span></a>
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flows</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -271,29 +271,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Information through time</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model catalogue</span></a>
+ <span class="menu-text">Overview and model catalogue</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -334,6 +313,27 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
@@ -355,6 +355,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../research/relative-entropy-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Market-efficiency tests · QF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -475,7 +481,8 @@ L_M=\frac{d\mathbb P^M}{d\mathbb P^Y},
 J(Z)=\frac12\chi^2
 -\frac12\mathbb E^Y[(G-L_M)^2].
 \]</span></p>
-<p>The first term is fixed. Maximizing <span class="math inline">\(J\)</span> chooses the attainable payoff closest to the likelihood ratio <span class="math inline">\(L_M\)</span> in squared error under the pricing measure. In a complete market, <span class="math inline">\(G=L_M\)</span> is attainable and achieves the maximum <span class="math inline">\(\chi^2/2\)</span> exactly. We reserve <span class="math inline">\(R\)</span> for a traded asset’s gross return, as on the <a href="../likelihood/hedging-comparison.html">comparison page</a>.</p>
+<p>Write <span class="math inline">\(Q(G)=\mathbb E^Y[(G-L_M)^2]\)</span> for the ordinary squared-error loss, without a factor of <span class="math inline">\(1/2\)</span>. Then <span class="math inline">\(J=\chi^2/2-Q(G)/2\)</span>: maximizing <span class="math inline">\(J\)</span> is exactly equivalent to minimizing <span class="math inline">\(Q\)</span>. The factor of <span class="math inline">\(1/2\)</span> belongs to the reward objective <span class="math inline">\(J\)</span>, while the loss <span class="math inline">\(Q\)</span> uses the same convention as the <a href="../likelihood/hedging-comparison.html">comparison page</a>.</p>
+<p>The first term is fixed. Maximizing <span class="math inline">\(J\)</span> chooses the attainable payoff closest to the likelihood ratio <span class="math inline">\(L_M\)</span> in squared error under the pricing measure. In a complete market, <span class="math inline">\(G=L_M\)</span> is attainable and achieves the maximum <span class="math inline">\(\chi^2/2\)</span> exactly. We reserve <span class="math inline">\(R\)</span> for a traded asset’s gross return.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exact optimizer does not mean exact growth value">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -612,6 +619,10 @@ w^*=\Sigma_Y^{-1}\mu.
 <h2 class="anchored" data-anchor-id="three-geometries-for-a-restricted-menu">Three geometries for a restricted menu</h2>
 <p>In finite states, write <span class="math inline">\(p_i=\mathbb P^M(i)\)</span>, <span class="math inline">\(q_i=\mathbb P^Y(i)\)</span> and <span class="math inline">\(v_i=\mathbb P^V(i)\)</span>. Then <span class="math inline">\(G(i)=v_i/q_i\)</span>, and the projection problems are:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Objective</th>
@@ -628,12 +639,12 @@ w^*=\Sigma_Y^{-1}\mu.
 <td style="text-align: left;"><span class="math inline">\(\tfrac12\sum_i(v_i-p_i)^2/p_i\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Mixed quadratic</td>
-<td style="text-align: left;"><span class="math inline">\(\tfrac12\sum_i(v_i-p_i)^2/q_i\)</span></td>
+<td style="text-align: left;">Mixed quadratic / ordinary quadratic hedge</td>
+<td style="text-align: left;"><span class="math inline">\(Q(G)=\sum_i(v_i-p_i)^2/q_i\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>KL2 is half the Pearson divergence <span class="math inline">\(\chi^2(v\Vert p)\)</span>. The mixed quadratic instead uses the fixed market distribution in its denominator. Neither expression is <span class="math inline">\(\chi^2(p\Vert v)\)</span>, whose denominator would be <span class="math inline">\(v_i\)</span>.</p>
+<p>KL2 is half the Pearson divergence <span class="math inline">\(\chi^2(v\Vert p)\)</span>; its factor of <span class="math inline">\(1/2\)</span> comes from the Taylor expansion of KL. The ordinary quadratic loss <span class="math inline">\(Q\)</span> uses the fixed market distribution in its denominator and has no factor of <span class="math inline">\(1/2\)</span>. Multiplying either loss by a positive constant leaves its minimizing portfolio unchanged. Neither expression is <span class="math inline">\(\chi^2(p\Vert v)\)</span>, whose denominator would be <span class="math inline">\(v_i\)</span>.</p>
 <p>If the investor’s distribution is attainable, all three mismatches can reach zero. Otherwise the geometry matters: the nearest feasible distribution in KL divergence need not be the nearest under either squared distance. The <a href="../likelihood/hedging-comparison.html">worked comparison</a> calculates all three and lets you vary the pricing law.</p>
 <p><strong>Continue:</strong> enter several asset densities and compare the resulting allocations in the <a href="../likelihood/portfolio-lab.html">portfolio laboratory</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Book connection">

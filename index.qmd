@@ -104,7 +104,7 @@ $$
 Start with one bet, see how trading restrictions change portfolio choice, then follow the accumulation of information through time.
 :::
 
-::: {.entry-grid}
+::: {.entry-grid .entry-grid-four}
 ::: {.entry-item}
 [01]{.entry-number}
 
@@ -125,6 +125,15 @@ Match beliefs to attainable payoffs. Compare exact log growth, utility, and quad
 :::
 ::: {.entry-item}
 [03]{.entry-number}
+
+### [Linear information flows](likelihood/linear-information.qmd)
+
+Six model families connect accumulating evidence to price paths: binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian.
+
+[Explore the models →](likelihood/linear-information.qmd){.text-link}
+:::
+::: {.entry-item}
+[04]{.entry-number}
 
 ### [Dynamics and learning](likelihood/dynamics-learning.qmd)
 
@@ -187,12 +196,23 @@ Derivative pricing and hedging viewed through relative prices, changes of numera
 
 ## From the framework to the literature. {.unlisted}
 
-Published articles connected to the ideas on this site.
+Published and forthcoming articles connected to the ideas on this site.
 
 [More research & contact →](jan-vecer.qmd){.text-link}
 :::
 
 ::: {.paper-list}
+::: {.paper-item}
+[Forthcoming · Quantitative Finance]{.paper-meta}
+
+### [Relative-entropy tests of market efficiency: symbolic benchmarks, finite alphabets, and attainable log-growth](research/relative-entropy-tests.qmd)
+
+Jan Vecer
+
+Conditional information, statistical efficiency tests, and the distinction between ideal information and attainable trading growth.
+
+[Author manuscript (PDF)](assets/papers/relative-entropy-tests-market-efficiency-author-manuscript.pdf) · [DOI: 10.1080/14697688.2026.2749693](https://doi.org/10.1080/14697688.2026.2749693)
+:::
 ::: {.paper-item}
 [2026 · Methodology and Computing in Applied Probability]{.paper-meta}
 
@@ -228,16 +248,19 @@ Robert Navratil, Stephen Taylor, and Jan Vecer
 ::: {.section-intro}
 [Talks and resources]{.eyebrow}
 
-## Two routes into the ideas. {.unlisted}
+## From one bet to market information. {.unlisted}
 
-The Columbia lecture starts with one bet and develops portfolio choice and hedging. The Oxford lecture connects relative entropy to Bayesian clearing, learning, and adaptation.
+The Columbia lectures develop discrete and continuous models. The Cornell seminar studies capital lock-in and recovery in costly markets. The Bloomberg presentation gives a short route from information channels to option portfolios, and the Oxford lecture connects portfolios to Bayesian learning.
 
 [Read the presentations and follow the tutorials →](resources.qmd){.text-link}
 :::
 
 ::: {.talk-links}
-[Columbia · 9 October 2026](assets/slides/columbia-information-theory-2026.pdf){.profile-link}
-[Oxford · 3 September 2026](assets/slides/oxford-bayesian-portfolios-2026.pdf){.profile-link}
+[Bloomberg BBQ · 19 October 2026](resources.qmd#bloomberg){.profile-link}
+[Columbia · Continuous models · 16 October 2026](resources.qmd#columbia-continuous){.profile-link}
+[Cornell CFEM · 15 October 2026](resources.qmd#cornell){.profile-link}
+[Columbia · Discrete models · 9 October 2026](resources.qmd#columbia){.profile-link}
+[Oxford · 3 September 2026](resources.qmd#oxford){.profile-link}
 :::
 :::
 

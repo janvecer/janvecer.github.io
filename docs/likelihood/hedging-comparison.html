@@ -173,7 +173,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prices as information</span></a>
+ <span class="menu-text">The framework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -262,8 +262,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dynamics and learning</span></a>
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flows</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -271,29 +271,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Information through time</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model catalogue</span></a>
+ <span class="menu-text">Overview and model catalogue</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -334,6 +313,27 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
@@ -355,6 +355,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../research/relative-entropy-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Market-efficiency tests · QF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -420,6 +426,65 @@ window.Quarto = {
 
 <p><strong>The desired payoff can be clear even when trading cannot produce it.</strong> The investor supplies a target distribution; stock and cash span a smaller set of distributions. The choice of loss determines which attainable portfolio comes closest.</p>
 <p>This page continues the <a href="../likelihood/binomial.html">binomial example</a> and the <a href="../likelihood/negative-binomial.html">negative-binomial trading clock</a>. All payoffs are expressed in units of the reference asset <span class="math inline">\(Y\)</span> and normalized to initial cost one.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Notation: beliefs, prices, and implemented payoffs">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Notation: beliefs, prices, and implemented payoffs
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All returns are measured in units of a strictly positive reference asset <span class="math inline">\(Y\)</span>. Its own return is one, so interest and reinvestment are included in the choice of unit.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^M\)</span></td>
+<td style="text-align: left;">Investor’s beliefs about outcomes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Pricing law in reference-asset units</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^X\)</span></td>
+<td style="text-align: left;">Law induced by the traded stock</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^V\)</span></td>
+<td style="text-align: left;">Law induced by the implemented portfolio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^U\)</span></td>
+<td style="text-align: left;">Law induced by a utility-selected payoff</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(R=d\mathbb P^X/d\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Stock’s gross return</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(L_M=d\mathbb P^M/d\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Ideal payoff for the belief</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(V_w=1+w(R-1)\)</span></td>
+<td style="text-align: left;">Unit-cost stock-and-cash payoff</td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="math inline">\(0\leq w\leq1\)</span>, <span class="math inline">\(\mathbb P^{V_w}=w\mathbb P^X+(1-w)\mathbb P^Y\)</span> is a convex mixture. Outside that range, admissibility still requires nonnegative wealth in every relevant state. In incomplete markets, the chosen pricing law need not be unique.</p>
+</div>
+</div>
+</div>
 <section id="the-same-binary-tree-a-different-trading-rule" class="level2">
 <h2 class="anchored" data-anchor-id="the-same-binary-tree-a-different-trading-rule">The same binary tree, a different trading rule</h2>
 <p>In the binary model, stock returns are <span class="math inline">\(u=3/2\)</span> and <span class="math inline">\(d=1/2\)</span>. The up probabilities are <span class="math inline">\(1/2\)</span> under the pricing law and <span class="math inline">\(2/3\)</span> under the investor’s beliefs. Rebalancing a stock fraction <span class="math inline">\(w=2/3\)</span> after every step produces the desired likelihood payoff.</p>
@@ -472,7 +537,7 @@ D(w)&amp;=D_{\mathrm{KL}}(m\Vert v(w))\\
 Q(w)=\sum_g\frac{e_g^2}{q_g}
 =\mathbb E^Y[(V_w-L_M)^2].
 \]</span></p>
-<p>The target-centered <span class="math inline">\(\operatorname{KL}_2\)</span> is the second-order expansion of exact KL when the <strong>relative mismatch</strong> <span class="math inline">\((V_w-L_M)/L_M\)</span> is small with suitable integrability. Ordinary quadratic hedging weights payoff errors using the pricing law. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.</p>
+<p>The target-centered <span class="math inline">\(\operatorname{KL}_2\)</span> is the second-order expansion of exact KL when the <strong>relative mismatch</strong> <span class="math inline">\((V_w-L_M)/L_M\)</span> is small with suitable integrability. Its factor of <span class="math inline">\(1/2\)</span> comes from that expansion. Ordinary quadratic hedging weights payoff errors using the pricing law; we define its loss <span class="math inline">\(Q\)</span> without a factor of <span class="math inline">\(1/2\)</span> throughout. Rescaling a loss by a positive constant changes its value but not its minimizing portfolio. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="A local approximation can have a different optimum">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -554,12 +619,12 @@ w_{\mathrm{KL}_2}&amp;=\frac{13}{16}.
 </section>
 <section id="explore-the-losses" class="level2">
 <h2 class="anchored" data-anchor-id="explore-the-losses">Explore the losses</h2>
-<p>Move the stock fraction or select an optimizer. The graph shows exact KL, <span class="math inline">\(\operatorname{KL}_2\)</span>, and <strong>half</strong> the ordinary squared error; the factor <span class="math inline">\(1/2\)</span> changes only the scale, not its optimizer. Only the exact-KL curve is an information loss in nats. A local view makes the distinct minima easier to see.</p>
+<p>Move the stock fraction or select an optimizer. The graph shows exact KL, <span class="math inline">\(\operatorname{KL}_2\)</span>, and the ordinary squared error <span class="math inline">\(Q\)</span>, with the normalizations defined above. Only the exact-KL curve is an information loss in nats. Compare each curve’s minimizing stock fraction; the displayed heights use different loss scales. A local view makes the distinct minima easier to see.</p>
 <div data-hedging-comparison="">
 <p>The interactive explorer requires JavaScript. The table above contains its default results. With the alternative pricing law below, the exact-KL optimum remains 0.745331, while the quadratic optimum becomes 0.640858 and the KL2 optimum becomes 0.827898.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Numerical method">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -568,7 +633,7 @@ w_{\mathrm{KL}_2}&amp;=\frac{13}{16}.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The explorer evaluates the geometric sums over <span class="math inline">\(g=0,\ldots,159\)</span> and solves the exact first-order condition by bisection. This truncation is far below displayed precision on the selected range, including the slower <span class="math inline">\((3/4)^g\)</span> tail in the target-centered quadratic. The original-law quadratic solutions above provide independent analytical checks. The slider restricts only the displayed allocation range; the stated optima are also the optima on the full positive-wealth domain.</p>
 </div>
@@ -651,7 +716,7 @@ q'_2=\frac3{16}.
 <p>is the expected log growth lost because intermediate rebalancing is unavailable. This difference between two attainable growth values does not depend on a chosen pricing law. Its equality to the absolute KL gap above uses the original law <span class="math inline">\(q\)</span>, which is fixed by pricing every step of the binary tree. The alternative <span class="math inline">\(q'\)</span> prices the terminal stock and cash, but not those intermediate trading opportunities.</p>
 <p><strong>Continue:</strong> <a href="../likelihood/mean-variance.html">Mean–variance and the local quadratic limits</a> · <a href="../likelihood/hedging.html">Hedging a specified option payoff</a> · <a href="../likelihood/trinomial.html">Pricing-law geometry and the dual problem</a></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Source and scope">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -660,7 +725,7 @@ q'_2=\frac3{16}.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The worked example follows Jan Vecer’s Columbia presentation, <em>Portfolio Optimization through Information Theory: Discrete Models (Prediction Markets)</em>, 9 October 2026, especially slides 22–37 and 43–48. The presentation is available from <a href="../resources.html">Research and resources</a>. All portfolio comparisons here concern expected log growth under the stated beliefs. A full-market utility-selected target can also be approximated by KL, but that procedure does not generally equal constrained expected-utility maximization for the original utility.</p>
 </div>

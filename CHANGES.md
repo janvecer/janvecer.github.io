@@ -1,4 +1,28 @@
-# Website revision — 11 October 2026
+# Website revision — 19 October 2026
+
+- Added the Columbia continuous-model lecture (16 October), Cornell CFEM seminar
+  (15 October), and Bloomberg BBQ lightning presentation (19 October), preserving
+  the existing Columbia discrete and Oxford PDFs and URLs.
+- Added the forthcoming Quantitative Finance author manuscript, DOI
+  `10.1080/14697688.2026.2749693`, a research landing page with citation metadata,
+  and a BibTeX download. Homepage, resources and academic profile link to it.
+- Restored **Linear information flows** as a top-level chapter in the tutorial
+  sidebar. Its six models are direct children; a fourth homepage entry links
+  directly to the chapter. Existing page addresses are preserved.
+- Kept **Prices as Information** and gave the framework page its own title.
+- Standardized ordinary quadratic loss Q without a factor of 1/2, including its
+  graph and readout. KL2 retains the factor required by the KL expansion. Portfolio
+  optima, growth figures and information gaps do not change.
+- Renamed the CRRA tempered weights to a_H and a_T, connected binomial v and w,
+  and reused the shared notation include on the two additional hedging pages.
+- Replaced the manual page-by-page render list with source-folder patterns.
+  Future pages in the existing source folders are rendered automatically, while
+  underscore-prefixed notation includes remain excluded.
+
+This package includes editable source and rendered `docs/`. It does not push a
+Git commit or change the live website; follow README.md to publish it.
+
+# Previous revision — 11 October 2026
 
 ## Positioning and structure
 

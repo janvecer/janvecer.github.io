@@ -1,0 +1,200 @@
+{
+  "generatedAt": "2026-10-19T14:34:46.542Z",
+  "method": "MathJax TeX parser and SVG output with liteAdaptor in Node.js; no browser",
+  "scope": "Static rendered HTML elements with class math; dynamic widget output and browser layout are not checked",
+  "mathjaxVersion": "3.2.2",
+  "nodeVersion": "v24.19.0",
+  "packages": "AllPackages excluding noerrors and noundefined error suppression",
+  "htmlPages": 26,
+  "pagesWithMath": 21,
+  "formulas": 1306,
+  "inlineFormulas": 1032,
+  "displayFormulas": 274,
+  "failures": [],
+  "pages": [
+    {
+      "file": "about.html",
+      "formulas": 0,
+      "inline": 0,
+      "display": 0,
+      "failures": 0
+    },
+    {
+      "file": "index.html",
+      "formulas": 13,
+      "inline": 11,
+      "display": 2,
+      "failures": 0
+    },
+    {
+      "file": "jan-vecer.html",
+      "formulas": 0,
+      "inline": 0,
+      "display": 0,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/bayesian-learning.html",
+      "formulas": 68,
+      "inline": 52,
+      "display": 16,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/binomial.html",
+      "formulas": 165,
+      "inline": 141,
+      "display": 24,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/dynamics-learning.html",
+      "formulas": 0,
+      "inline": 0,
+      "display": 0,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/dynamics.html",
+      "formulas": 34,
+      "inline": 22,
+      "display": 12,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/gamma.html",
+      "formulas": 42,
+      "inline": 32,
+      "display": 10,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/hedging-comparison.html",
+      "formulas": 75,
+      "inline": 61,
+      "display": 14,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/hedging.html",
+      "formulas": 56,
+      "inline": 41,
+      "display": 15,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/index.html",
+      "formulas": 111,
+      "inline": 90,
+      "display": 21,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/inverse-gaussian.html",
+      "formulas": 44,
+      "inline": 34,
+      "display": 10,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/linear-information.html",
+      "formulas": 23,
+      "inline": 17,
+      "display": 6,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/markets-portfolios.html",
+      "formulas": 31,
+      "inline": 25,
+      "display": 6,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/mean-variance.html",
+      "formulas": 101,
+      "inline": 82,
+      "display": 19,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/negative-binomial.html",
+      "formulas": 106,
+      "inline": 85,
+      "display": 21,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/normal.html",
+      "formulas": 54,
+      "inline": 44,
+      "display": 10,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/options.html",
+      "formulas": 62,
+      "inline": 47,
+      "display": 15,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/poisson.html",
+      "formulas": 33,
+      "inline": 25,
+      "display": 8,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/portfolio-lab.html",
+      "formulas": 37,
+      "inline": 28,
+      "display": 9,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/pricing-hedging.html",
+      "formulas": 17,
+      "inline": 16,
+      "display": 1,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/relative-entropy.html",
+      "formulas": 82,
+      "inline": 63,
+      "display": 19,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/trinomial.html",
+      "formulas": 67,
+      "inline": 48,
+      "display": 19,
+      "failures": 0
+    },
+    {
+      "file": "likelihood/utility.html",
+      "formulas": 85,
+      "inline": 68,
+      "display": 17,
+      "failures": 0
+    },
+    {
+      "file": "research/relative-entropy-tests.html",
+      "formulas": 0,
+      "inline": 0,
+      "display": 0,
+      "failures": 0
+    },
+    {
+      "file": "resources.html",
+      "formulas": 0,
+      "inline": 0,
+      "display": 0,
+      "failures": 0
+    }
+  ],
+  "failedFormulas": 0,
+  "passed": true
+}

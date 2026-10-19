@@ -23,7 +23,11 @@ for(const alternative of [false,true]) {
     assert.ok(Object.values(v).every(Number.isFinite));
     near(v.kl+v.growth,alternative?altInformation:shock);
     near(v.growth,compare.losses(w,!alternative).growth);
-    if(!alternative)near(v.kl2,(24/65)*w*w-.6*w+.25);
+    if(!alternative){
+      near(v.kl2,(24/65)*w*w-.6*w+.25);
+      // Independent geometric sums: Q is unhalved squared error, KL2 is halved.
+      near(v.quadratic,(2/7)*w*w-(2/5)*w+1/7);
+    }
     assert.ok(v.kl>=0 && v.kl2>=0 && v.quadratic>=0);
   }
   for(const [objective,key] of [['kl','kl'],['kl2','kl2'],['quadratic','quadratic']]){
@@ -33,6 +37,7 @@ for(const alternative of [false,true]) {
   }
 }
 near(compare.losses(compare.optimizers(false).kl,false).growth,.081462349657880,1e-11);
+near(compare.losses(.7,false).quadratic,1/350);
 // The Win-only preset retains the market's conditional Draw/Loss split.
 const q=[.5,.3,.2],m=[.6,.3,.1],claim=[1,0,0];
 const optimum=portfolio.optimize([q,claim],m,q);

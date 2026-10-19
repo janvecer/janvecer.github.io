@@ -14,6 +14,8 @@ include-after-body:
 
 This page continues the [binomial example](binomial.qmd) and the [negative-binomial trading clock](negative-binomial.qmd). All payoffs are expressed in units of the reference asset $Y$ and normalized to initial cost one.
 
+{{< include _notation.qmd >}}
+
 ## The same binary tree, a different trading rule
 
 In the binary model, stock returns are $u=3/2$ and $d=1/2$. The up probabilities are $1/2$ under the pricing law and $2/3$ under the investor's beliefs. Rebalancing a stock fraction $w=2/3$ after every step produces the desired likelihood payoff.
@@ -81,7 +83,7 @@ Q(w)=\sum_g\frac{e_g^2}{q_g}
 =\mathbb E^Y[(V_w-L_M)^2].
 $$
 
-The target-centered $\operatorname{KL}_2$ is the second-order expansion of exact KL when the **relative mismatch** $(V_w-L_M)/L_M$ is small with suitable integrability. Ordinary quadratic hedging weights payoff errors using the pricing law. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.
+The target-centered $\operatorname{KL}_2$ is the second-order expansion of exact KL when the **relative mismatch** $(V_w-L_M)/L_M$ is small with suitable integrability. Its factor of $1/2$ comes from that expansion. Ordinary quadratic hedging weights payoff errors using the pricing law; we define its loss $Q$ without a factor of $1/2$ throughout. Rescaling a loss by a positive constant changes its value but not its minimizing portfolio. The two quadratic criteria have different denominators; exact KL also has a different, logarithmic loss.
 
 ::: {.callout-note title="A local approximation can have a different optimum"}
 The target approaches zero in the tail, while a portfolio with $w<1$ retains a positive cash intercept. Relative errors can therefore be large even when absolute errors are small. There is no guarantee that minimizing $\operatorname{KL}_2$ gives a better exact-KL fit than minimizing ordinary squared error.
@@ -126,7 +128,7 @@ Growth and exact KL are in nats per completed shock. In each row their sum is $D
 
 ## Explore the losses
 
-Move the stock fraction or select an optimizer. The graph shows exact KL, $\operatorname{KL}_2$, and **half** the ordinary squared error; the factor $1/2$ changes only the scale, not its optimizer. Only the exact-KL curve is an information loss in nats. A local view makes the distinct minima easier to see.
+Move the stock fraction or select an optimizer. The graph shows exact KL, $\operatorname{KL}_2$, and the ordinary squared error $Q$, with the normalizations defined above. Only the exact-KL curve is an information loss in nats. Compare each curve's minimizing stock fraction; the displayed heights use different loss scales. A local view makes the distinct minima easier to see.
 
 ::: {data-hedging-comparison=""}
 The interactive explorer requires JavaScript. The table above contains its default results. With the alternative pricing law below, the exact-KL optimum remains 0.745331, while the quadratic optimum becomes 0.640858 and the KL2 optimum becomes 0.827898.

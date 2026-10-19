@@ -172,7 +172,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prices as information</span></a>
+ <span class="menu-text">The framework</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -261,8 +261,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dynamics and learning</span></a>
+            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear information flows</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -270,29 +270,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Information through time</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Two ways to build a market</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear information flow</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../likelihood/linear-information.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model catalogue</span></a>
+ <span class="menu-text">Overview and model catalogue</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -333,6 +312,27 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamics and learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information through time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/dynamics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two ways to build a market</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/bayesian-learning.html" class="sidebar-item-text sidebar-link">
@@ -354,6 +354,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Talks and reading routes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../research/relative-entropy-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Market-efficiency tests · QF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -416,6 +422,65 @@ window.Quarto = {
 
 
 <p>A hedge starts with a target claim and the assets available to reproduce it. Information theory supplies a probability representation of both the target and the implemented position.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Notation: beliefs, prices, and implemented payoffs">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Notation: beliefs, prices, and implemented payoffs
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All returns are measured in units of a strictly positive reference asset <span class="math inline">\(Y\)</span>. Its own return is one, so interest and reinvestment are included in the choice of unit.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^M\)</span></td>
+<td style="text-align: left;">Investor’s beliefs about outcomes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Pricing law in reference-asset units</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^X\)</span></td>
+<td style="text-align: left;">Law induced by the traded stock</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^V\)</span></td>
+<td style="text-align: left;">Law induced by the implemented portfolio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathbb P^U\)</span></td>
+<td style="text-align: left;">Law induced by a utility-selected payoff</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(R=d\mathbb P^X/d\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Stock’s gross return</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(L_M=d\mathbb P^M/d\mathbb P^Y\)</span></td>
+<td style="text-align: left;">Ideal payoff for the belief</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(V_w=1+w(R-1)\)</span></td>
+<td style="text-align: left;">Unit-cost stock-and-cash payoff</td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="math inline">\(0\leq w\leq1\)</span>, <span class="math inline">\(\mathbb P^{V_w}=w\mathbb P^X+(1-w)\mathbb P^Y\)</span> is a convex mixture. Outside that range, admissibility still requires nonnegative wealth in every relevant state. In incomplete markets, the chosen pricing law need not be unique.</p>
+</div>
+</div>
+</div>
 <p>Fix a pricing law <span class="math inline">\(\mathbb P^Y\)</span> and a nonnegative claim <span class="math inline">\(H\)</span> with finite, positive price <span class="math inline">\(H(0)=\mathbb E^Y[H]\)</span>. Its induced law is</p>
 <p><span class="math display">\[
 \mathbb P^H(\omega)

@@ -19,10 +19,19 @@ function clean(directory: string) {
 clean(output);
 
 // Some Quarto render/cache paths leave intermediate HTML beside the sources.
-// Remove a copy only when its QMD source exists and the finished output has
-// identical content after the polyfill cleanup. Never remove unmatched HTML.
+// Remove a copy only when its QMD source and finished output exist. Quarto 1.9
+// can postprocess the output after making the intermediate copy, so the two
+// files may differ in resolved links/navigation. In that case, require the same
+// explicit Quarto generator and page title. Preserve handwritten/unmatched HTML.
+function quartoIdentity(html: string): string | null {
+  const generator = html.match(/<meta\s+name=["']generator["']\s+content=["'](quarto-[^"']+)["'][^>]*>/i);
+  const title = html.match(/<title>([\s\S]*?)<\/title>/i);
+  return generator && title ? `${generator[1]}\n${title[1].trim()}` : null;
+}
 const separateOutput = Deno.realPathSync(output) !== Deno.realPathSync('.');
-for (const directory of separateOutput ? ['.', 'likelihood'] : []) {
+for (const directory of separateOutput ? ['.', 'likelihood', 'research'] : []) {
+  try { if (!Deno.statSync(directory).isDirectory) continue; }
+  catch (error) { if (error instanceof Deno.errors.NotFound) continue; throw error; }
   for (const entry of Deno.readDirSync(directory)) {
     if (!entry.isFile || !entry.name.endsWith('.html')) continue;
     const relative = directory === '.' ? entry.name : `${directory}/${entry.name}`;
@@ -32,7 +41,11 @@ for (const directory of separateOutput ? ['.', 'likelihood'] : []) {
       if (!Deno.statSync(source).isFile || !Deno.statSync(rendered).isFile) continue;
       const intermediate = Deno.readTextFileSync(relative);
       const finished = Deno.readTextFileSync(rendered);
-      if (withoutPolyfill(intermediate) === withoutPolyfill(finished)) Deno.removeSync(relative);
+      const identity = quartoIdentity(intermediate);
+      if (withoutPolyfill(intermediate) === withoutPolyfill(finished) ||
+          (identity !== null && identity === quartoIdentity(finished))) {
+        Deno.removeSync(relative);
+      }
     } catch (error) {
       if (!(error instanceof Deno.errors.NotFound)) throw error;
     }

@@ -1,0 +1,45 @@
+---
+title: "Relative-entropy tests of market efficiency"
+subtitle: "Symbolic benchmarks, finite alphabets, and attainable log-growth"
+description: "Jan Vecer's forthcoming Quantitative Finance paper on conditional relative entropy, symbolic efficiency tests, finite alphabets and attainable trading growth. DOI: 10.1080/14697688.2026.2749693."
+sidebar: likelihood
+include-in-header:
+  text: |
+    <meta name="citation_title" content="Relative-entropy tests of market efficiency: symbolic benchmarks, finite alphabets, and attainable log-growth">
+    <meta name="citation_author" content="Jan Vecer">
+    <meta name="citation_journal_title" content="Quantitative Finance">
+    <meta name="citation_doi" content="10.1080/14697688.2026.2749693">
+    <meta name="citation_pdf_url" content="https://janvecer.com/assets/papers/relative-entropy-tests-market-efficiency-author-manuscript.pdf">
+---
+
+**Jan Vecer** · *Quantitative Finance* · **Forthcoming**
+
+[Read the author manuscript (PDF) →](../assets/papers/relative-entropy-tests-market-efficiency-author-manuscript.pdf){.action-link .action-primary}
+
+[Publisher DOI: 10.1080/14697688.2026.2749693](https://doi.org/10.1080/14697688.2026.2749693) · [Download BibTeX](../assets/papers/relative-entropy-tests.bib)
+
+## What the paper asks
+
+How can we express departures from a market-efficiency benchmark in units of information, test them statistically, and distinguish that information from what a specified trading strategy can attain?
+
+The paper studies symbolic and finite-alphabet representations of market data. It connects conditional relative entropy, likelihood-ratio inference, and expected logarithmic growth while keeping the information set and available trading opportunities explicit.
+
+## Main connections
+
+- **A statistical benchmark:** conditional relative entropy measures departure from the chosen reference law. Finite-alphabet likelihood-ratio statistics give this population quantity a statistical counterpart.
+- **The effect of coarsening:** a simpler observation alphabet can discard population information. Its effect on statistical power also depends on the test and sampling problem.
+- **Attainable growth:** information and trading gains agree under the appropriate payoff and trading assumptions. A restricted strategy set can implement only part of the available information.
+
+## Empirical illustration
+
+A daily S&P 500 illustration uses a bounded cash/index allocation. It finds no statistically significant improvement for that tested allocation. The framework therefore separates an information measure, evidence against a benchmark, and a demonstrated trading advantage.
+
+## Citation and manuscript
+
+Jan Vecer. “Relative-entropy tests of market efficiency: symbolic benchmarks, finite alphabets, and attainable log-growth.” *Quantitative Finance*, forthcoming. DOI: [10.1080/14697688.2026.2749693](https://doi.org/10.1080/14697688.2026.2749693).
+
+The linked PDF is the supplied **author manuscript**, with its original title and contents. It is not the publisher's version of record. Use the DOI for the journal record and final bibliographic details as they become available.
+
+## Explore the ideas
+
+[Relative entropy](../likelihood/relative-entropy.qmd) · [The framework](../likelihood/index.qmd) · [Beliefs and attainable portfolios](../likelihood/markets-portfolios.qmd) · [Talks and resources](../resources.qmd)

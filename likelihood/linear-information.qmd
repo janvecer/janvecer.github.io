@@ -1,10 +1,10 @@
 ---
-title: "Linear information flow"
-subtitle: "A model family within dynamics and learning"
+title: "Linear information flows"
+subtitle: "Six model families, one likelihood-ratio structure"
 description: "Additive information drivers produce likelihood-ratio prices with linear relative entropy in time."
 ---
 
-This subsection collects examples of [price dynamics](dynamics.qmd). The binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian models share a structure. An observable driver $Z(t)$ accumulates information. Two measures give different probabilities to its increments. Price is the likelihood ratio of those two models.
+This chapter develops six families of [price dynamics](dynamics.qmd): binomial, negative binomial, normal, Poisson, gamma, and inverse Gaussian. Each model has its own section in the navigation. They share a structure: an observable driver $Z(t)$ accumulates information, two measures give different probabilities to its increments, and price is the likelihood ratio of those two models.
 
 The driver is additive; the price is multiplicative. “Linear information flow” refers to the affine log likelihood and its expected accumulation, not to a price moving along a straight line.
 

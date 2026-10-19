@@ -6,6 +6,8 @@ description: "An information-theoretic view of replication, option distributions
 
 A hedge starts with a target claim and the assets available to reproduce it. Information theory supplies a probability representation of both the target and the implemented position.
 
+{{< include _notation.qmd >}}
+
 Fix a pricing law $\mathbb P^Y$ and a nonnegative claim $H$ with finite, positive price $H(0)=\mathbb E^Y[H]$. Its induced law is
 
 $$
